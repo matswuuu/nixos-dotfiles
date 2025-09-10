@@ -1,0 +1,190 @@
+{ 
+  "output": "eDP-1",
+  "position": "top",
+  "exlusive": "true",
+  "passthrough": "true",
+  "gtk-layer-shell": "true",
+  "margin-top": 10,
+  "margin-left": 10,
+  "margin-right": 10,
+  "height": 36,
+  "modules-left": [
+    "cpu",
+    "gpu",
+    "memory",
+    
+    "custom/cpu_temp",
+
+    "mpris"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "hyprland/workspaces",
+
+    "pulseaudio",
+    "pulseaudio#microphone",
+
+    "hyprland/language",
+    "network",
+    "custom/ip_info",
+    "battery",
+  
+    "tray"
+  ],
+
+  "tray": {
+    "icon-size": 16,
+    "icon-theme": "Papirus",
+    "spacing": 2
+  },
+   "custom/spacer": {
+      "format": " ", // Empty space
+      "tooltip": false
+  },
+  "custom/separator": {
+    "format": " | "
+  },
+  "hyprland/window": {
+    "format": "{}",
+    "max-length": 35,
+    "rewrite": {
+      "": "Harsh"
+    },
+    "separate-outputs": true
+  },
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "on-click": "activate",
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "active": "",
+      "urgent": "",
+      "persistent": "",
+      "focused": "",
+      "default": ""
+
+        },
+    "sort-by-number": true,
+    "persistent-workspaces": {
+      "*": 9,
+      "DP-1": 9
+    }
+  },
+  "clock": {
+    "interval": 1,
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    "format": "<span> </span><span color='#cdd6f4'>{:%H:%M %a %d %b}</span>",
+    "format-alt": "{:%H:%M:%S %d-%m-%Y}"
+  },
+
+  // "temperature": {
+  //   "thermal-zone": 5,
+  //   "critical-threshold": 80,
+  //   "format": "{temperatureC}°C",
+  //   "interval": 2,
+  //   "on-click": "kitty -e watch sensors"
+  // },
+  "cpu": {
+    "format": "<span>{usage}%</span>",
+    "interval": 1,
+    "on-click": "kitty -e htop -s PERCENT_CPU"
+  },
+  "custom/gpu": {
+
+  },
+  "memory": {
+    "interval": 3,
+    "format": "<span color='#cdd6f4'>{used:0.1f}G</span>",
+    "on-click": "kitty -e htop -s PERCENT_MEM"
+  },
+
+  "custom/cpu_temp": {
+    "exec": "~/.config/waybar/scripts/cpu_temp.sh",
+    "interval": 1,
+    "format": {},
+    "return-type": "json",
+    "on-click": "kitty -e watch sensors"
+  },
+
+
+  "mpris": {
+    "format": "{title} - {artist}",
+    "max-length": 40,
+    "interval": 1,
+    // "on-click": "playerctl play-pause",
+    // "on-scroll-up": "playerctl next",
+    // "on-scroll-down": "playerctl previous"
+  },
+
+   
+  "pulseaudio": {
+    "format": "<span color='#a6e3a1'>{icon} </span><span color='#cdd6f4'>{volume}%</span>",
+    "format-bluetooth": "<span color='#a6e3a1'>{icon}</span>  <span color='#cdd6f4'>{volume}%</span>",
+    "tooltip": false,
+    "format-muted": "<span color='#f38ba8'>󰝟</span>",
+    "on-click": "wpctl set-mute @DEFAULT_SINK@ toggle",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_SINK@ 10%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_SINK@ 10%-",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    }
+  },
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": "<span color='#f38ba8'> </span><span color='#cdd6f4'>{volume}%</span>",
+    "format-source-muted": "",
+    "on-click": "wpctl set-mute @DEFAULT_SOURCE@ toggle",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_SOURCE@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_SOURCE@ 5%-"
+  },
+
+  "hyprland/language": {
+    "format": "{}",
+    "format-en": "eng",
+    "format-ru": "ru",
+    "on-click": "hyprctl switchxkblayout current next"
+  },
+  "network": {
+    "interval": 60,
+    "format-wifi": "", // nf-fa-wifi
+    "format-ethernet": "", // nf-fa-ethernet
+    "format-disconnected": "󰤫", // nf-md-wifi_strength_alert_outline
+    // "tooltip-format": "{ifname} {essid} {signalStrength} {frequency}",
+    // "tooltip-format-disconnected": "Disconnected"
+  },
+  "custom/ip_info": {
+    "interval": 60,
+    "exec": "~/.config/waybar/scripts/ip_info.sh",
+    "return-type": "json"
+  },
+  "battery": {
+    "bat": "BAT0",
+    "interval": 60,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}%",
+    "max-length": 25
+  }
+}
