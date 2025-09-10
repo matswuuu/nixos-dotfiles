@@ -3,11 +3,12 @@
     vars = import ./../vars.nix;
     modules = {
       "main" = [
+        ./hardware/hardware-configuration-main.nix
         ./hardware/nvidia.nix
         ./programs/steam.nix
       ];
       laptop = [
-
+        ./hardware/hardware-configuration-laptop.nix
       ];
     };
   in
@@ -18,7 +19,6 @@
     ./users.nix
     ./packages.nix
     ./hyprland.nix
-    ./hardware/hardware-configuration.nix
     ./services/display-manager.nix
     ./services/flatpak.nix
     ./services/openssh.nix

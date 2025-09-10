@@ -16,7 +16,9 @@
     gnome-keyring
     kdePackages.kwallet
 
-    # xwayland
+    docker-compose
+
+    xwayland
     wl-clipboard-rs
     xclip
     xsel

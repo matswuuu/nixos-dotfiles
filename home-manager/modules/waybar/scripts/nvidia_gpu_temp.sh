@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
 max_temp=100
-zone=thermal_zone0
 
-current_temp=$(cat /sys/class/thermal/$zone/temp)
-current_temp=$((current_temp / 1000))
+current_temp=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits)
+# current_temp=$((current_temp))
 
 percent=$(awk "BEGIN {print $current_temp/$max_temp}")
 

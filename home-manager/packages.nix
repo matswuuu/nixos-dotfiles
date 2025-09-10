@@ -12,6 +12,14 @@
         git
         file-roller
         sshuttle
+        traceroute
+        mtr
+        jmtpfs
+        simple-mtpfs
+        mtpfs
+        libmtp
+        gvfs
+        usbutils
         upower
         playerctl
         jq
@@ -42,7 +50,7 @@
 
         # Social
         telegram-desktop
-        #discord
+        discord-ptb
 
         # Code stuff
         vscode
@@ -60,6 +68,7 @@
         mangohud
         protonup-qt
         lutris
+        #modrinth-app # Minecraft
 
         # Anime
         ani-cli
