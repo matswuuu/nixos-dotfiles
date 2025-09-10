@@ -16,7 +16,7 @@
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; ncm[ 
+    extraPortals = with pkgs; [
       xdg-desktop-portal-hyprland 
       xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk

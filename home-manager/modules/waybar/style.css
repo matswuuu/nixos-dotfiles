@@ -59,10 +59,10 @@ tooltip {
 }
 
 #cpu,
-#memory,
-
 #custom-cpu_temp,
+#custom-gpu,
 #custom-gpu_temp,
+#memory,
 
 #mpris,
 
@@ -79,9 +79,9 @@ tooltip {
 #pulseaudio.microphone,
 #workspaces,
 #tray {
-    /* background: #1e1e2e; */
-    background: red;
-    padding: 1.5px 5px 1.5px 5px;
+    background: #1e1e2e;
+    /* background: red; */
+    padding: 1.5px 7px 1.5px 7px;
     /* opacity: 1.0;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -116,13 +116,25 @@ tooltip {
 
 #pulseaudio.microphone {
     color: #cba6f7;
-    border-radius: 0px 0px 0px 0px;
-    margin-left: 0px;
-    margin-right: 0px;
+    border-radius: 0px 15px 15px 0px;
 }
 
 #cpu {
     border-radius: 15px 0px 0px 15px;
+    padding-right: 1px;
+}
+
+#custom-cpu_temp {
+    border-radius: 0px;
+}
+
+#custom-gpu {
+    border-radius: 0px;
+    padding-right: 1px;
+}
+
+#custom-gpu_temp {
+    border-radius: 0px;
 }
 
 #memory {
@@ -130,13 +142,10 @@ tooltip {
 }
 
 
-#custom-cpu_temp {
-    border-radius: 15px 0px 0px 15px;
-    margin-left: 10px;
-}
 
-#custom-gpu_temp {
-    border-radius: 0px 15px 15px 0px;
+#mpris {
+    border-radius: 15px;
+    margin-left: 10px;
 }
 
 
@@ -156,8 +165,10 @@ tooltip {
 
 #battery {
     border-radius: 0px 15px 15px 0px;
+    margin-left: 10px;
 }
 
 #tray {
     border-radius: 15px;
+    margin-left: 10px;
 }

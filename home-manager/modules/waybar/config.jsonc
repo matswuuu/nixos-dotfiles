@@ -1,5 +1,5 @@
 { 
-  "output": "eDP-1",
+  "output": "DP-1",
   "position": "top",
   "exlusive": "true",
   "passthrough": "true",
@@ -10,10 +10,10 @@
   "height": 36,
   "modules-left": [
     "cpu",
-    "gpu",
-    "memory",
-    
     "custom/cpu_temp",
+    "custom/gpu",
+    "custom/gpu_temp",
+    "memory",
 
     "mpris"
   ],
@@ -38,13 +38,6 @@
     "icon-size": 16,
     "icon-theme": "Papirus",
     "spacing": 2
-  },
-   "custom/spacer": {
-      "format": " ", // Empty space
-      "tooltip": false
-  },
-  "custom/separator": {
-    "format": " | "
   },
   "hyprland/window": {
     "format": "{}",
@@ -87,20 +80,17 @@
     "format-alt": "{:%H:%M:%S %d-%m-%Y}"
   },
 
-  // "temperature": {
-  //   "thermal-zone": 5,
-  //   "critical-threshold": 80,
-  //   "format": "{temperatureC}°C",
-  //   "interval": 2,
-  //   "on-click": "kitty -e watch sensors"
-  // },
   "cpu": {
-    "format": "<span>{usage}%</span>",
+    "format": "<i>CPU</i> {usage}%",
     "interval": 1,
     "on-click": "kitty -e htop -s PERCENT_CPU"
   },
   "custom/gpu": {
-
+    "exec": "~/.config/waybar/scripts/gpu_usage.sh",
+    "interval": 1,
+    "format": {},
+    "return-type": "json",
+    "on-click": "kitty -e watch nvidia-smi"
   },
   "memory": {
     "interval": 3,
@@ -115,15 +105,22 @@
     "return-type": "json",
     "on-click": "kitty -e watch sensors"
   },
+  "custom/gpu_temp": {
+    "exec": "~/.config/waybar/scripts/gpu_temp.sh",
+    "interval": 1,
+    "format": {},
+    "return-type": "json",
+    "on-click": "kitty -e watch nvidia-smi"
+  },
 
 
   "mpris": {
     "format": "{title} - {artist}",
     "max-length": 40,
     "interval": 1,
-    // "on-click": "playerctl play-pause",
-    // "on-scroll-up": "playerctl next",
-    // "on-scroll-down": "playerctl previous"
+    "on-click": "playerctl play-pause",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous"
   },
 
    
@@ -168,7 +165,7 @@
     "interval": 60,
     "format-wifi": "", // nf-fa-wifi
     "format-ethernet": "", // nf-fa-ethernet
-    "format-disconnected": "󰤫", // nf-md-wifi_strength_alert_outline
+    "format-disconnected": "󰤫" // nf-md-wifi_strength_alert_outline
     // "tooltip-format": "{ifname} {essid} {signalStrength} {frequency}",
     // "tooltip-format-disconnected": "Disconnected"
   },

@@ -1,7 +1,7 @@
 {
   system = "x86_64-linux";
-  hostName = "laptop";
-  profile = "laptop";
+  hostName = "main";
+  profile = "main";
   username = "matswuuu";
-  flakeLocation = "~/test";
+  flakeLocation = "~/nixos-dotfiles";
 }

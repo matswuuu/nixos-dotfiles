@@ -30,13 +30,6 @@
         home-manager.nixosModules.home-manager
         ./os/configuration.nix
       ];
-      # specialArgs = {
-      #   pkgs-stable = import nixpkgs-stable {
-      #     inherit system;
-      #     config.allowUnfree = true;
-      #   };
-      #   inherit inputs system;
-      # };
     };
 
     programs.home-manager = {
