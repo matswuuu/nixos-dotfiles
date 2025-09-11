@@ -1,16 +1,6 @@
 { inputs, lib, config, pkgs, ...}:
   let
     vars = import ./../vars.nix;
-    modules = {
-      "main" = [
-        ./hardware/hardware-configuration-main.nix
-        ./hardware/nvidia.nix
-        ./programs/steam.nix
-      ];
-      "laptop" = [
-        ./hardware/hardware-configuration-laptop.nix
-      ];
-    };
   in
 {
   imports = [
@@ -26,7 +16,7 @@
     ./programs/fish.nix
     ./programs/amnezia-vpn.nix
   ]
-  ++ (modules.${vars.profile} or []);
+  ++ (vars.profiles.${activeProfile}.modules or []);
 
   boot.loader = {
     systemd-boot.enable = true;
