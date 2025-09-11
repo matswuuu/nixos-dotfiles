@@ -45,32 +45,31 @@
         obs-studio
 
         # Wine
-        wineWowPackages.stable
-        lutris
+      #  wineWowPackages.stable
 
         # Social
         telegram-desktop
-        discord-ptb
+#        discord-ptb
 
         # Code stuff
         vscode
         jetbrains-toolbox 
         python314
-        recaf-launcher
-        mongodb-compass
-        insomnia
-        blockbench
-        figma-linux
+        # recaf-launcher
+        # mongodb-compass
+        # insomnia
+        # blockbench
+        # figma-linux
 
         # Gaming
-        steam
-        protontricks
-        mangohud
-        protonup-qt
-        lutris
+        # steam
+        # protontricks
+        # mangohud
+        # protonup-qt
+        # lutris
         #modrinth-app # Minecraft
 
         # Anime
-        ani-cli
+        # ani-cli
     ];
 }
