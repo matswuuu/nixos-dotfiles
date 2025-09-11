@@ -7,7 +7,7 @@
         ./hardware/nvidia.nix
         ./programs/steam.nix
       ];
-      laptop = [
+      "laptop" = [
         ./hardware/hardware-configuration-laptop.nix
       ];
     };
