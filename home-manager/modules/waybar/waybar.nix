@@ -1,6 +1,9 @@
+  let
+    vars = import ./../../../vars.nix;
+  in
 {
   home.file = {
-    ".config/waybar/config.jsonc".source = ./config.jsonc;
+    ".config/waybar/common.jsonc".source = ./common.jsonc;
     ".config/waybar/style.css".source = ./style.css;
 
     # Scripts
@@ -23,6 +26,12 @@
   };
   programs.waybar = {
     enable = true;
+    settings = {
+      mainBar = {
+        output = vars.profiles.${vars.activeProfile}.waybar.output;
+        include = [ ./common.jsonc ];
+      };
+    };
   };
   catppuccin.waybar = {
     mode = "createLink";

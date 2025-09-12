@@ -1,5 +1,7 @@
 { pkgs, ...}:
-
+  let
+    vars = import ./../vars.nix;
+  in
 {
   services = {
     xserver.xkb = {
@@ -24,6 +26,6 @@
   };
 
   programs.hyprland = {
-     enable = true;
+    enable = true;
   };
 }

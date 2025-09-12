@@ -16,7 +16,7 @@
     ./programs/fish.nix
     ./programs/amnezia-vpn.nix
   ]
-  ++ (vars.profiles.${activeProfile}.modules or []);
+  ++ (vars.profiles.${vars.activeProfile}.modules or []);
 
   boot.loader = {
     systemd-boot.enable = true;

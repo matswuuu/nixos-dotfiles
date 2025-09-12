@@ -1,5 +1,4 @@
 { 
-  "output": "eDP-1",
   "position": "top",
   "exlusive": "true",
   "passthrough": "true",
