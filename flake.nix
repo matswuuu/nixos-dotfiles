@@ -23,8 +23,8 @@
       vars = import ./vars.nix;
     in {
 
-    nixosConfigurations.${vars.hostName} = nixpkgs-stable.lib.nixosSystem {
-      system = "${vars.system}";
+    nixosConfigurations.${vars.profiles.${vars.activeProfile}.hostName} = nixpkgs-stable.lib.nixosSystem {
+      system = "${vars.profiles.${vars.activeProfile}.system}";
       modules = [
         catppuccin.nixosModules.catppuccin
         home-manager.nixosModules.home-manager
@@ -36,7 +36,7 @@
       enable = true;
     };
 
-    homeConfigurations.${vars.username} = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations.${vars.profiles.${vars.activeProfile}.username} = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs-stable.legacyPackages.x86_64-linux;
       modules = [
         ./home-manager/home.nix

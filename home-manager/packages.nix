@@ -55,21 +55,21 @@
         vscode
         jetbrains-toolbox 
         python314
-        # recaf-launcher
-        # mongodb-compass
-        # insomnia
-        # blockbench
-        # figma-linux
+        recaf-launcher
+        mongodb-compass
+        insomnia
+        blockbench
+        figma-linux
 
         # Gaming
-        # steam
-        # protontricks
-        # mangohud
-        # protonup-qt
-        # lutris
+        steam
+        protontricks
+        mangohud
+        protonup-qt
+        lutris
         #modrinth-app # Minecraft
 
         # Anime
-        # ani-cli
+        ani-cli
     ];
 }
