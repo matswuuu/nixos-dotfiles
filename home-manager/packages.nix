@@ -45,12 +45,11 @@
         obs-studio
 
         # Wine
-        wineWowPackages.stable
-        lutris
+      #  wineWowPackages.stable
 
         # Social
         telegram-desktop
-        discord-ptb
+#        discord-ptb
 
         # Code stuff
         vscode
