@@ -22,9 +22,10 @@
     ./services/display-manager.nix
     ./services/flatpak.nix
     ./services/openssh.nix
-    ./programs/ssh.nix
-    ./programs/fish.nix
     ./programs/amnezia-vpn.nix
+    ./programs/docker.nix
+    ./programs/fish.nix
+    ./programs/ssh.nix
   ]
   ++ (modules.${vars.profile} or []);
 
