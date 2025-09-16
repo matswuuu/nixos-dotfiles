@@ -81,11 +81,25 @@
 
   "cpu": {
     "format": "<i>CPU</i> {usage}%",
-    "interval": 1,
+    "interval": 1, 
     "on-click": "kitty -e htop -s PERCENT_CPU"
+  },
+  "custom/cpu_temp": {
+    "exec": "~/.config/waybar/scripts/cpu_temp.sh",
+    "interval": 1,
+    "format": {},
+    "return-type": "json",
+    "on-click": "kitty -e watch sensors"
   },
   "custom/gpu": {
     "exec": "~/.config/waybar/scripts/gpu_usage.sh",
+    "interval": 1,
+    "format": {},
+    "return-type": "json",
+    "on-click": "kitty -e watch nvidia-smi"
+  },
+  "custom/gpu_temp": {
+    "exec": "~/.config/waybar/scripts/gpu_temp.sh",
     "interval": 1,
     "format": {},
     "return-type": "json",
@@ -96,22 +110,6 @@
     "format": "<span color='#cdd6f4'>{used:0.1f}G</span>",
     "on-click": "kitty -e htop -s PERCENT_MEM"
   },
-
-  "custom/cpu_temp": {
-    "exec": "~/.config/waybar/scripts/cpu_temp.sh",
-    "interval": 1,
-    "format": {},
-    "return-type": "json",
-    "on-click": "kitty -e watch sensors"
-  },
-  "custom/gpu_temp": {
-    "exec": "~/.config/waybar/scripts/gpu_temp.sh",
-    "interval": 1,
-    "format": {},
-    "return-type": "json",
-    "on-click": "kitty -e watch nvidia-smi"
-  },
-
 
   "mpris": {
     "format": "{title} - {artist}",
