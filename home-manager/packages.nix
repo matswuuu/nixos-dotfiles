@@ -3,6 +3,9 @@
 {
     nixpkgs.config.allowUnfree = true;
     home.packages = with pkgs; [
+        # Cursor 
+        numix-cursor-theme
+
         # Utils
         brightnessctl
         screenfetch

@@ -17,6 +17,9 @@
         "~/.config/hypr/common.conf"
       ];
       monitor = vars.profiles.${vars.activeProfile}.hyprland.monitor;
+      exec-once = [
+        "THERMAL_ZONE=${vars.profiles.${vars.activeProfile}.waybar.thermal.cpuZone} waybar"
+      ];
     };
   };
 }

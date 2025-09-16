@@ -1,6 +1,7 @@
 {
   imports = [
     ./packages.nix
+    ./cursor.nix
     ./modules/kitty/kitty.nix
     ./modules/gtk.nix
     ./modules/java.nix

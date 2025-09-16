@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+# Check if nvidia-smi command is presented
+if ! command -v nvidia-smi >/dev/null 2>&1; then
+    exit 0
+fi
+
 max_temp=100
 
 current_temp=$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits)
-
 percent=$(awk "BEGIN {print $current_temp/$max_temp}")
 
 if [ $percent != 0 ]; then
