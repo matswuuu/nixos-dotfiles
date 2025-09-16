@@ -9,6 +9,7 @@
     ./users.nix
     ./packages.nix
     ./hyprland.nix
+    ./bluetooth.nix
     ./services/display-manager.nix
     ./services/flatpak.nix
     ./services/openssh.nix
@@ -27,7 +28,6 @@
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services = {
-    hyprland = {};
     login.enableKwallet = true;
   };
 
@@ -42,10 +42,10 @@
         "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI=" 
       ];
     };
-    optimise = {
+    gc = {
       automatic = true;
-      dates = [ "6:00" ];
+      dates = "06:00";
       options = "--delete-older-than 14d";
     };
-  }
+  };
 }

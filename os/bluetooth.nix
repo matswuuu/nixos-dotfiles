@@ -1,12 +1,13 @@
-{ pkgs }:
+{ pkgs, ... }:
+
 {
   hardware = {
     bluetooth = {
       enable = true;
     };
-    blueman = {
-      enable = true;
-    };
+    # blueman = {
+    #   enable = true;
+    # };
   };
   services.blueman = {
     enable = true;

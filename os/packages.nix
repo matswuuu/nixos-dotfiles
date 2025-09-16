@@ -16,6 +16,9 @@
     gnome-keyring
     kdePackages.kwallet
 
+    bluez
+    bluez-tools
+
     docker-compose
 
     xwayland
