@@ -10,5 +10,8 @@
       #default = "socks5h://127.0.0.1:2081";
       #noProxy = "127.0.0.1,localhost,*.local";
     };
+    firewall = {
+      allowedTCPPorts = [ 8081 8096 ];
+    };
   };
 }
