@@ -19,8 +19,7 @@
     ./programs/docker.nix
     ./programs/fish.nix
     ./programs/ssh.nix
-  ]
-  ++ (vars.profiles.${vars.activeProfile}.modules or []);
+  ] ++ (vars.profiles.${vars.activeProfile}.modules or []);
 
   boot.loader = {
     systemd-boot.enable = true;

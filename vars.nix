@@ -14,12 +14,13 @@
         ./os/programs/steam.nix
         ./server/yoru/yoru.nix
       ];
-      hyprland = {
-        monitor = [
-          "DP-1, 1920x1080@165, 0x0, 1"
-          "DP-2, 1920x1080@144, 0x1080, 1"
-        ];
-      };
+      packages = [
+        nvtopPackages.nvidia
+        vulkan-tools
+      ];
+      hyprland = [
+        ./home-manager/modules/hyprland/main/monitor.conf
+      ];
       waybar = {
         output = "DP-1";
         thermal = {
@@ -36,11 +37,12 @@
         ./os/hardware/laptop/hardware-configuration.nix
         ./os/hardware/laptop/auto-cpufreq.nix
       ];
-      hyprland = {
-        monitor = [
-          "eDP-1, 1920x1080@60, 0x0, 1.2"
-        ];
-      };
+      packages = [
+
+      ];
+      hyprland = [
+        ./home-manager/modules/hyprland/laptop/monitor.conf
+      ];
       waybar = {
         output = "eDP-1";
         thermal = {

@@ -1,10 +1,10 @@
-{ pkgs, ... }:
-
+{ pkgs, ...}:
+  let
+    vars = import ./../vars.nix;
+  in
 {
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    nvtopPackages.nvidia
-    vulkan-tools
     hyprland
     kitty
     waybar
@@ -15,6 +15,8 @@
     libsecret
     gnome-keyring
     kdePackages.kwallet
+
+    linuxPackages.cpupower
 
     # Bluetooth
     bluez
@@ -29,7 +31,7 @@
     xclip
     xsel
     cliphist
-  ];
+  ] ++ (vars.profiles.${vars.activeProfile}.packages or []);
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];
