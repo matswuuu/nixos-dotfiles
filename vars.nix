@@ -1,5 +1,5 @@
 {
-  activeProfile = "laptop";
+  activeProfile = "main";
   profiles = {
     "main" = {
       system = "x86_64-linux";
@@ -10,6 +10,7 @@
         ./os/hardware/hardware-configuration-main.nix
         ./os/hardware/nvidia.nix
         ./os/programs/steam.nix
+        ./server/yoru/yoru.nix
       ];
       hyprland = {
         monitor = [

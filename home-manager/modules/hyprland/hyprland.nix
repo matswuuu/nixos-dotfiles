@@ -15,6 +15,8 @@
     settings = {
       source = [
         "~/.config/hypr/common.conf"
+        "~/.config/hypr/env.conf"
+        "~/.config/hypr/binds.conf"
       ];
       monitor = vars.profiles.${vars.activeProfile}.hyprland.monitor;
     };
