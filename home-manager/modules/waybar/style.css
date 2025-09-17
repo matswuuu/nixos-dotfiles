@@ -150,7 +150,8 @@ tooltip {
 
 
 #language {
-   border-radius: 15px 0px 0px 15px;
+    border-radius: 15px 0px 0px 15px;
+    padding: 1.5px 7px 0px 7px;
 }
 
 #network {
@@ -161,10 +162,10 @@ tooltip {
 }
 
 #bluetooth {
+    border-radius: 0px 15px 15px 0px;
 } 
 
 #battery {
-    border-radius: 0px 15px 15px 0px;
 }
 
 #tray {

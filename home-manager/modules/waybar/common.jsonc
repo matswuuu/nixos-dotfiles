@@ -26,9 +26,10 @@
     "pulseaudio#microphone",
 
     "hyprland/language",
+    "battery",
     "network",
     "custom/ip_info",
-    "battery",
+    "bluetooth",
   
     "tray"
   ],
@@ -158,6 +159,16 @@
     "format-ru": "ru",
     "on-click": "hyprctl switchxkblayout current next"
   },
+  "battery": {
+    "bat": "BAT0",
+    "interval": 60,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}%",
+    "max-length": 25
+  },
   "network": {
     "interval": 60,
     "format-wifi": "", // nf-fa-wifi
@@ -171,14 +182,11 @@
     "exec": "~/.config/waybar/scripts/ip_info.sh",
     "return-type": "json"
   },
-  "battery": {
-    "bat": "BAT0",
-    "interval": 60,
-    "states": {
-      "warning": 30,
-      "critical": 15
-    },
-    "format": "{capacity}%",
-    "max-length": 25
+  "bluetooth": {
+    
+    "format-connected": "󰂯", // nf-md-bluetooth
+    "format-disconnected": "󰂲", // nf-md-bluetooth_off
+    "tooltip-format": "Bluetooth Status:\nController: {controller_alias}\nAddress: {controller_address}\n\nDevices:\n{device_enumerate}", // Detailed tooltip
+    "on-click": "overskride"
   }
 }

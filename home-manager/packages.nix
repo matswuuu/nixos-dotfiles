@@ -28,6 +28,8 @@
         jq
         unzip
         shadowsocks-libev
+        overskride # Bluetooth manager
+        coolercontrol.coolercontrol-gui # Fan controller
 
         (flameshot.override { enableWlrSupport = true; })
         
