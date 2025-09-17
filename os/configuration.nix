@@ -14,11 +14,12 @@
     ./services/display-manager.nix
     ./services/flatpak.nix
     ./services/openssh.nix
-    ./services/tlp.nix
     ./programs/amnezia-vpn.nix
     ./programs/cooler-control.nix
-    ./programs/ssh.nix
+    ./programs/docker.nix
     ./programs/fish.nix
+    ./programs/ssh.nix
+    ./services/tlp.nix
   ]
   ++ (vars.profiles.${vars.activeProfile}.modules or []);
 

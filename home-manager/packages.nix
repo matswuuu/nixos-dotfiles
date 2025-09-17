@@ -54,7 +54,7 @@
 
         # Social
         telegram-desktop
-#        discord-ptb
+        discord-ptb
 
         # Code stuff
         vscode
