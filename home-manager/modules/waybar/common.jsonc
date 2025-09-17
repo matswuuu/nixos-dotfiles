@@ -183,9 +183,14 @@
     "return-type": "json"
   },
   "bluetooth": {
-    
-    "format-connected": "󰂯", // nf-md-bluetooth
-    "format-disconnected": "󰂲", // nf-md-bluetooth_off
+    "format-icons": {
+      "off": "󰂲", // nf-md-bluetooth_off
+      "on": "󰂯", // nf-md-bluetooth
+      "connected": "󰂰" // nf-md-bluetooth_audio
+    },
+    "format": "{icon}",
+    "format-connected": "{icon}",
+    "format-disconnected": "{icon}",
     "tooltip-format": "Bluetooth Status:\nController: {controller_alias}\nAddress: {controller_address}\n\nDevices:\n{device_enumerate}", // Detailed tooltip
     "on-click": "overskride"
   }
