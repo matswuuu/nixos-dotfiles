@@ -3,6 +3,9 @@
 {
     nixpkgs.config.allowUnfree = true;
     home.packages = with pkgs; [
+        # Cursor 
+        numix-cursor-theme
+
         # Utils
         brightnessctl
         screenfetch
@@ -25,6 +28,8 @@
         jq
         unzip
         shadowsocks-libev
+        overskride # Bluetooth manager
+        coolercontrol.coolercontrol-gui # Fan controller
 
         (flameshot.override { enableWlrSupport = true; })
         

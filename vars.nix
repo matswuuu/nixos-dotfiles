@@ -21,7 +21,7 @@
       waybar = {
         output = "DP-1";
         thermal = {
-          cpuZone = 0;
+          cpuZone = "0";
         };
       };
     };
@@ -41,7 +41,7 @@
       waybar = {
         output = "eDP-1";
         thermal = {
-          cpuZone = 5;
+          cpuZone = "5";
         };
       };
     };

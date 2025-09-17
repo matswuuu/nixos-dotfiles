@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 max_temp=100
-zone=thermal_zone0
+zone="thermal_zone${THERMAL_ZONE}"
 
 current_temp=$(cat /sys/class/thermal/$zone/temp)
 current_temp=$((current_temp / 1000))

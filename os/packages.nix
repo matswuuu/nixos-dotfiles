@@ -16,6 +16,12 @@
     gnome-keyring
     kdePackages.kwallet
 
+    # Bluetooth
+    bluez
+    bluez-tools
+
+    coolercontrol.coolercontrold
+
     docker-compose
 
     xwayland

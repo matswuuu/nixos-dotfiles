@@ -1,10 +1,8 @@
-{ pkgs }:
+{ pkgs, ... }:
+
 {
   hardware = {
     bluetooth = {
-      enable = true;
-    };
-    blueman = {
       enable = true;
     };
   };
