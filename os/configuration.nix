@@ -19,7 +19,6 @@
     ./programs/docker.nix
     ./programs/fish.nix
     ./programs/ssh.nix
-    ./services/tlp.nix
   ]
   ++ (vars.profiles.${vars.activeProfile}.modules or []);
 

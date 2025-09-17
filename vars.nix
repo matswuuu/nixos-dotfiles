@@ -7,8 +7,10 @@
       hostName = "main";
       flakeLocation = "~/nixos-dotfiles";
       modules = [
-        ./os/hardware/hardware-configuration-main.nix
-        ./os/hardware/nvidia.nix
+        ./os/hardware/main/hardware-configuration.nix
+        ./os/hardware/main/cpu.nix
+        ./os/hardware/main/nvidia.nix
+        ./os/programs/gamemode.nix
         ./os/programs/steam.nix
         ./server/yoru/yoru.nix
       ];
@@ -31,7 +33,8 @@
       hostName = "laptop";
       flakeLocation = "~/nixos-dotfiles";
       modules = [
-        ./os/hardware/hardware-configuration-laptop.nix
+        ./os/hardware/laptop/hardware-configuration.nix
+        ./os/hardware/laptop/auto-cpufreq.nix
       ];
       hyprland = {
         monitor = [

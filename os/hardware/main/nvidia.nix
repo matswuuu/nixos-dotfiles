@@ -7,10 +7,11 @@
       enable = true;
     };
     nvidia = {
-      modesetting.enable = true;
+      modesetting = {
+        enable = true;
+      };
       powerManagement = {
         enable = true;
-        finegrained = false;
       };
       open = true;
       nvidiaSettings = true;
