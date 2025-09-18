@@ -1,5 +1,5 @@
 {
-  activeProfile = "main";
+  activeProfile = "laptop";
   profiles = {
     "main" = {
       system = "x86_64-linux";
@@ -14,18 +14,22 @@
         ./os/programs/steam.nix
         ./server/yoru/yoru.nix
       ];
-      packages = [
+      packages = pkgs: with pkgs; [
         nvtopPackages.nvidia
         vulkan-tools
       ];
       hyprland = [
-        ./home-manager/modules/hyprland/main/monitor.conf
+        "./home-manager/modules/hyprland/main/monitor.conf"
       ];
       waybar = {
         output = "DP-1";
         thermal = {
           cpuZone = "0";
         };
+      };
+      catppuccin = {
+        flavor = "macchiato";
+        accent = "mauve";
       };
     };
     "laptop" = {
@@ -37,17 +41,20 @@
         ./os/hardware/laptop/hardware-configuration.nix
         ./os/hardware/laptop/auto-cpufreq.nix
       ];
-      packages = [
-
+      packages = pkgs: with pkgs; [
       ];
       hyprland = [
-        ./home-manager/modules/hyprland/laptop/monitor.conf
+        "~/.config/hypr/laptop/monitor.conf"
       ];
       waybar = {
         output = "eDP-1";
         thermal = {
           cpuZone = "5";
         };
+      };
+      catppuccin = {
+        flavor = "macchiato";
+        accent = "mauve";
       };
     };
   };

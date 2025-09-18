@@ -6,6 +6,8 @@
     ".config/hypr/common.conf".source = ./common.conf;
     ".config/hypr/binds.conf".source = ./binds.conf;
     ".config/hypr/env.conf".source = ./env.conf;
+    ".config/hypr/main/monitor.conf".source = ./main/monitor.conf;
+    ".config/hypr/laptop/monitor.conf".source = ./laptop/monitor.conf;
   };
   wayland.windowManager.hyprland = {
     enable = true;

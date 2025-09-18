@@ -31,7 +31,7 @@
     xclip
     xsel
     cliphist
-  ] ++ (vars.profiles.${vars.activeProfile}.packages or []);
+  ] ++ (vars.profiles.${vars.activeProfile}.packages pkgs or []);
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];

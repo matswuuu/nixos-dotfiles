@@ -10,7 +10,6 @@
     ./packages.nix
     ./hyprland.nix
     ./bluetooth.nix
-    ./gtk.nix
     ./services/display-manager.nix
     ./services/flatpak.nix
     ./services/openssh.nix
