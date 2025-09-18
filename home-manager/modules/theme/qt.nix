@@ -3,7 +3,9 @@
 {
   qt = {
     enable = true;
-    platformTheme = "qt5ct";
+    platformTheme = {
+      name = "kvantum";
+    };
     style = {
       package = pkgs.catppuccin-kvantum;
       name = "kvantum";
