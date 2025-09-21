@@ -11,7 +11,7 @@
       #noProxy = "127.0.0.1,localhost,*.local";
     };
     firewall = {
-      allowedTCPPorts = [ 8081 8096 ];
+      allowedTCPPorts = [ 8081 8080 8096 ];
     };
   };
 }

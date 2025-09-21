@@ -44,13 +44,14 @@
         wofi
         mpv
         mpvpaper
+        hyprpaper
         hyprshot
+        hyprsysteminfo
         wl-clipboard
         cliphist
         obs-studio
-
-        # Wine
-      #  wineWowPackages.stable
+        wayvnc
+        tigervnc
 
         # Social
         telegram-desktop

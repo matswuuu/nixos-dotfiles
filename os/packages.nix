@@ -31,7 +31,11 @@
     xclip
     xsel
     cliphist
-  ] ++ (vars.profiles.${vars.activeProfile}.packages pkgs or []);
+
+    nvtopPackages.nvidia
+    vulkan-tools
+  ];
+  #  ++ (vars.profiles.${vars.activeProfile}.packages pkgs or []);
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];

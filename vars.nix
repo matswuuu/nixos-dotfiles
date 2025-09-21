@@ -1,5 +1,5 @@
 {
-  activeProfile = "laptop";
+  activeProfile = "main";
   profiles = {
     "main" = {
       system = "x86_64-linux";
@@ -19,7 +19,7 @@
         vulkan-tools
       ];
       hyprland = [
-        "./home-manager/modules/hyprland/main/monitor.conf"
+        "~/.config/hypr/main/monitor.conf"
       ];
       waybar = {
         output = "DP-1";

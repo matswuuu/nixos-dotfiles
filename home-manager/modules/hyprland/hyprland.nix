@@ -8,6 +8,10 @@
     ".config/hypr/env.conf".source = ./env.conf;
     ".config/hypr/main/monitor.conf".source = ./main/monitor.conf;
     ".config/hypr/laptop/monitor.conf".source = ./laptop/monitor.conf;
+    ".config/hypr/wallpapers" = {
+      source = ./wallpapers;
+      recursive = true;
+    };
   };
   wayland.windowManager.hyprland = {
     enable = true;
