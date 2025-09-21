@@ -48,6 +48,8 @@
         wl-clipboard
         cliphist
         obs-studio
+        wayvnc
+        tigervnc
 
         # Wine
       #  wineWowPackages.stable
