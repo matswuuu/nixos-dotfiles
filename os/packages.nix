@@ -31,8 +31,11 @@
     xclip
     xsel
     cliphist
+    
+    # TODO: Move packages to module (file)
+    nvtopPackages.nvidia
+    vulkan-tools
   ];
-  # TODO: Move packages to module (file)
   #  ++ (vars.profiles.${vars.activeProfile}.packages pkgs or []);
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono

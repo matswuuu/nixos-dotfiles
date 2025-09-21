@@ -10,8 +10,9 @@
      shellAliases = {
       c7x-host = "bash /home/matswuuu/c7x-host.sh";
       my-ip = "bash ~/.config/waybar/scripts/ip_info.sh";
-      os-rebuild = "sudo nixos-rebuild switch --flake ${vars.profiles.${vars.activeProfile}.flakeLocation}";
-      home-rebuild = "home-manager switch --flake ${vars.profiles.${vars.activeProfile}.flakeLocation}";
+      os-rebuild = "cd ${vars.profiles.${vars.activeProfile}.flakeLocation}; git add -all; sudo nixos-rebuild switch --flake .";
+      home-rebuild = "cd ${vars.profiles.${vars.activeProfile}.flakeLocation}; git add -all; home-manager switch --flake .";
+      mongodb = "mongodb-compass --password-store="gnome-libsecret" --ignore-additional-command-line-flags";
     };
   };
 }
