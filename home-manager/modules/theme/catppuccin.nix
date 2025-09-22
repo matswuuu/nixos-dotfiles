@@ -7,5 +7,8 @@
     enable = true;
     flavor = vars.profiles.${vars.activeProfile}.catppuccin.flavor;
     accent = vars.profiles.${vars.activeProfile}.catppuccin.accent;
+    kvantum = {
+      apply = true;
+    };
   };
 }
