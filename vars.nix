@@ -10,7 +10,6 @@
         ./os/hardware/main/hardware-configuration.nix
         ./os/hardware/main/cpu.nix
         ./os/hardware/main/nvidia.nix
-        ./os/programs/gamemode.nix
         ./os/programs/steam.nix
         ./server/yoru/yoru.nix
       ];

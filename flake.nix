@@ -10,38 +10,45 @@
     };
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     catppuccin = {
       url = "github:catppuccin/nix";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    quickshell = {
+      url = "github:quickshell-mirror/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, home-manager, catppuccin, ... } @inputs:
-    let
-      vars = import ./vars.nix;
-    in {
+  outputs = { nixpkgs, home-manager, catppuccin, ... } @inputs:
+      let
+        vars = import ./vars.nix;
+        profile = vars.profiles.${vars.activeProfile};
+        system = profile.system;
+        pkgs = import nixpkgs { inherit system; };
+      in 
+    {
+      nixosConfigurations.${profile.hostName} = nixpkgs.lib.nixosSystem {
+        system = system;
+        modules = [
+          catppuccin.nixosModules.catppuccin
+          home-manager.nixosModules.home-manager
+          ./os/configuration.nix
+        ];
+      };
 
-    nixosConfigurations.${vars.profiles.${vars.activeProfile}.hostName} = nixpkgs-stable.lib.nixosSystem {
-      system = "${vars.profiles.${vars.activeProfile}.system}";
-      modules = [
-        catppuccin.nixosModules.catppuccin
-        home-manager.nixosModules.home-manager
-        ./os/configuration.nix
-      ];
-    };
+      programs.home-manager = {
+        enable = true;
+      };
 
-    programs.home-manager = {
-      enable = true;
-    };
-
-    homeConfigurations.${vars.profiles.${vars.activeProfile}.username} = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs-stable.legacyPackages.x86_64-linux;
-      modules = [
-        ./home-manager/home.nix
-        catppuccin.homeModules.catppuccin
-      ]; 
-    };
+      homeConfigurations.${profile.username} = home-manager.lib.homeManagerConfiguration {
+        pkgs = pkgs;
+        modules = [
+          ./home-manager/home.nix
+          catppuccin.homeModules.catppuccin
+        ]; 
+      };
   };
 }

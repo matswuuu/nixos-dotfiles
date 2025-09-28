@@ -3,10 +3,10 @@
   "exlusive": "true",
   "passthrough": "true",
   "gtk-layer-shell": "true",
-  "margin-top": 10,
+  "margin-top": 6,
   "margin-left": 10,
   "margin-right": 10,
-  "height": 36,
+  "height": 32,
   "modules-left": [
     "cpu",
     "custom/cpu_temp",

@@ -1,12 +1,14 @@
+{ pkgs, ... }:
+
 {
   imports = [
     ./packages.nix
     ./cursor.nix
     ./modules/kitty/kitty.nix
-    ./modules/gtk.nix
     ./modules/java.nix
     ./modules/wofi/wofi.nix
     ./modules/hyprland/hyprland.nix
+    ./modules/quickshell/default.nix
     ./modules/waybar/waybar.nix
     ./modules/theme/gtk.nix
     ./modules/theme/qt.nix

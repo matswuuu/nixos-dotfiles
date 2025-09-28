@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 {
     nixpkgs.config.allowUnfree = true;
     home.packages = with pkgs; [
@@ -34,6 +33,8 @@
         (flameshot.override { enableWlrSupport = true; })
         
         gtk3
+        gtk4
+        adw-gtk3
 
         # Dolphin
         kdePackages.dolphin
@@ -74,6 +75,9 @@
         protonup-qt
         lutris
         #modrinth-app # Minecraft
+
+        # Python
+        uv
 
         # Anime
         ani-cli
