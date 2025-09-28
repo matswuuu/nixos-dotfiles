@@ -31,7 +31,8 @@
     xclip
     xsel
     cliphist
-
+    
+    # TODO: Move packages to module (file)
     nvtopPackages.nvidia
     vulkan-tools
   ];

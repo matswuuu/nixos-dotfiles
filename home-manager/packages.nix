@@ -54,6 +54,10 @@
         wayvnc
         tigervnc
 
+        # Catppuccin
+        catppuccin-kvantum
+        catppuccin-kde
+
         # Social
         telegram-desktop
         discord-ptb
