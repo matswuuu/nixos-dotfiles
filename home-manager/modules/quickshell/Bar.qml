@@ -1,7 +1,7 @@
-// Bar.qml
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import "./utils/"
 
 Scope {
   id: root
@@ -27,6 +27,11 @@ Scope {
         anchors.centerIn: parent
         time: root.time
       }
+
+      Text {
+        id: memoryText
+        text: Formatter.formatKBtoGB(MemoryUsage.memoryUsed)
+      }
     }
   }
 
@@ -44,6 +49,9 @@ Scope {
     interval: 1000
     running: true
     repeat: true
-    onTriggered: dateProc.running = true
+    onTriggered: {
+      dateProc.running = true
+
+    }
   }
 }
