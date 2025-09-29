@@ -22,10 +22,14 @@ Scope {
 
       implicitHeight: 30
 
-      // the ClockWidget type we just created
       ClockWidget {
         anchors.centerIn: parent
         time: root.time
+      }
+
+      Text {
+        id: cpuText
+        text: Formatter.formatKBtoGB(CpuUsage.cpuUsage)
       }
 
       Text {

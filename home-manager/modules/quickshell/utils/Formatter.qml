@@ -6,6 +6,6 @@ import QtQuick
 
 Singleton {
     function formatKBtoGB(kb: int): string {
-        return kb / 1024 / 1024;
+        return (kb / 1024 / 1024).toFixed(1);
     }
 }
