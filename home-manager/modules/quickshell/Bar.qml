@@ -1,10 +1,12 @@
+import "./utils/"
+import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import QtQuick
-import "./utils/"
 
 Scope {
   id: root
+
   property string time
 
   Variants {
@@ -13,6 +15,7 @@ Scope {
     PanelWindow {
       required property var modelData
       screen: modelData
+      color: "red"
 
       anchors {
         top: true
@@ -35,6 +38,22 @@ Scope {
       Text {
         id: memoryText
         text: Formatter.formatKBtoGB(MemoryUsage.memoryUsed)
+      }
+
+      Item {
+        RowLayout {
+          spacing: 8
+          Text {
+            text: "123"
+          }
+          Text {
+            text: "123"
+          }
+
+          Resource {
+            
+          }
+        }
       }
     }
   }
