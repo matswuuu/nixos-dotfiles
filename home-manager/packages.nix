@@ -72,6 +72,12 @@
         blockbench
         figma-linux
 
+        # Python
+        uv
+
+        # JS
+        nodejs
+
         # Gaming
         steam
         protontricks
@@ -79,9 +85,6 @@
         protonup-qt
         lutris
         #modrinth-app # Minecraft
-
-        # Python
-        uv
 
         # Anime
         ani-cli

@@ -7,12 +7,12 @@ import "./element/"
 import "./utils/"
 import "./theme/"
 import "./modules/"
+import "./modules/resource/"
 
 Scope {
   id: root
 
   readonly property var theme: Themes.active
-  property string time
 
   Variants {
     model: Quickshell.screens
@@ -21,64 +21,40 @@ Scope {
       required property var modelData
       screen: modelData
       color: "transparent"
-
       anchors {
         top: true
         left: true
         right: true
       }
-
       margins {
         left: 10
         right: 10
         top: 6
       }
-
       implicitHeight: 32
-
-      Clock {
-        anchors.centerIn: parent
-        // time: root.time
-      }
 
       RowLayout {
         id: leftLayout
+        anchors {
+          left: parent.left
+          verticalCenter: parent.verticalCenter
+        }
 
-        WrapperRectangle {
-          id: resourcesLayout
-          color: theme.backgroundColor
-          radius: theme.borderRadius
-          margin: theme.margin
+        ResourceBlock {
 
-          RowLayout {
-            spacing: 8
+        }
 
-            RowLayout {
-              spacing: 4
+        MprisWidget {
+          
+        }
+      }
 
-              StyledText {
-                text: "CPU"
-              }
-              StyledText {
-                text: Formatter.formatKBtoGB(CpuUsage.cpuUsage)
-              }
-            }
+      RowLayout {
+        anchors {
+          centerIn: parent
+        }
 
-            RowLayout {
-              spacing: 4
-
-              StyledText {
-                text: "GPU"
-              }
-              StyledText {
-                text: Formatter.formatKBtoGB(CpuUsage.cpuUsage)
-              }
-            }
-
-            StyledText {
-              text: Formatter.formatKBtoGB(MemoryUsage.memoryUsed) + "G"
-            }
-          }
+        Clock {
         }
       }
 
@@ -86,33 +62,17 @@ Scope {
         id: rightLayout
         anchors {
           right: parent.right
-          rightMargin: 55
+          verticalCenter: parent.verticalCenter
         }
-      
+
+        System {
+          
+        }
+
         Tray {
-          id: tray
+
         }
       }
-    }
-  }
-
-  Process {
-    id: dateProc
-    command: ["date"]
-    running: true
-
-    stdout: StdioCollector {
-      onStreamFinished: root.time = this.text
-    }
-  }
-
-  Timer {
-    interval: 1000
-    running: true
-    repeat: true
-    onTriggered: {
-      dateProc.running = true
-
     }
   }
 }

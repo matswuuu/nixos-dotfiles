@@ -16,12 +16,12 @@ Singleton {
     property double swapUsedPercentage: swapTotal > 0 ? (swapUsed / swapTotal) : 0
 
     FileView { 
-        id: fileMeminfo;
+        id: fileMeminfo
         path: "/proc/meminfo" 
     }
 
     Timer {
-        interval: 1
+        interval: 1000
         running: true
         repeat: true
         onTriggered: {
