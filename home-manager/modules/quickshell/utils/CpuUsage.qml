@@ -13,7 +13,7 @@ Singleton {
         running: true
         repeat: true
         onTriggered: {
-
+            
         }
     }
 }
