@@ -10,7 +10,7 @@ Singleton {
     property int cpuTemp: 0
     property color tempColor
 
-    property int thermalZone: getCpuThermalZone()
+    property int thermalZone
     property int maxTemp: 100
     property int prevIdle: 0
     property int prevTotal: 0
@@ -51,26 +51,29 @@ Singleton {
         )
     }
 
-    function getCpuThermalZone() {
-        const dir = "/sys/class/thermal/"
+    Process {
+        id: findZoneProcess
+        command: ["bash", "-c", "for z in /sys/class/thermal/thermal_zone*; do echo $(basename $z):$(cat $z/type); done"]
+        running: true
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const types = ["cpu", "pkg", "core"]
+                const lines = this.text.trim().split("\n")
+                for (let line of lines) {
+                    let parts = line.split(":")
+                    if (parts.length < 2) continue
+                    const zoneName = parts[0]
+                    const type = parts[1].toLowerCase()
+                    const match = types.some(k => type.includes(k))
 
-        const fs = File.list(dir)
-        for (let i = 0; i < fs.length; i++) {
-            if (!fs[i].startsWith("thermal_zone")) continue
-
-            const typeFile = dir + fs[i] + "/type"
-            const typeContent = Quickshell.File.read(typeFile) || ""
-            if (typeContent.toLowerCase().includes("cpu")) {
-                return parseInt(fs[i].replace("thermal_zone",""))
+                    if (match) {
+                        thermalZone = parseInt(zoneName.replace("thermal_zone", ""))
+                        timer.running = true
+                        return
+                    }
+                }
             }
         }
-
-        return 0
-    }
-
-    FileView {
-        id: thermal
-        path: "/sys/class/thermal/"
     }
 
     FileView {
@@ -84,8 +87,9 @@ Singleton {
     }
 
     Timer {
+        id: timer
         interval: 1000
-        running: true
+        running: false
         repeat: true
         onTriggered: {
             updateUsage()

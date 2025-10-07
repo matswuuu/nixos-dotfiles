@@ -13,6 +13,7 @@
     ./services/display-manager.nix
     ./services/flatpak.nix
     ./services/openssh.nix
+    ./services/upower.nix
     ./programs/amnezia-vpn.nix
     ./programs/cooler-control.nix
     ./programs/docker.nix

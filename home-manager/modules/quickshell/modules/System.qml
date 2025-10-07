@@ -20,6 +20,11 @@ WrapperRectangle {
         spacing: 4
 
         StyledText {
+            text: Battery.percentage
+            // visible: Battery.present
+        }
+
+        StyledText {
             text: IpInfo.countryCode || "?"
         }
     }

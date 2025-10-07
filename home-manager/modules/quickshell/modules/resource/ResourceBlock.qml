@@ -33,6 +33,7 @@ WrapperRectangle {
 
         RowLayout {
             spacing: 4
+            visible: GpuUsage.isPresented
 
             StyledText {
                 text: "GPU"

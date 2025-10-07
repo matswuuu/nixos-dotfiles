@@ -11,11 +11,24 @@ Singleton {
     property color tempColor
 
     property int maxTemp: 100
+    // Probably we need to add AMD, but I don't have one to test
+    property bool isPresented: nvidia
+    property bool nvidia
+
+    Process {
+        id: checkProcess
+        command: ["which", "nvidia-smi"]
+        running: true
+        stdout: StdioCollector {
+            onStreamFinished: {
+                nvidia = this.text.trim().length > 0
+            }
+        }
+    }
 
     Process {
         id: gpuUsageProcess
         command: ["nvidia-smi", "--query-gpu=utilization.gpu", "--format=csv,noheader,nounits"]
-        running: true
         stdout: StdioCollector {
             onStreamFinished: {
                 gpuUsage = parseInt(this.text)
@@ -26,7 +39,6 @@ Singleton {
     Process {
         id: gpuTempProcess
         command: ["nvidia-smi", "--query-gpu=temperature.gpu", "--format=csv,noheader,nounits"]
-        running: true
         stdout: StdioCollector {
             onStreamFinished: {
                 gpuTemp = parseInt(this.text)
@@ -46,8 +58,10 @@ Singleton {
         running: true
         repeat: true
         onTriggered: {
-            gpuUsageProcess.running = true
-            gpuTempProcess.running = true
+            if (nvidia) {
+                gpuUsageProcess.running = true
+                gpuTempProcess.running = true
+            }
         }
     }
 }
