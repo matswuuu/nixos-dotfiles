@@ -5,14 +5,17 @@ import Quickshell
 import Quickshell.Services.UPower
 
 Singleton {
-    id: battery
-
     property bool present: false
-    property bool charging: false
-    property bool full: false
-    property bool onBattery: false
-    property int percentage: UPower.displayDevice?.percentage ?? 1
-    property string state: "unknown"
-    property string iconName: ""
-    property var device: null
+    property int percentage
+
+    Timer {
+        interval: 1000
+        repeat: true
+        running: true
+        onTriggered: {
+            const device = UPower.displayDevice
+            present = device.isLaptopBattery
+            percentage = device.percentage * 100
+        }
+    }
 }

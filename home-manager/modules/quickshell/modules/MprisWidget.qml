@@ -12,7 +12,7 @@ WrapperRectangle {
     property int titleLength: 32
 
     property list<var> players: Mpris.players.values
-    property MprisPlayer activePlayer: players[0]
+    property MprisPlayer activePlayer: players.lenght >= 0 ? players[0] : null
     property string title: getTitle()
     property string artist: getArtist()
 

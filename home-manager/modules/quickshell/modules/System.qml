@@ -20,12 +20,20 @@ WrapperRectangle {
         spacing: 4
 
         StyledText {
-            text: Battery.percentage
-            // visible: Battery.present
+            text: HyprlandXkb.translatedLayout
+        }
+
+        StyledText {
+            text: Battery.percentage + "%"
+            visible: Battery.present
         }
 
         StyledText {
             text: IpInfo.countryCode || "?"
+        }
+
+        StyledText {
+            text: Bluetooth.stateSymbol
         }
     }
 }

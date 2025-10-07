@@ -8,7 +8,7 @@ Text {
     font {
         family: "JetBrainsMono Nerd Font"
         weight: Font.Bold
-        pixelSize: 13
+        pixelSize: 14
     }
     color: theme.textColor
 }
