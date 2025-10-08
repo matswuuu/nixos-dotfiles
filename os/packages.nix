@@ -7,7 +7,6 @@
   environment.systemPackages = with pkgs; [
     hyprland
     kitty
-    waybar
     google-chrome
     home-manager
     amnezia-vpn

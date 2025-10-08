@@ -9,7 +9,6 @@
     ./modules/wofi/wofi.nix
     ./modules/hyprland/hyprland.nix
     ./modules/quickshell/default.nix
-    ./modules/waybar/waybar.nix
     ./modules/theme/gtk.nix
     ./modules/theme/qt.nix
     ./modules/theme/catppuccin.nix
