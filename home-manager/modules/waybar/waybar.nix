@@ -24,15 +24,15 @@
       executable = true;
     };
   };
-  programs.waybar = {
-    enable = true;
-    settings = {
-      mainBar = {
-        output = vars.profiles.${vars.activeProfile}.waybar.output;
-        include = [ ./common.jsonc ];
-      };
-    };
-  };
+  # programs.waybar = {
+  #   enable = true;
+  #   settings = {
+  #     mainBar = {
+  #       output = vars.profiles.${vars.activeProfile}.waybar.output;
+  #       include = [ ./common.jsonc ];
+  #     };
+  #   };
+  # };
   catppuccin.waybar = {
     mode = "createLink";
   };

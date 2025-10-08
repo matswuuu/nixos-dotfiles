@@ -65,6 +65,10 @@ Scope {
           verticalCenter: parent.verticalCenter
         }
 
+        SoundWidget {
+          
+        }
+
         System {
           
         }

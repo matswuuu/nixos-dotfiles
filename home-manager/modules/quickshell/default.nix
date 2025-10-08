@@ -2,7 +2,10 @@
 
 {
   home.file = {
-    ".config/quickshell/schell.qml".source = ./shell.qml;
+    ".config/quickshell/" = {
+      source = ./src;
+      recursive = true;
+    };
   };
   programs.quickshell = {
     enable = true;

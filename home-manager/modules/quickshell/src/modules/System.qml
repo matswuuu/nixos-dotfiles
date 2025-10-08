@@ -29,6 +29,10 @@ WrapperRectangle {
         }
 
         StyledText {
+            text: Network.connectionSymbol
+        }
+
+        StyledText {
             text: IpInfo.countryCode || "?"
         }
 
