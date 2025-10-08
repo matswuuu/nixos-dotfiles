@@ -6,25 +6,22 @@ import Quickshell.Services.Mpris
 import "./../element/"
 import "./../theme/"
 
-WrapperRectangle {
+RowLayout {
     readonly property Theme theme: Themes.active
 
     property int titleLength: 32
 
     property list<var> players: Mpris.players.values
-    property MprisPlayer activePlayer: players.lenght >= 0 ? players[0] : null
+    property MprisPlayer activePlayer: players.length >= 0 ? players[0] : null
     property string title: getTitle()
     property string artist: getArtist()
 
-    id: root
-    color: theme.backgroundColor
-    radius: theme.borderRadius
-    margin: theme.margin
     visible: activePlayer != null
 
     function getTitle(): string {
-        if (!activePlayer) return ""
-        return activePlayer.metadata["xesam:title"].substring(0, titleLength + 1) || "";
+        if (!activePlayer) return "";
+        const title = activePlayer.metadata["xesam:title"];
+        return title ? title.substring(0, titleLength + 1) || "" : "";
     }
 
     function getArtist(): string {

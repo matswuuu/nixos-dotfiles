@@ -65,18 +65,23 @@
         # Code stuff
         vscode
         jetbrains-toolbox 
-        python314
-        recaf-launcher
         mongodb-compass
         insomnia
+
+        # Visual
+        krita
         blockbench
         figma-linux
 
-        # Python
-        uv
+        # Java
+        recaf-launcher
 
         # JS
         nodejs
+
+        # Python
+        uv
+        python314
 
         # Gaming
         steam

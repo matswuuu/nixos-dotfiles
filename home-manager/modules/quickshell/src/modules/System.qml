@@ -32,6 +32,7 @@ WrapperRectangle {
             text: Network.connectionSymbol
         }
 
+        // TODO: Move to tooltip
         StyledText {
             text: IpInfo.countryCode || "?"
         }

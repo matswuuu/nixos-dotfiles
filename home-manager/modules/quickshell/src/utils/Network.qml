@@ -15,7 +15,7 @@ Singleton {
         25: "󰤟",
         50: "󰤢",
         75: "󰤥",
-        100: "󰤨"
+        90: "󰤨"
     })
 
     property int networkStrength
@@ -29,13 +29,7 @@ Singleton {
             case 1:
                 return lanSymbol
             case 2:
-                const keys = Object.keys(wifiSymbols).map(Number).sort((a, b) => a - b)
-                let floorKey = 0
-                for (let i = 0; i < keys.length; i++) {
-                    if (networkStrength >= keys[i]) floorKey = keys[i]
-                    else break
-                }
-                return wifiSymbols[floorKey]
+                return Collection.floorValue(wifiSymbols, networkStrength)
         }
     }
 

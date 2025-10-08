@@ -1,8 +1,10 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
 import "./../element/"
 import "./../theme/"
+import "./../utils/"
 
 WrapperRectangle {
     readonly property var theme: Themes.active
@@ -13,9 +15,21 @@ WrapperRectangle {
     radius: theme.borderRadius
     margin: theme.margin
 
-    Row {
-        StyledText {
-            text: Sound.outputVolume
+    RowLayout {
+        spacing: 8
+
+        MprisWidget {
+
+        }
+
+        RowLayout {
+            spacing: 4
+            StyledText {
+                text: Sound.getOutputSymbol()
+            }
+            StyledText {
+                text: Sound.getInputSymbol()
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ Scope {
   readonly property var theme: Themes.active
 
   Variants {
-    model: Quickshell.screens
+    model: [Quickshell.screens[0]]
 
     PanelWindow {
       required property var modelData
@@ -44,9 +44,9 @@ Scope {
 
         }
 
-        MprisWidget {
+        // MprisWidget {
           
-        }
+        // }
       }
 
       RowLayout {
@@ -54,7 +54,7 @@ Scope {
           centerIn: parent
         }
 
-        Clock {
+        ClockWidget {
         }
       }
 
