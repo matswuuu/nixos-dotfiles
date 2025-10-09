@@ -1,17 +1,24 @@
 { config, lib, pkgs, modulesPath, ... }: 
   let
     vars = import ./../vars.nix;
+    profile = vars.profiles.${vars.activeProfile};
   in
 {
   networking = {
-    hostName = vars.profiles.${vars.activeProfile}.hostName;
+    hostName = profile.hostName;
     networkmanager.enable = true;
-    proxy = {
-      #default = "socks5h://127.0.0.1:2081";
-      #noProxy = "127.0.0.1,localhost,*.local";
-    };
     firewall = {
-      allowedTCPPorts = [ 8081 8080 8096 ];
+      allowedTCPPorts = [ 
+        7878
+        8081 
+        8080
+        8085
+        8096
+        8686
+        8989
+        9117
+        9696
+      ];
     };
   };
 }

@@ -10,14 +10,14 @@ Singleton {
     property string outputMutedSymbol: "dis"
     property var outputSymbols: ({
         0: "-",
-        25: "low",
+        1: "low",
         50: "med",
         75: "high"
     })
     property string inputMutedSymbol: "dis"
     property var inputSymbols: ({
         0: "-",
-        25: "low",
+        1: "low",
         50: "med",
         75: "high"
     })

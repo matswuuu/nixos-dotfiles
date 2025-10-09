@@ -25,9 +25,6 @@
         "~/.config/hypr/env.conf"
         "~/.config/hypr/binds.conf"
       ] ++ (vars.profiles.${vars.activeProfile}.hyprland or []);
-      exec-once = [
-        "THERMAL_ZONE=${vars.profiles.${vars.activeProfile}.waybar.thermal.cpuZone} waybar"
-      ];
     };
   };
 }

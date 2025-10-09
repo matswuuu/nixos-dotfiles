@@ -1,5 +1,5 @@
 {
-  activeProfile = "laptop";
+  activeProfile = "main";
   profiles = {
     "main" = {
       system = "x86_64-linux";
@@ -20,12 +20,6 @@
       hyprland = [
         "~/.config/hypr/main/monitor.conf"
       ];
-      waybar = {
-        output = "DP-1";
-        thermal = {
-          cpuZone = "0";
-        };
-      };
       catppuccin = {
         flavor = "macchiato";
         accent = "mauve";
@@ -45,12 +39,6 @@
       hyprland = [
         "~/.config/hypr/laptop/monitor.conf"
       ];
-      waybar = {
-        output = "eDP-1";
-        thermal = {
-          cpuZone = "5";
-        };
-      };
       catppuccin = {
         flavor = "macchiato";
         accent = "mauve";

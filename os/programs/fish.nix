@@ -1,5 +1,6 @@
   let
     vars = import ./../../vars.nix;
+    profile = vars.profiles.${vars.activeProfile};
   in
 {
   programs.fish = {
@@ -9,9 +10,8 @@
     '';
      shellAliases = {
       c7x-host = "bash /home/matswuuu/c7x-host.sh";
-      my-ip = "bash ~/.config/waybar/scripts/ip_info.sh";
-      os-rebuild = "cd ${vars.profiles.${vars.activeProfile}.flakeLocation}; git add --all; sudo nixos-rebuild switch --flake .";
-      home-rebuild = "cd ${vars.profiles.${vars.activeProfile}.flakeLocation}; git add --all; home-manager switch --flake .";
+      os-rebuild = "cd ${profile.flakeLocation}; git add --all; sudo nixos-rebuild switch --flake .";
+      home-rebuild = "cd ${profile.flakeLocation}; git add --all; home-manager switch --flake .";
       mongodb = "mongodb-compass --password-store=\"gnome-libsecret\" --ignore-additional-command-line-flags";
     };
   };
