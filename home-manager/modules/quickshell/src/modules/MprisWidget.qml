@@ -12,7 +12,7 @@ RowLayout {
     property int titleLength: 32
 
     property list<var> players: Mpris.players.values
-    property MprisPlayer activePlayer: players.length >= 0 ? players[0] : null
+    property MprisPlayer activePlayer: players.length >= ? players[0] : null
     property string title: getTitle()
     property string artist: getArtist()
 

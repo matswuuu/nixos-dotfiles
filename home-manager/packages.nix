@@ -36,6 +36,9 @@
         gtk4
         adw-gtk3
 
+        # Qt
+        qt6.full
+
         # Dolphin
         kdePackages.dolphin
         kdePackages.qtsvg
