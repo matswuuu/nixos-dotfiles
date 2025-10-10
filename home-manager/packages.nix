@@ -37,7 +37,9 @@
         adw-gtk3
 
         # Qt
-        qt6.full
+        qt6.full          
+        qt6.qtgraphicaleffects
+
 
         # Dolphin
         kdePackages.dolphin
