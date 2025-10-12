@@ -7,6 +7,8 @@ import Quickshell.Io
 import Quickshell.Widgets
 
 Singleton {
+    id: root 
+
     property string outputMutedSymbol: "dis"
     property var outputSymbols: ({
         0: "-",
@@ -27,6 +29,8 @@ Singleton {
     property bool inputMuted: false
     property int inputVolume: 0
 
+    signal outputUpdated(volume: int, muted: bool)
+
     function getOutputSymbol() {
         if (outputMuted) return outputMutedSymbol;
         return Collection.floorValue(outputSymbols, outputVolume);
@@ -43,8 +47,13 @@ Singleton {
         stdout: SplitParser {
             onRead: data => {
                 const volMatch = data.match(/([0-9.]+)/)
-                outputVolume = volMatch ? parseFloat(volMatch[0]) * 100.0 : 0
-                outputMuted = data.includes("[MUTED]")
+                const outputVolume = volMatch ? parseFloat(volMatch[0]) * 100.0 : 0
+                const outputMuted = data.includes("[MUTED]")
+                if (outputVolume != root.outputVolume || outputMuted != root.outputMuted) {
+                    root.outputVolume = outputVolume
+                    root.outputMuted = outputMuted
+                    outputUpdated(outputVolume, outputMuted)
+                }
             }
         }
     }

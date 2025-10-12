@@ -5,6 +5,7 @@ import Quickshell.Widgets
 import "./../element/"
 import "./../theme/"
 import "./../utils/"
+import "./media/"
 
 WrapperRectangle {
     readonly property var theme: Themes.active
@@ -31,5 +32,11 @@ WrapperRectangle {
                 text: Sound.getInputSymbol()
             }
         }
+    }
+
+    VolumeOverlay {
+        anchor {
+            item: root
+        } 
     }
 }

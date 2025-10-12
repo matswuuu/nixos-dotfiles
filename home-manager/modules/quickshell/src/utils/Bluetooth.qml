@@ -15,5 +15,5 @@ Singleton {
     }
 
     property BluetoothAdapter adapter: Bluetooth.defaultAdapter
-    property string stateSymbol: stateSymbols[adapter.state]
+    property string stateSymbol: stateSymbols[adapter ? adapter.state : 0]
 }

@@ -3,10 +3,12 @@ pragma Singleton
 import Quickshell
 
 Singleton {
-    property Theme dark: Theme {
-        backgroundColor: "#222233"
-        textColor: "#e0e0e0"
+    property Theme macchiato: Theme {
+        backgroundColor: "#24273a"
+        backgroundColor2: "#363a4f"
+        interactiveColor: "#c6a0f6"
+        textColor: "#cad3f5"
     }
 
-    property var active: dark
+    property var active: macchiato
 }

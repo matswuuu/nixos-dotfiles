@@ -10,6 +10,7 @@ RowLayout {
     readonly property Theme theme: Themes.active
 
     property int titleLength: 32
+    property int artistLength: 16
 
     property list<var> players: Mpris.players.values
     property MprisPlayer activePlayer: players.length >= 1 ? players[0] : null
@@ -26,7 +27,8 @@ RowLayout {
 
     function getArtist(): string {
         if (!activePlayer) return ""
-        return activePlayer.metadata["xesam:artist"]?.[0] || "";
+        const artist = activePlayer.metadata["xesam:artist"];
+        return artist ? artist.toString().substring(0, artistLength + 1) || "" : "";
     }
 
     RowLayout {

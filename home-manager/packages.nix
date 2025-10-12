@@ -38,7 +38,7 @@
 
         # Qt
         qt6.full          
-        qt6.qtgraphicaleffects
+        # qt6.qtgraphicaleffects
 
 
         # Dolphin
@@ -86,7 +86,7 @@
 
         # Python
         uv
-        python314
+        python312
 
         # Gaming
         steam

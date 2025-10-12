@@ -17,8 +17,6 @@ WrapperMouseArea {
     }
 
     WrapperRectangle {
-        readonly property var theme: Themes.active
-
         color: theme.backgroundColor
         radius: theme.borderRadius
         margin: theme.margin
