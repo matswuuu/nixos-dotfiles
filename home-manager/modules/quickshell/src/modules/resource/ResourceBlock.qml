@@ -23,8 +23,24 @@ WrapperRectangle {
                 radius: theme.borderRadius
                 margin: theme.margin + 4
 
-                StyledText {
-                    text: "CPU"
+                RowLayout {
+                    StyledText {
+                        text: "CPU"
+                    }
+
+                    UsageDiagram {
+                        maxX: CpuUsage.maxHistory
+                        maxY: CpuUsage.maxFreq
+                        valueStepX: 10
+                        valueStepY: CpuUsage.maxFreq / 5
+                    }
+
+                    UsageDiagram {
+                        maxX: CpuUsage.maxHistory
+                        maxY: CpuUsage.maxTemp
+                        valueStepX: 10
+                        valueStepY: CpuUsage.maxTemp / 5
+                    }
                 }
             }
 

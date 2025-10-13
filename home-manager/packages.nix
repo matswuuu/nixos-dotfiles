@@ -38,13 +38,12 @@
         adw-gtk3
 
         # Qt
-        qt6.full          
-        # qt6.qtgraphicaleffects
-
+        qt6.full      
+        kdePackages.qtcharts
+        kdePackages.qtsvg
 
         # Dolphin
         kdePackages.dolphin
-        kdePackages.qtsvg
         kdePackages.kio-extras
 
         # Wayland
