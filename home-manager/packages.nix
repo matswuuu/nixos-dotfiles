@@ -38,9 +38,18 @@
         adw-gtk3
 
         # Qt
-        qt6.full      
-        kdePackages.qtcharts
-        kdePackages.qtsvg
+        # qt6.full      
+        
+        qt5.qtbase
+        qt5.qtdeclarative
+        qt5.qtquickcontrols
+        qt5.qtcharts
+        # qt6Packages.qt6ct
+        # qt6Packages.qtbase
+        # qt6Packages.qtdeclarative
+        # qt6Packages.qtmultimedia
+        # qt6Packages.qtsvg
+        # qt6Packages.qtcharts
 
         # Dolphin
         kdePackages.dolphin

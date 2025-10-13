@@ -35,12 +35,12 @@ WrapperRectangle {
                         valueStepY: CpuUsage.maxFreq / 5
                     }
 
-                    UsageDiagram {
-                        maxX: CpuUsage.maxHistory
-                        maxY: CpuUsage.maxTemp
-                        valueStepX: 10
-                        valueStepY: CpuUsage.maxTemp / 5
-                    }
+                    // UsageDiagram {
+                    //     maxX: CpuUsage.maxHistory
+                    //     maxY: CpuUsage.maxTemp
+                    //     valueStepX: 10
+                    //     valueStepY: CpuUsage.maxTemp / 5
+                    // }
                 }
             }
 

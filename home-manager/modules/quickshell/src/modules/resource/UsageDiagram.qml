@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-// import QtCharts
+import QtGraphs
 import Quickshell
 import "./../../utils/"
 
@@ -39,59 +39,58 @@ Item {
         property color axisColor: "#FF5555"
 
         onPaint: {
-            const leftMargin = 30
-            const bottomMargin = 20
+            // const leftMargin = 30
+            // const bottomMargin = 20
 
-            const ctx = getContext("2d")
-            ctx.clearRect(0, 0, root.width, root.height)
+            // const ctx = getContext("2d")
+            // ctx.clearRect(0, 0, root.width, root.height)
 
-            const usage = CpuUsage.usageHistory
-            const stepX = (width - leftMargin - 10) / maxX
-            const stepY = (height - bottomMargin - 10) / maxY
-            const scaleY = height / 100
+            // const usage = CpuUsage.usageHistory
+            // const stepX = (width - leftMargin - 10) / maxX
+            // const stepY = (height - bottomMargin - 10) / maxY
+            // const scaleY = height / 100
 
-            // --- Draw axes ---
-            ctx.strokeStyle = axisColor
-            ctx.lineWidth = 2
-            ctx.beginPath()
-            // Oy (value)
-            ctx.moveTo(leftMargin, 0)
-            ctx.lineTo(leftMargin, height - bottomMargin)
-            // Ox (time)
-            ctx.moveTo(leftMargin, height - bottomMargin)
-            ctx.lineTo(width + leftMargin, height - bottomMargin)
-            ctx.stroke()
+            // // --- Draw axes ---
+            // ctx.strokeStyle = axisColor
+            // ctx.lineWidth = 2
+            // ctx.beginPath()
+            // // Oy (value)
+            // ctx.moveTo(leftMargin, 0)
+            // ctx.lineTo(leftMargin, height - bottomMargin)
+            // // Ox (time)
+            // ctx.moveTo(leftMargin, height - bottomMargin)
+            // ctx.lineTo(width + leftMargin, height - bottomMargin)
+            // ctx.stroke()
 
-            ctx.fillStyle = "white"
-            for (let i = 0; i <= maxX; i += valueStepX) {
-                const x = leftMargin + i * stepX
-                ctx.fillText(`${i}s`, x - 8, height - 6)
-            }
+            // ctx.fillStyle = "white"
+            // for (let i = 0; i <= maxX; i += valueStepX) {
+            //     const x = leftMargin + i * stepX
+            //     ctx.fillText(`${i}s`, x - 8, height - 6)
+            // }
 
-            ctx.fillStyle = "red"
-            ctx.font = "10px Sans"
-            for (let i = 0; i <= maxY; i += valueStepY) {
-                const y = height - bottomMargin + i * stepY
-                print(y)
-                ctx.fillText(i.toString(), 4, y + 3)
-            }
+            // ctx.fillStyle = "red"
+            // ctx.font = "10px Sans"
+            // for (let i = 0; i <= maxY; i += valueStepY) {
+            //     const y = height - bottomMargin + i * stepY
+            //     ctx.fillText(i.toString(), 4, y + 3)
+            // }
 
-            // --- Draw CPU usage ---
-            ctx.beginPath()
-            ctx.strokeStyle = usageColor
-            ctx.lineWidth = 2
-            for (let i = 0; i < usage.length; i++) {
-                const x = leftMargin + (i * stepX)
-                const y = height - bottomMargin - (usage[i] * scaleY)
-                if (i === 0) ctx.moveTo(x, y)
-                else ctx.lineTo(x, y)
-            }
-            ctx.stroke()
+            // // --- Draw CPU usage ---
+            // ctx.beginPath()
+            // ctx.strokeStyle = usageColor
+            // ctx.lineWidth = 2
+            // for (let i = 0; i < usage.length; i++) {
+            //     const x = leftMargin + (i * stepX)
+            //     const y = height - bottomMargin - (usage[i] * scaleY)
+            //     if (i === 0) ctx.moveTo(x, y)
+            //     else ctx.lineTo(x, y)
+            // }
+            // ctx.stroke()
         }
     }
 
 
-    // ChartView {
+    ChartView {
     //     title: "Line"
     //     anchors.fill: parent
     //     antialiasing: true
@@ -106,7 +105,7 @@ Item {
     //         XYPoint { x: 3.4; y: 3.0 }
     //         XYPoint { x: 4.1; y: 3.3 }
     //     }
-    // }
+    }
 
     Text {
         anchors.left: parent.left
