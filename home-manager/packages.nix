@@ -29,6 +29,7 @@
         shadowsocks-libev
         overskride # Bluetooth manager
         coolercontrol.coolercontrol-gui # Fan controller
+        yt-dlp
 
         (flameshot.override { enableWlrSupport = true; })
         
