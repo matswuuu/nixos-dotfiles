@@ -6,14 +6,26 @@ import QtQuick
 import QtQuick
 
 Singleton {
+    property int maxHistory: 60
+
     property int cpuUsage: 0
     property int cpuTemp: 0
     property color tempColor
+    property list<int> usageHistory: []
+    property list<int> tempHistory: []
+    property list<int> freqHistory: []
 
     property int thermalZone
+    property int maxFreq
     property int maxTemp: 100
     property int prevIdle: 0
     property int prevTotal: 0
+
+    function pushToHistory(array, value) {
+        if (array.length >= maxHistory)
+            array.shift()
+        array.push(value)
+    }
 
     function updateUsage() {
         fileStat.reload()
@@ -35,6 +47,8 @@ Singleton {
 
         prevIdle = idle
         prevTotal = total
+
+        pushToHistory(usageHistory, cpuUsage)
     }
 
     function updateTemp() {
@@ -49,6 +63,15 @@ Singleton {
             0,
             1
         )
+
+        pushToHistory(tempHistory, cpuTemp)
+    }
+
+    function updateFreq() {
+        fileFreq.reload()
+        const freqRaw = Number(fileFreq.text()) || 0
+        const freqMHz = Math.floor(freqRaw / 1000)
+        pushToHistory(freqHistory, freqMHz)
     }
 
     Process {
@@ -86,6 +109,12 @@ Singleton {
         path: "/sys/class/thermal/thermal_zone" + thermalZone + "/temp"
     }
 
+    FileView { 
+        id: fileFreq;
+        path: "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq" 
+    }
+
+
     Timer {
         id: timer
         interval: 1000
@@ -94,6 +123,7 @@ Singleton {
         onTriggered: {
             updateUsage()
             updateTemp()
+            updateFreq()
         }
     }
 }
