@@ -8,16 +8,22 @@ import QtQuick
 Singleton {
     property int maxHistory: 60
 
-    property int cpuUsage: 0
-    property int cpuTemp: 0
     property color tempColor
+    property int thermalZone
+    // Usage
+    property int maxUsage: 100
+    property int cpuUsage: 0
+    // Frequency
+    property int minFreq: 1
+    property int maxFreq: 1
+    property int cpuFreq: 1
+    // Temperature
+    property int maxTemp: 100
+    property int cpuTemp: 1
+
     property list<int> usageHistory: []
     property list<int> tempHistory: []
     property list<int> freqHistory: []
-
-    property int thermalZone
-    property int maxFreq
-    property int maxTemp: 100
     property int prevIdle: 0
     property int prevTotal: 0
 
@@ -67,11 +73,17 @@ Singleton {
         pushToHistory(tempHistory, cpuTemp)
     }
 
+    function getFreq(file: FileView): int {
+        file.reload();
+        const freqRaw = Number(file.text()) || 0;
+        return Math.floor(freqRaw / 1000);
+    }
+
     function updateFreq() {
-        fileFreq.reload()
-        const freqRaw = Number(fileFreq.text()) || 0
-        const freqMHz = Math.floor(freqRaw / 1000)
-        pushToHistory(freqHistory, freqMHz)
+        minFreq = getFreq(fileMinFreq);
+        maxFreq = getFreq(fileMaxFreq);
+        cpuFreq = getFreq(fileCurFreq);
+        pushToHistory(freqHistory, cpuFreq);
     }
 
     Process {
@@ -109,11 +121,19 @@ Singleton {
         path: "/sys/class/thermal/thermal_zone" + thermalZone + "/temp"
     }
 
+    // Frequency
     FileView { 
-        id: fileFreq;
+        id: fileMinFreq;
+        path: "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq" 
+    }
+    FileView { 
+        id: fileMaxFreq;
+        path: "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq" 
+    }
+    FileView { 
+        id: fileCurFreq;
         path: "/sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq" 
     }
-
 
     Timer {
         id: timer
@@ -121,9 +141,9 @@ Singleton {
         running: false
         repeat: true
         onTriggered: {
-            updateUsage()
-            updateTemp()
-            updateFreq()
+            updateUsage();
+            updateTemp();
+            updateFreq();
         }
     }
 }
