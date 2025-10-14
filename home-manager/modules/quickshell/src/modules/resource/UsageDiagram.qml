@@ -1,19 +1,22 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import QtGraphs
+// import QtGraphs
 import Quickshell
 import "./../../utils/"
+import "./../../element/"
 
 Item {
     id: root
     width: 300 + 60 + 100
     height: 100 + 40
 
-    property int maxX: 60
-    property int maxY: 100
-    property int valueStepX: 10
-    property int valueStepY: 20
+    property string title
+    property var history
+    property double maxX
+    property double maxY
+    property double valueStepX: 1
+    property double valueStepY: 1
 
     Timer {
         interval: 1000
@@ -45,10 +48,9 @@ Item {
             // const ctx = getContext("2d")
             // ctx.clearRect(0, 0, root.width, root.height)
 
-            // const usage = CpuUsage.usageHistory
-            // const stepX = (width - leftMargin - 10) / maxX
-            // const stepY = (height - bottomMargin - 10) / maxY
-            // const scaleY = height / 100
+            const stepX = (width - leftMargin - 10) / maxX
+            const stepY = (height - bottomMargin - 10) / maxY
+            const scaleY = height / 100
 
             // // --- Draw axes ---
             // ctx.strokeStyle = axisColor
@@ -68,29 +70,29 @@ Item {
             //     ctx.fillText(`${i}s`, x - 8, height - 6)
             // }
 
-            // ctx.fillStyle = "red"
-            // ctx.font = "10px Sans"
-            // for (let i = 0; i <= maxY; i += valueStepY) {
-            //     const y = height - bottomMargin + i * stepY
-            //     ctx.fillText(i.toString(), 4, y + 3)
-            // }
+            ctx.fillStyle = "red"
+            ctx.font = "10px Sans"
+            for (let i = 0; i <= maxY; i += valueStepY) {
+                const y = height - bottomMargin + i * stepY
+                ctx.fillText(i.toString(), 4, y + 3)
+            }
 
-            // // --- Draw CPU usage ---
-            // ctx.beginPath()
-            // ctx.strokeStyle = usageColor
-            // ctx.lineWidth = 2
-            // for (let i = 0; i < usage.length; i++) {
-            //     const x = leftMargin + (i * stepX)
-            //     const y = height - bottomMargin - (usage[i] * scaleY)
-            //     if (i === 0) ctx.moveTo(x, y)
-            //     else ctx.lineTo(x, y)
-            // }
-            // ctx.stroke()
+            // --- Draw CPU usage ---
+            ctx.beginPath()
+            ctx.strokeStyle = usageColor
+            ctx.lineWidth = 2
+            for (let i = 0; i < history.length; i++) {
+                const x = leftMargin + (i * stepX)
+                const y = height - bottomMargin - (history[i] * scaleY)
+                if (i === 0) ctx.moveTo(x, y)
+                else ctx.lineTo(x, y)
+            }
+            ctx.stroke()
         }
     }
 
 
-    ChartView {
+    // GraphsView {
     //     title: "Line"
     //     anchors.fill: parent
     //     antialiasing: true
@@ -107,12 +109,7 @@ Item {
     //     }
     }
 
-    Text {
-        anchors.left: parent.left
-        anchors.top: parent.top
-        anchors.margins: 6
-        color: "white"
-        text: `CPU: ${CpuUsage.cpuUsage}%  Temp: ${CpuUsage.cpuTemp}°C`
-        font.pixelSize: 12
+    StyledText {
+        text: title
     }
 }
