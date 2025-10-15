@@ -52,7 +52,7 @@ Item {
             const stepY = (height - bottomMargin - 10) / maxY
             const scaleY = height / 100
 
-            // // --- Draw axes ---
+            // --- Draw axes ---
             ctx.strokeStyle = axisColor
             ctx.lineWidth = 2
             ctx.beginPath()
@@ -111,5 +111,9 @@ Item {
 
     StyledText {
         text: title
+    }
+
+    StyledText {
+        text: ProcessUsage.processes
     }
 }
