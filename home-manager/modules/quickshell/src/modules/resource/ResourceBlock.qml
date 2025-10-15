@@ -50,6 +50,10 @@ WrapperRectangle {
                         valueStepX: 10
                         valueStepY: CpuUsage.maxFreq / 5
                     }
+
+                    ProcessViewer {
+                        
+                    }
                 }
             }
 
