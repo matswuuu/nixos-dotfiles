@@ -26,7 +26,6 @@
         playerctl
         jq
         unzip
-        shadowsocks-libev
         overskride # Bluetooth manager
         coolercontrol.coolercontrol-gui # Fan controller
         yt-dlp
@@ -94,7 +93,6 @@
         mangohud
         protonup-qt
         lutris
-        modrinth-app # Minecraft
 
         # Anime
         ani-cli
