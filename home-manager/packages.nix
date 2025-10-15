@@ -94,7 +94,7 @@
         mangohud
         protonup-qt
         lutris
-        #modrinth-app # Minecraft
+        modrinth-app # Minecraft
 
         # Anime
         ani-cli

@@ -42,33 +42,33 @@ Item {
         property color axisColor: "#FF5555"
 
         onPaint: {
-            // const leftMargin = 30
-            // const bottomMargin = 20
+            const leftMargin = 30
+            const bottomMargin = 20
 
-            // const ctx = getContext("2d")
-            // ctx.clearRect(0, 0, root.width, root.height)
+            const ctx = getContext("2d")
+            ctx.clearRect(0, 0, root.width, root.height)
 
             const stepX = (width - leftMargin - 10) / maxX
             const stepY = (height - bottomMargin - 10) / maxY
             const scaleY = height / 100
 
             // // --- Draw axes ---
-            // ctx.strokeStyle = axisColor
-            // ctx.lineWidth = 2
-            // ctx.beginPath()
-            // // Oy (value)
-            // ctx.moveTo(leftMargin, 0)
-            // ctx.lineTo(leftMargin, height - bottomMargin)
-            // // Ox (time)
-            // ctx.moveTo(leftMargin, height - bottomMargin)
-            // ctx.lineTo(width + leftMargin, height - bottomMargin)
-            // ctx.stroke()
+            ctx.strokeStyle = axisColor
+            ctx.lineWidth = 2
+            ctx.beginPath()
+            // Oy (value)
+            ctx.moveTo(leftMargin, 0)
+            ctx.lineTo(leftMargin, height - bottomMargin)
+            // Ox (time)
+            ctx.moveTo(leftMargin, height - bottomMargin)
+            ctx.lineTo(width + leftMargin, height - bottomMargin)
+            ctx.stroke()
 
-            // ctx.fillStyle = "white"
-            // for (let i = 0; i <= maxX; i += valueStepX) {
-            //     const x = leftMargin + i * stepX
-            //     ctx.fillText(`${i}s`, x - 8, height - 6)
-            // }
+            ctx.fillStyle = "white"
+            for (let i = 0; i <= maxX; i += valueStepX) {
+                const x = leftMargin + i * stepX
+                ctx.fillText(`${i}s`, x - 8, height - 6)
+            }
 
             ctx.fillStyle = "red"
             ctx.font = "10px Sans"
@@ -107,7 +107,7 @@ Item {
     //         XYPoint { x: 3.4; y: 3.0 }
     //         XYPoint { x: 4.1; y: 3.3 }
     //     }
-    }
+    // }
 
     StyledText {
         text: title
