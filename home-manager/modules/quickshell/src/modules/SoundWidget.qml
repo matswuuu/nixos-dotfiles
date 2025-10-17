@@ -16,20 +16,26 @@ WrapperRectangle {
     radius: theme.borderRadius
     margin: theme.margin
 
-    RowLayout {
-        spacing: 8
-
-        MprisWidget {
-
+    StyledPopup {
+        contentItem: PlayerControl {
         }
 
         RowLayout {
-            spacing: 4
-            StyledText {
-                text: Sound.getOutputSymbol()
+            spacing: 8
+
+            MprisWidget {
+
             }
-            StyledText {
-                text: Sound.getInputSymbol()
+
+            RowLayout {
+                spacing: 4
+                
+                StyledText {
+                    text: Sound.getOutputSymbol()
+                }
+                StyledText {
+                    text: Sound.getInputSymbol()
+                }
             }
         }
     }

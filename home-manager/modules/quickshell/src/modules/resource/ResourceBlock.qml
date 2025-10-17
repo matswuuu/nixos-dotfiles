@@ -1,5 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
+import QtQuick.Controls.Material
 import Quickshell
 import Quickshell.Widgets
 import "./../../element/"
