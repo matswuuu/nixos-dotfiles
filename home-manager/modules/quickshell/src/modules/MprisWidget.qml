@@ -14,8 +14,8 @@ RowLayout {
     property int titleLength: 32
     property int artistLength: 16
 
-    property string title: MprisUtil.getTitle("")
-    property string artist: MprisUtil.getArtist("")
+    property string title: MprisUtil.getTitle(titleLength, "")
+    property string artist: MprisUtil.getArtist(artistLength, "")
 
     visible: MprisUtil.activePlayer != null
 

@@ -3,7 +3,11 @@ import Quickshell
 import "./../theme/"
 
 Text {
+    readonly property var theme: Themes.active
+    
     font {
-        family: Icons.iconFont
+        family: Icons.font.name
+        pixelSize: 28
     }
+    color: theme.textColor
 }

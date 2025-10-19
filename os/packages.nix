@@ -16,6 +16,8 @@
     kdePackages.kwallet
 
     linuxPackages.cpupower
+    dunst
+    libnotify
 
     # Bluetooth
     bluez

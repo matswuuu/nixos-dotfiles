@@ -5,8 +5,8 @@ import QtQuick.Controls.Material
 ProgressBar {
     id: control
     implicitHeight: 4
-    // Material.theme: Material.Light
-    // Material.accent: "#6750A4" // Material 3 default purple
+    Material.theme: Material.Dark
+    Material.accent: Material.Green
 
     background: Rectangle {
         implicitHeight: control.implicitHeight

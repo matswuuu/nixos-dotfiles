@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import ".././theme/"
+import "./../theme/"
 
 Text {
     readonly property var theme: Themes.active
@@ -11,4 +11,5 @@ Text {
         pixelSize: 14
     }
     color: theme.textColor
+    wrapMode: Text.WordWrap
 }

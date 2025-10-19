@@ -12,16 +12,18 @@ import "./../manager/"
 WrapperMouseArea {
     readonly property Theme theme: Themes.active
     required property var contentItem
+    property int hoverCountTrigger: 300
 
     property bool triggerHovered
     property bool popupHovered
+    property int triggerHoverCount
 
     id: root
     hoverEnabled: true
 
     onEntered: {
         triggerHovered = true;
-        show();
+        triggerHoverCount = 0;
     }
     onExited: {
         triggerHovered = false;
@@ -45,6 +47,19 @@ WrapperMouseArea {
         appearAnim.stop();
         window.visible = false
     }
+    
+    // Prevent from accidental movements
+    Timer {
+        interval: 10
+        running: triggerHovered
+        repeat: true
+        onTriggered: {
+            triggerHoverCount += interval;
+            if (triggerHoverCount == hoverCountTrigger) {
+                show();
+            }
+        }
+    }
 
     PopupWindow {
         id: window
@@ -56,6 +71,29 @@ WrapperMouseArea {
             item: root
             rect.y: root.implicitHeight + 10
         }
+
+        // ShaderEffectSource {
+        //     id: effectSource
+
+        //     sourceItem: wrapper
+        //     anchors.centerIn: wrapper
+        //     width: 400
+        //     height: 400
+        //     sourceRect: Qt.rect(x,y, width, height)
+        // }
+
+        // MultiEffect {
+        //     id: blurEffect
+        //     anchors.fill: parent
+        //     source: effectSource
+        //     blurEnabled: true
+        //     blur: 0.45            // tweak
+        //     brightness: 1.0
+        //     saturation: 1.0
+        //     colorization: 0.12    // slight tint if you want
+        //     colorizationColor: "#00000050"
+        //     z: 0
+        // }
 
         MouseArea {
             id: wrapper

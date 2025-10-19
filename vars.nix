@@ -11,7 +11,6 @@
         ./os/hardware/main/cpu.nix
         ./os/hardware/main/nvidia.nix
         ./os/programs/steam.nix
-        ./server/yoru/yoru.nix
       ];
       packages = pkgs: with pkgs; [
         nvtopPackages.nvidia

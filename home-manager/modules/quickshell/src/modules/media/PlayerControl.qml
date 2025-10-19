@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Effects
 import QtQuick.Controls.Material
 import Quickshell
 import Quickshell.Widgets
@@ -12,21 +13,41 @@ import "./../../theme/"
 WrapperRectangle {
     readonly property var theme: Themes.active
 
-    color: theme.backgroundColor2
+    id: player
+    child: l
+    // color: theme.opacity(theme.backgroundColor2, 0.1)
+    color: "transparent"
     radius: theme.borderRadius
     margin: theme.margin + 4
 
+    //   layer.enabled: true
+            // layer.smooth: true
+
+    // MultiEffect {
+    //     anchors.fill: player
+    //     source: player
+    //     blurEnabled: true
+    //     blur: 0.2       // 0.0–1.0 range (approximate)
+    //     blurMax: 64.0   // blur radius in pixels
+    //     // brightness: 1.0
+    //     // contrast: 1.0
+    //     // saturation: 1.0
+    // }
+
+
     RowLayout {
+        id: l
         spacing: 14
 
-        Rectangle { // TODO: Replace later with track image
-            color: "green"
-            implicitWidth: 150
-            implicitHeight: 150
+        StyledImage {
+            width: 150
+            height: 150
+            source: MprisUtil.getImage()
+            radius: theme.borderRadius
         }
 
-        Rectangle {
-            color: "blue"
+        Item {
+            id: rightBlock
             implicitWidth: 300
             implicitHeight: 150
 
@@ -34,13 +55,15 @@ WrapperRectangle {
                 spacing: 4
 
                 StyledText {
-                    text: MprisUtil.getTitle("Untitled")
+                    text: MprisUtil.getTitle(64, "Untitled")
                     font {
                         pixelSize: 18
                     }
+                    width: rightBlock.width
+                    Layout.fillWidth: true
                 }
                 StyledText {
-                    text: MprisUtil.getArtist("Unknown")
+                    text: MprisUtil.getArtist(64, "Unknown")
                 }
             }
 
@@ -53,42 +76,28 @@ WrapperRectangle {
                 }
 
                 StyledText {
-                    text: "1:54/2:34"
+                    text: Formatter.formatTime(MprisUtil.getPlayedSeconds()) + "/" + Formatter.formatTime(MprisUtil.getTotalSeconds())
                 }
 
-                StyledText {
-                    text: Icons.skip_next
-                }
+                RowLayout {
+                    id: layout
+                    spacing: 4
 
-                ProgressBar {
-                    id: progressBar
-                    value: 0.5
-                    implicitWidth: 300
-                    implicitHeight: 4
+                    MaterialSymbol {
+                        id: skipPrevous
+                        text: "skip_previous"
+                    }
 
-                    Material.theme: Material.Dark
-                    Material.accent: Material.Red
+                    StyledProgressBar {
+                        id: progressBar
+                        value: MprisUtil.getPlayedSeconds() / MprisUtil.getTotalSeconds()
+                        implicitWidth: rightBlock.width - (skipPrevous.width + skipNext.width + layout.spacing * 2)
+                    }
 
-
-                    // background: Rectangle {
-                    //     width: parent.implicitWidth
-                    //     color: theme.backgroundColor2
-                    //     radius: theme.borderRadius
-                    // }
-
-                    // contentItem: Rectangle {
-                    //     width: progressBar.implicitWidth * parent.value
-                    //     height: progressBar.implicitHeight
-                    //     color: theme.interactiveColor
-                    //     radius: theme.borderRadius
-                    // }
-
-                    // Behavior on value {
-                    //     NumberAnimation {
-                    //         duration: 120
-                    //         easing.type: Easing.InOutQuad
-                    //     }
-                    // }
+                    MaterialSymbol {
+                        id: skipNext
+                        text: "skip_next"
+                    } 
                 }
             }
         }

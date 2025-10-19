@@ -20,13 +20,6 @@ ShellRoot {
       Bar {
         id: bar
       }
-
-      PanelWindow {
-        MaterialSymbol {
-        	// font.family: iconFont.name
-          text: "skip_next"
-        }
-      }
     }
   }
 }

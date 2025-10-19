@@ -29,6 +29,8 @@
         overskride # Bluetooth manager
         coolercontrol.coolercontrol-gui # Fan controller
         yt-dlp
+        ffmpeg
+        gcc
 
         (flameshot.override { enableWlrSupport = true; })
         
@@ -85,7 +87,12 @@
 
         # Python
         uv
-        python312
+        conda
+        portaudio
+        python3Packages.dbus-python
+        (python3.withPackages (ps: with ps; [
+          dbus-python
+        ]))
 
         # Gaming
         steam
