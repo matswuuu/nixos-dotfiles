@@ -11,7 +11,6 @@ import "./modules/resource/"
 
 PanelWindow {
   id: root
-  screen: modelData
   color: "transparent"
   anchors {
     top: true
@@ -26,7 +25,6 @@ PanelWindow {
   implicitHeight: 32
 
   readonly property var theme: Themes.active
-  required property var modelData
 
   RowLayout {
     id: leftLayout

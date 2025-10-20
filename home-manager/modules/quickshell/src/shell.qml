@@ -1,25 +1,28 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
-import "./modules/media/"
 import "./element/"
 
 ShellRoot {
   property list<string> monitors: ["DP-1", "eDP-1"]
 
-  FontLoader {
-    id: iconFont
-    source: "./fonts/MaterialIcons-Regular.ttf"
-  }
+  Variants {
+    model: Quickshell.screens.filter(monitor => monitors.includes(monitor.name))
 
-  Scope {
-    id: root
-
-    Variants {
-      model: Quickshell.screens.filter(monitor => monitors.includes(monitor.name))
+    Scope {
+      required property var modelData
 
       Bar {
         id: bar
+        screen: modelData
       }
-    }
+
+      ScreenOverlay {
+        screen: modelData
+        margins {
+          top: bar.margins.top * 2 + bar.height
+        }
+      }
+    }   
   }
 }

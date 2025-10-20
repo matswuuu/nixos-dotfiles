@@ -9,19 +9,17 @@ import Quickshell.Widgets
 Singleton {
     id: root 
 
-    property string outputMutedSymbol: "dis"
+    property string outputMutedSymbol: "volume_off"
     property var outputSymbols: ({
-        0: "-",
-        1: "low",
-        50: "med",
-        75: "high"
+        0: "volume_off",
+        1: "volume_mute",
+        25: "volume_down",
+        50: "volume_up"
     })
-    property string inputMutedSymbol: "dis"
+    property string inputMutedSymbol: "mic_off"
     property var inputSymbols: ({
-        0: "-",
-        1: "low",
-        50: "med",
-        75: "high"
+        0: "mic_off",
+        1: "mic"
     })
 
     property bool outputMuted: false

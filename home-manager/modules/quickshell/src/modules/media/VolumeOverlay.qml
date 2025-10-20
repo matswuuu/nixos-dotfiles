@@ -16,11 +16,6 @@ PopupWindow {
     implicitWidth: wrapper.width
     implicitHeight: wrapper.height
 
-    onVisibleChanged: if (visible && anchor.item) {
-        anchor.rect.x = (anchor.item.width - width) / 2
-        anchor.rect.y = anchor.item.height + 10
-    }
-
     readonly property var theme: Themes.active
     property int volume
     property bool muted
@@ -48,33 +43,6 @@ PopupWindow {
                     value: volume / 100
                     implicitWidth: 180
                 }
-
-                // ProgressBar {
-                //     id: progressBar
-                //     value: volume / 100
-                //     implicitWidth: 180
-                //     implicitHeight: 4
-
-                //     background: Rectangle {
-                //         width: parent.implicitWidth
-                //         color: theme.backgroundColor2
-                //         radius: theme.borderRadius
-                //     }
-
-                //     contentItem: Rectangle {
-                //         width: progressBar.implicitWidth * parent.value
-                //         height: progressBar.implicitHeight
-                //         color: theme.interactiveColor
-                //         radius: theme.borderRadius
-                //     }
-
-                //     Behavior on value {
-                //         NumberAnimation {
-                //             duration: 120
-                //             easing.type: Easing.InOutQuad
-                //         }
-                //     }
-                // }
 
                 StyledText {
                     text: `${volume}%`

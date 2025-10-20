@@ -30,19 +30,15 @@ WrapperRectangle {
             RowLayout {
                 spacing: 4
                 
-                StyledText {
+                MaterialSymbol {
                     text: Sound.getOutputSymbol()
+                    font.pixelSize: 18
                 }
-                StyledText {
+                MaterialSymbol {
                     text: Sound.getInputSymbol()
+                    font.pixelSize: 18
                 }
             }
         }
-    }
-
-    VolumeOverlay {
-        anchor {
-            item: root
-        } 
     }
 }
