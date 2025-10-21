@@ -73,7 +73,6 @@
         jetbrains-toolbox 
         mongodb-compass
         insomnia
-        wireshark
 
         # Visual
         krita
