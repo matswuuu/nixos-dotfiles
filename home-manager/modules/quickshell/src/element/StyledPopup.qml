@@ -19,6 +19,7 @@ WrapperMouseArea {
     property int triggerHoverCount
 
     id: root
+    child: window
     hoverEnabled: true
 
     onEntered: {
@@ -61,38 +62,18 @@ WrapperMouseArea {
         }
     }
 
-    PopupWindow {
+    ColumnLayout {
         id: window
-        visible: false
-        color: "transparent"
+
+    Item {
+        // visible: false
+        // color: "transparent"
         implicitWidth: wrapper.width
         implicitHeight: wrapper.height
-        anchor {
-            item: root
-            rect.y: root.implicitHeight + 10
-        }
-
-        // ShaderEffectSource {
-        //     id: effectSource
-
-        //     sourceItem: wrapper
-        //     anchors.centerIn: wrapper
-        //     width: 400
-        //     height: 400
-        //     sourceRect: Qt.rect(x,y, width, height)
-        // }
-
-        // MultiEffect {
-        //     id: blurEffect
-        //     anchors.fill: parent
-        //     source: effectSource
-        //     blurEnabled: true
-        //     blur: 0.45            // tweak
-        //     brightness: 1.0
-        //     saturation: 1.0
-        //     colorization: 0.12    // slight tint if you want
-        //     colorizationColor: "#00000050"
-        //     z: 0
+        // anchors.topMargin: root,implicitHeight + 10
+        // anchor {
+        //     item: root
+        //     rect.y: root.implicitHeight + 10
         // }
 
         MouseArea {
@@ -130,5 +111,6 @@ WrapperMouseArea {
                 contentItem.anchors.fill = wrapper
             }
         }
+    }
     }
 }
