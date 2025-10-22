@@ -16,19 +16,25 @@ WrapperMouseArea {
         currentFormat = currentFormat == simpleFormat ? fullFormat : simpleFormat
     }
 
-    WrapperRectangle {
-        color: theme.backgroundColor
-        radius: theme.borderRadius
-        margin: theme.margin
+    StyledPopup {
+        contentItem: CalendarWidget {
 
-        Row {
-            SystemClock {
-                id: sysClock
-                precision: SystemClock.Seconds
-            }
+        }
 
-            StyledText {
-                text: Qt.formatDateTime(sysClock.date, currentFormat)
+        WrapperRectangle {
+            color: theme.backgroundColor
+            radius: theme.borderRadius
+            margin: theme.margin
+
+            Row {
+                SystemClock {
+                    id: sysClock
+                    precision: SystemClock.Seconds
+                }
+
+                StyledText {
+                    text: Qt.formatDateTime(sysClock.date, currentFormat)
+                }
             }
         }
     }

@@ -19,7 +19,6 @@ WrapperMouseArea {
     property int triggerHoverCount
 
     id: root
-    child: window
     hoverEnabled: true
 
     onEntered: {
@@ -62,19 +61,16 @@ WrapperMouseArea {
         }
     }
 
-    ColumnLayout {
+    PopupWindow {
         id: window
-
-    Item {
-        // visible: false
-        // color: "transparent"
+        visible: false
+        color: "transparent"
         implicitWidth: wrapper.width
         implicitHeight: wrapper.height
-        // anchors.topMargin: root,implicitHeight + 10
-        // anchor {
-        //     item: root
-        //     rect.y: root.implicitHeight + 10
-        // }
+        anchor {
+            item: root
+            rect.y: root.implicitHeight + 10
+        }
 
         MouseArea {
             id: wrapper
@@ -111,6 +107,5 @@ WrapperMouseArea {
                 contentItem.anchors.fill = wrapper
             }
         }
-    }
     }
 }

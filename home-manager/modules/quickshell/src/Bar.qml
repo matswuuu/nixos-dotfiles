@@ -36,10 +36,6 @@ PanelWindow {
     ResourceBlock {
 
     }
-
-    // MprisWidget {
-      
-    // }
   }
 
   RowLayout {
