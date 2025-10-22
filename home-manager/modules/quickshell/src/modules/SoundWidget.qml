@@ -34,6 +34,7 @@ WrapperRectangle {
                 implicitHeight: 100
                 color: "red"
             }
+        }
 
         RowLayout {
             spacing: 4
