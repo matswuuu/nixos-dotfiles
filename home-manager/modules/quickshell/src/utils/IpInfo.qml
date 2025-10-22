@@ -5,14 +5,12 @@ import Quickshell
 import Quickshell.Io
 
 Singleton {
-    property string ip: ""
-    property string country: ""
-    property string countryCode: ""
-    property string regionName: ""
-    property string city: ""
-    property string timezone: ""
-    property string isp: ""
-    property string org: ""
+    property string ip
+    property string country
+    property string countryCode
+    property string city
+    property string timezone
+    property string isp
 
     Process {
         id: fetchProcess
@@ -22,16 +20,14 @@ Singleton {
             onStreamFinished: {
                 try {
                     const info = JSON.parse(this.text.trim())
-                    ip = info.query || ""
-                    country = info.country || ""
-                    countryCode = info.countryCode || ""
-                    regionName = info.regionName || ""
-                    city = info.city || ""
-                    timezone = info.timezone || ""
-                    isp = info.isp || ""
-                    org = info.org || ""
+                    ip = info.query || "?"
+                    country = info.country || "?"
+                    countryCode = info.countryCode || "?"
+                    city = info.city || "?"
+                    timezone = info.timezone || "?"
+                    isp = `${info.isp} (${info.as})` || "?"
                 } catch(e) {
-                    console.log("Failed to parse IP info:", e)
+                    console.err1or("Failed to parse IP info:", e)
                 }
             }
         }

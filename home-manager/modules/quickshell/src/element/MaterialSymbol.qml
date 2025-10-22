@@ -10,4 +10,3 @@ Text {
         pixelSize: 28
     }
     color: theme.textColor
-}

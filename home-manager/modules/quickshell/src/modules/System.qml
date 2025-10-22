@@ -28,13 +28,13 @@ WrapperRectangle {
             visible: Battery.present
         }
 
-        StyledText {
-            text: Network.connectionSymbol
-        }
+        StyledPopup {
+            contentItem: NetworkTooltip {
+            }
 
-        // TODO: Move to tooltip
-        StyledText {
-            text: IpInfo.countryCode || "?"
+            StyledText {
+                text: Network.connectionSymbol
+            }
         }
 
         StyledText {

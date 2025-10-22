@@ -11,7 +11,6 @@ WrapperRectangle {
     readonly property var theme: Themes.active
     property string format: "HH:mm ddd dd MMM"
 
-    id: root
     color: theme.backgroundColor
     radius: theme.borderRadius
     margin: theme.margin
@@ -20,13 +19,21 @@ WrapperRectangle {
         spacing: 8
 
         StyledPopup {
+            visible: MprisUtil.activePlayer != null
             contentItem: PlayerControl {
+        
             }
 
             MprisWidget {
-
             }
         }
+
+        StyledPopup {
+            contentItem: Rectangle {
+                implicitWidth: 100
+                implicitHeight: 100
+                color: "red"
+            }
 
         RowLayout {
             spacing: 4

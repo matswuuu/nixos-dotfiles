@@ -17,8 +17,6 @@ RowLayout {
     property string title: MprisUtil.getTitle(titleLength, "")
     property string artist: MprisUtil.getArtist(artistLength, "")
 
-    visible: MprisUtil.activePlayer != null
-
     RowLayout {
         spacing: 4
 
