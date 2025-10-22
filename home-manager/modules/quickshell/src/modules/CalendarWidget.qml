@@ -29,8 +29,8 @@ WrapperRectangle {
 
         MonthGrid {
             id: grid
-            month: Calendar.December
-            year: 2015
+            month: Calendar.month
+            year: Calendar.year
             locale: Qt.locale("en_US")
 
             Layout.fillWidth: true
