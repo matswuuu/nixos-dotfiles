@@ -34,18 +34,18 @@ WrapperRectangle {
                 implicitHeight: 100
                 color: "red"
             }
-        }
 
-        RowLayout {
-            spacing: 4
-            
-            MaterialSymbol {
-                text: Sound.getOutputSymbol()
-                font.pixelSize: 18
-            }
-            MaterialSymbol {
-                text: Sound.getInputSymbol()
-                font.pixelSize: 18
+            RowLayout {
+                spacing: 4
+                
+                MaterialSymbol {
+                    text: Sound.getOutputSymbol()
+                    font.pixelSize: 18
+                }
+                MaterialSymbol {
+                    text: Sound.getInputSymbol()
+                    font.pixelSize: 18
+                }
             }
         }
     }

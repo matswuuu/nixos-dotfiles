@@ -7,7 +7,7 @@ import "./../element/"
 import "./../theme/"
 
 WrapperRectangle {
-    color: "red"
+    color: "yellow"
 
     GridLayout {
         columns: 2
@@ -25,16 +25,44 @@ WrapperRectangle {
             locale: grid.locale
 
             Layout.fillHeight: true
+
+            delegate: Text {
+                text: model.weekNumber
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
         }
 
         MonthGrid {
             id: grid
-            month: Calendar.month
+            month: new Date().getMonth()
             year: Calendar.year
-            locale: Qt.locale("en_US")
+            locale: Qt.locale()
 
             Layout.fillWidth: true
             Layout.fillHeight: true
+
+            delegate: Rectangle {
+                width: grid.cellWidth
+                height: grid.cellHeight
+                color: model.isCurrentMonth ? "white" : "lightgray" // Differentiate previous/next month days
+                opacity: model.isCurrentMonth ? 1.0 : 0.5 // Make them slightly faded
+
+                Text {
+                    anchors.centerIn: parent
+                    text: model.day
+                    color: model.isCurrentMonth ? "black" : "darkgray"
+                }
+
+                Timer {
+                    interval: 1000
+                    running: true
+                    repeat: true
+                    onTriggered: {
+                        print(model.weekNumber)
+                    }
+                }
+            }
         }
     }
 }
