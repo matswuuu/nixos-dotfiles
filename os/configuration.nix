@@ -36,13 +36,13 @@
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      substituters = [ 
-        "https://aseipp-nix-cache.global.ssl.fastly.net"
-        "https://ezkea.cachix.org" 
-      ];
-      trusted-public-keys = [
-        "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI=" 
-      ];
+      # substituters = [ 
+      #   "https://aseipp-nix-cache.global.ssl.fastly.net"
+      #   "https://ezkea.cachix.org" 
+      # ];
+      # trusted-public-keys = [
+      #   "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI=" 
+      # ];
     };
     gc = {
       automatic = true;
