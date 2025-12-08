@@ -1,6 +1,10 @@
 { pkgs, ... }:
 {
     nixpkgs.config.allowUnfree = true;
+    # TODO: Remove
+    nixpkgs.config.permittedInsecurePackages = [
+      "gradle-7.6.6"
+    ];
     home.packages = with pkgs; [
         # Cursor 
         numix-cursor-theme
@@ -38,11 +42,6 @@
         gtk4
         adw-gtk3
 
-        # Qt
-        qt6.full  
-        kdePackages.qtgraphs
-        kdePackages.qtsvg
-
         # Dolphin
         kdePackages.dolphin
         kdePackages.kio-extras
@@ -70,17 +69,15 @@
 
         # Code stuff
         vscode
+        code-cursor
         jetbrains-toolbox 
-        mongodb-compass
+        #mongodb-compass
         insomnia
 
         # Visual
         krita
         blockbench
         figma-linux
-
-        # Java
-        recaf-launcher
 
         # JS
         nodejs
@@ -91,6 +88,7 @@
         portaudio
         python3Packages.dbus-python
         (python3.withPackages (ps: with ps; [
+          tkinter
           dbus-python
         ]))
 

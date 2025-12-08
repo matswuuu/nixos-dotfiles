@@ -69,7 +69,11 @@ WrapperMouseArea {
         implicitHeight: wrapper.height
         anchor {
             item: root
-            rect.y: root.implicitHeight + 10
+            rect { 
+                width: wrapper.width
+                height: wrapper.height
+                y: root.implicitHeight + 10
+            }
         }
 
         MouseArea {
@@ -104,7 +108,7 @@ WrapperMouseArea {
 
             Component.onCompleted: {
                 contentItem.parent = wrapper
-                contentItem.anchors.fill = wrapper
+                contentItem.anchors.centerIn = wrapper
             }
         }
     }

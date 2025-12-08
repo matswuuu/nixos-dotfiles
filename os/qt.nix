@@ -1,7 +1,6 @@
-{ pkgs ? import <nixpkgs> {} }:
-
-let
-  libs = with pkgs; [
+{ pkgs, ...}:
+{
+   environment.systemPackages = with pkgs; [
     qt6.qt3d
     qt6.qt5compat
     qt6.qtcharts
@@ -39,19 +38,7 @@ let
     qt6.qtwebengine
     qt6.qtwebsockets
     qt6.qtwebview
+
+    quickshell
   ];
-
-  qmlPath = builtins.concatStringsSep ":" (map (p: "${p}/lib/qt-6/qml") libs);
-  pluginPath = builtins.concatStringsSep ":" (map (p: "${p}/lib/qt-6/plugins") libs);
-in
-
-pkgs.mkShell {
-  buildInputs = libs ++ [ pkgs.quickshell ];
-  shellHook = ''
-    export QML_IMPORT_PATH=${qmlPath}
-    export QT_PLUGIN_PATH=${pluginPath}
-
-    cd ~/nixos-dotfiles/home-manager/modules/quickshell/src
-    # exec quickshell -p shell.qml
-  '';
 }

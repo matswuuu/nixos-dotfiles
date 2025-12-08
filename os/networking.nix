@@ -9,11 +9,7 @@
     networkmanager = {
       enable = true;
     };
-    interfaces = {
-      enp2s0 = {
-        useDHCP = true;
-      };
-    };
+    timeServers = [ "0.pool.ntp.org" "1.pool.ntp.org" ];
     firewall = {
       allowedTCPPorts = [ 
         7878

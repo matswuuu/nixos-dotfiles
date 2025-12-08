@@ -12,10 +12,6 @@
         ./os/hardware/main/nvidia.nix
         ./os/programs/steam.nix
       ];
-      packages = pkgs: with pkgs; [
-        nvtopPackages.nvidia
-        vulkan-tools
-      ];
       hyprland = [
         "~/.config/hypr/main/monitor.conf"
       ];
@@ -32,8 +28,6 @@
       modules = [
         ./os/hardware/laptop/hardware-configuration.nix
         ./os/hardware/laptop/auto-cpufreq.nix
-      ];
-      packages = pkgs: with pkgs; [
       ];
       hyprland = [
         "~/.config/hypr/laptop/monitor.conf"

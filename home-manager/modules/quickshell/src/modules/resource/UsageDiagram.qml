@@ -44,70 +44,72 @@ Item {
         onPaint: {
             const leftMargin = 30
             const bottomMargin = 20
+            const textHeight = 10
 
             const ctx = getContext("2d")
             ctx.clearRect(0, 0, root.width, root.height)
 
-            const stepX = (width - leftMargin - 10) / maxX
-            const stepY = (height - bottomMargin - 10) / maxY
+            const stepX = (width - leftMargin - textHeight) / maxX
+            const stepY = (height - bottomMargin - textHeight) / maxY
             const scaleY = height / 100
+
+            // Offsets for label spacing
+            const xLabelOffset = 6    // space below Ox
+            const yLabelOffset = 6    // space left of Oy
 
             // --- Draw axes ---
             ctx.strokeStyle = axisColor
             ctx.lineWidth = 2
             ctx.beginPath()
-            // Oy (value)
+
+            // Oy (vertical)
             ctx.moveTo(leftMargin, 0)
             ctx.lineTo(leftMargin, height - bottomMargin)
-            // Ox (time)
+
+            // Ox (horizontal)
             ctx.moveTo(leftMargin, height - bottomMargin)
-            ctx.lineTo(width + leftMargin, height - bottomMargin)
+            ctx.lineTo(width - 5, height - bottomMargin)
             ctx.stroke()
 
+            // --- Draw X axis labels ---
             ctx.fillStyle = "white"
+            ctx.font = "10px Sans"
+            ctx.textAlign = "center"
+            ctx.textBaseline = "top"
+
             for (let i = 0; i <= maxX; i += valueStepX) {
                 const x = leftMargin + i * stepX
-                ctx.fillText(`${i}s`, x - 8, height - 6)
+                const y = height - bottomMargin + xLabelOffset
+                ctx.fillText(`${i}s`, x, y)
             }
 
+            // --- Draw Y axis labels ---
             ctx.fillStyle = "red"
-            ctx.font = "10px Sans"
+            ctx.textAlign = "right"
+            ctx.textBaseline = "middle"
+
             for (let i = 0; i <= maxY; i += valueStepY) {
-                const y = height - bottomMargin + i * stepY
-                ctx.fillText(i.toString(), 4, y + 3)
+                const y = height - bottomMargin - i * stepY
+                ctx.fillText(i.toString(), leftMargin - yLabelOffset, y)
             }
 
-            // --- Draw CPU usage ---
+            // --- Draw CPU usage line ---
             ctx.beginPath()
             ctx.strokeStyle = usageColor
             ctx.lineWidth = 2
+
             for (let i = 0; i < history.length; i++) {
                 const x = leftMargin + (i * stepX)
                 const y = height - bottomMargin - (history[i] * scaleY)
+
                 if (i === 0) ctx.moveTo(x, y)
                 else ctx.lineTo(x, y)
             }
+
             ctx.stroke()
+
         }
     }
-
-
-    // GraphsView {
-    //     title: "Line"
-    //     anchors.fill: parent
-    //     antialiasing: true
-
-    //     LineSeries {
-    //         name: "LineSeries"
-    //         XYPoint { x: 0; y: 0 }
-    //         XYPoint { x: 1.1; y: 2.1 }
-    //         XYPoint { x: 1.9; y: 3.3 }
-    //         XYPoint { x: 2.1; y: 2.1 }
-    //         XYPoint { x: 2.9; y: 4.9 }
-    //         XYPoint { x: 3.4; y: 3.0 }
-    //         XYPoint { x: 4.1; y: 3.3 }
-    //     }
-    // }
 
     StyledText {
         text: title

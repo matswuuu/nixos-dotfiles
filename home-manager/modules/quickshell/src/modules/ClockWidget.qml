@@ -1,8 +1,10 @@
 import QtQuick
+import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
 import "./../element/"
 import "./../theme/"
+import "./calendar/"
 
 StyledPopup {
     readonly property var theme: Themes.active
@@ -12,11 +14,13 @@ StyledPopup {
 
     property string currentFormat: simpleFormat
 
-
     contentItem: CalendarWidget {
-
+        id: calendar
     }
 
+    onEntered: {
+        calendar.monthOffset = 0
+    }
     onClicked: {
         currentFormat = currentFormat == simpleFormat ? fullFormat : simpleFormat;
     }

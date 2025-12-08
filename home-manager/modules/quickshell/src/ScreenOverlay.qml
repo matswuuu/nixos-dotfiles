@@ -18,7 +18,7 @@ PanelWindow {
         id: layout
         spacing: 10
         anchors {
-        horizontalCenter: parent.horizontalCenter
+            horizontalCenter: parent.horizontalCenter
         }
 
         DisplayIndicator {
