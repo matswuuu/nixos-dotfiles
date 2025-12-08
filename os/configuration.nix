@@ -36,5 +36,10 @@
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
     };
+    gc = {
+      automatic = true;
+      dates = "06:00";
+      options = "--delete-older-than 14d";
+    };
   };
 }

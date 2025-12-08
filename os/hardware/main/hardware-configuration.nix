@@ -23,9 +23,13 @@
   };
 
   fileSystems."/mnt/data" = {
-    device = "/dev/sda2";
-    fsType = "ntfs-3g";
-    options = [ "defaults" ];
+    device = "/dev/disk/by-uuid/ACB6A0E5B6A0B16E";
+    fsType = "ntfs";
+    options = [ "default" ];
+  };
+  fileSystems."/mnt/data2" = {
+    device = "/dev/disk/by-uuid/dd25fff4-b71b-4fe5-a348-9c953b812a12";
+    fsType = "ext4";
   };
 
   swapDevices = [

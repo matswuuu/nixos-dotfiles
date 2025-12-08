@@ -10,5 +10,8 @@
     kvantum = {
       apply = true;
     };
+    btop = {
+      enable = true;
+    };
   };
 }

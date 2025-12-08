@@ -35,12 +35,18 @@
         yt-dlp
         ffmpeg
         gcc
+        btop
 
         (flameshot.override { enableWlrSupport = true; })
         
         gtk3
         gtk4
         adw-gtk3
+
+        # Qt
+        qt6.qtdeclarative
+        kdePackages.qtgraphs
+        kdePackages.qtsvg
 
         # Dolphin
         kdePackages.dolphin
@@ -52,7 +58,6 @@
         mpvpaper
         hyprpaper
         hyprshot
-        hyprsysteminfo
         wl-clipboard
         cliphist
         obs-studio
@@ -98,6 +103,9 @@
         mangohud
         protonup-qt
         lutris
+        gamescope
+        xdotool
+        ydotool
 
         # Anime
         ani-cli
