@@ -48,52 +48,12 @@ WrapperRectangle {
 
         }
 
-        StyledPopup {
-            visible: GpuUsage.isPresented
-            contentItem: WrapperRectangle {
-                color: theme.backgroundColor2
-                radius: theme.borderRadius
-                margin: theme.margin + 4
+        GpuWidget {
 
-                StyledText {
-                    text: "GPU"
-                }
-            }
-
-            RowLayout {
-                spacing: 4
-
-                StyledText {
-                    text: "GPU"
-                }
-                StyledText {
-                    text: GpuUsage.gpuUsage + usageSymbol
-                }
-                StyledText {
-                    text: GpuUsage.gpuTemp + tempSymbol
-                    color: GpuUsage.tempColor
-                }
-            }  
         }
 
         MemoryWidget {
             
         }
-
-        // StyledPopup {
-        //     contentItem: WrapperRectangle {
-        //         color: theme.backgroundColor2
-        //         radius: theme.borderRadius
-        //         margin: theme.margin + 4
-
-        //         StyledText {
-        //             text: "MEMORY"
-        //         }
-        //     }
-
-        //     StyledText {
-        //         text: Formatter.formatKBtoGB(MemoryUsage.memoryUsed) + "G"
-        //     }
-        // }
     }
 }

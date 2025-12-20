@@ -6,6 +6,8 @@ import QtQuick
 import QtQuick
 
 Singleton {
+    property int maxHistory: 60
+
     property int gpuUsage: 0
     property int gpuTemp: 0
     property color tempColor
