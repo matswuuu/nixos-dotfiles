@@ -63,15 +63,14 @@ WrapperMouseArea {
 
     PopupWindow {
         id: window
-        visible: false
         color: "transparent"
         implicitWidth: wrapper.width
         implicitHeight: wrapper.height
+        visible: false
         anchor {
             item: root
-            rect { 
-                width: wrapper.width
-                height: wrapper.height
+            rect {
+                x: (root.width - width) / 2
                 y: root.implicitHeight + 10
             }
         }
@@ -95,7 +94,7 @@ WrapperMouseArea {
                 id: appearAnim
                 PropertyAnimation { to: 1; duration: 200 }
             }
-
+ 
             SequentialAnimation on opacity {
                 id: fadeAnim
                 PropertyAnimation { to: 1; duration: 200 }

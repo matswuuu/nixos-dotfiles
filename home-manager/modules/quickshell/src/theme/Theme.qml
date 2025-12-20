@@ -13,6 +13,9 @@ QtObject {
     property int borderRadius: 15
     property int margin: 7
 
+    // Font
+    property string font: "JetBrainsMono Nerd Font"
+
     function opacity(color: string, opacity: real): color {
         const baseColor = Qt.color(color)
         return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, opacity)

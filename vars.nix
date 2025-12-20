@@ -1,5 +1,5 @@
 {
-  activeProfile = "main";
+  activeProfile = "laptop";
   profiles = {
     "main" = {
       system = "x86_64-linux";

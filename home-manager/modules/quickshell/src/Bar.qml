@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Io
@@ -44,6 +45,27 @@ PanelWindow {
     }
 
     ClockWidget {
+      id: clock
+
+      // ToolTip {
+      //   parent: clock
+      //   visible: true
+      //   text: "test"
+      //   margins: 20
+
+      //   contentItem: RowLayout {
+      //     Text {
+      //       text: "test"
+      //       color: "#21be2b"
+      //     }
+      //   }
+
+      //   background: Rectangle {
+      //     border.color: "#21be2b"
+      //     implicitHeight: 100
+      //     implicitWidth: 400
+      //   }
+      // }
     }
   }
 

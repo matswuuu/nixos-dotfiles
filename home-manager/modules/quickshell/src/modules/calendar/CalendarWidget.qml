@@ -7,9 +7,15 @@ import "./../../element/"
 import "./../../theme/"
 
 WrapperRectangle {
+    readonly property var theme: Themes.active
+
     property int monthOffset: 0
     property var viewingDate: getDate(monthOffset)
     property var currentDate: getDate(0)
+
+    color: theme.backgroundColor2
+    radius: theme.borderRadius
+    margin: theme.margin
 
     function getDate(offset): Date {
         const date = new Date();
@@ -38,6 +44,7 @@ WrapperRectangle {
 
                     StyledText {
                         text: viewingDate.toLocaleDateString(Qt.locale(), "MMMM yyyy")
+                        font.pixelSize: 18
                     }
                 }
 
@@ -72,9 +79,9 @@ WrapperRectangle {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                delegate: Text {
+                delegate: StyledText {
                     text: model.shortName
-                    Layout.alignment: Qt.AlignHCenter 
+                    Layout.alignment: Qt.AlignHCenter
                 }
             }
 
@@ -91,15 +98,20 @@ WrapperRectangle {
 
                 delegate: Rectangle {
                     property bool currentMonth: model.year === currentDate.getFullYear() && model.month === currentDate.getMonth()
+
                     width: grid.cellWidth
                     height: grid.cellHeight
-                    color: currentMonth ? "yellow" : "lightgray"
-                    opacity: currentMonth ? 1.0 : 0.4
+                    color: "white"
+                    radius: theme.borderRadius
+                    opacity: currentMonth ? 1 : 0.8
+                    anchors {
+                        margins: theme.margin
+                    }
 
-                    Text {
+                    StyledText {
                         anchors.centerIn: parent
                         text: model.day
-                        color: model.today ? "red" : "blue"
+                        color: model.today ? "red" : "black"
                     }
                 }
             }

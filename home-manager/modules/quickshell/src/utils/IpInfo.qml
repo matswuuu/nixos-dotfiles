@@ -27,7 +27,7 @@ Singleton {
                     timezone = info.timezone || "?"
                     isp = `${info.isp} (${info.as})` || "?"
                 } catch(e) {
-                    console.err1or("Failed to parse IP info:", e)
+                    console.error("Failed to parse IP info:", e)
                 }
             }
         }

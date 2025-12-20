@@ -37,6 +37,10 @@
         gcc
         btop
 
+        swappy
+        slurp
+        grim
+
         (flameshot.override { enableWlrSupport = true; })
         
         gtk3
@@ -76,13 +80,14 @@
         vscode
         code-cursor
         jetbrains-toolbox 
-        #mongodb-compass
+        mongodb-compass
         insomnia
 
         # Visual
         krita
         blockbench
         figma-linux
+        blender
 
         # JS
         nodejs

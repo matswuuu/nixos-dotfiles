@@ -16,63 +16,36 @@ WrapperRectangle {
     radius: theme.borderRadius
     margin: theme.margin
 
+    function getUsagePoints(stepX: int, maxX: int, history) {
+        const points = []
+        for (let i = 0; i <= maxX; i++) {
+            const x = i
+            const y = i >= history.length ? -1 : history[i]
+            points.push({ x: x, y: y })
+        }
+
+        return points
+    }
+
+    function updateDiagrams(diagrams) {
+        for (let i = 0; i < diagrams.length; i++) {
+            let item = chartRepeater.itemAt(i)
+            if (item) {
+                const diagram = diagrams[i]
+                item.points = getUsagePoints(diagram.stepX, diagram.maxX, diagram.history)
+                item.minY = diagram.minY ? diagram.minY : 0
+                item.maxX = diagram.maxX
+                item.maxY = diagram.maxY
+                item.title = diagram.title
+            }
+        }
+    }
+
     RowLayout {
         spacing: 8
 
-        StyledPopup {
-            contentItem: WrapperRectangle {
-                color: theme.backgroundColor2
-                radius: theme.borderRadius
-                margin: theme.margin + 4
+        CpuWidget {
 
-                ColumnLayout {
-                    UsageDiagram {
-                        title: "Usage"
-                        history: CpuUsage.usageHistory
-                        maxX: CpuUsage.maxHistory
-                        maxY: CpuUsage.maxUsage
-                        valueStepX: 10
-                        valueStepY: CpuUsage.maxUsage / 5
-                    }
-
-                    UsageDiagram {
-                        title: "Temp"
-                        history: CpuUsage.tempHistory
-                        maxX: CpuUsage.maxHistory
-                        maxY: CpuUsage.maxTemp
-                        valueStepX: 10
-                        valueStepY: CpuUsage.maxTemp / 5
-                    }
-
-                    UsageDiagram {
-                        title: "Freq"
-                        history: CpuUsage.freqHistory
-                        maxX: CpuUsage.maxHistory
-                        maxY: CpuUsage.maxFreq
-                        valueStepX: 10
-                        valueStepY: CpuUsage.maxFreq / 5
-                    }
-
-                    ProcessViewer {
-                        
-                    }
-                }
-            }
-
-            RowLayout {
-                spacing: 4
-
-                StyledText {
-                    text: "CPU"
-                }
-                StyledText {
-                    text: CpuUsage.cpuUsage + usageSymbol
-                }
-                StyledText {
-                    text: CpuUsage.cpuTemp + tempSymbol
-                    color: CpuUsage.tempColor
-                }
-            }  
         }
 
         StyledPopup {
@@ -103,20 +76,24 @@ WrapperRectangle {
             }  
         }
 
-        StyledPopup {
-            contentItem: WrapperRectangle {
-                color: theme.backgroundColor2
-                radius: theme.borderRadius
-                margin: theme.margin + 4
-
-                StyledText {
-                    text: "MEMORY"
-                }
-            }
-
-            StyledText {
-                text: Formatter.formatKBtoGB(MemoryUsage.memoryUsed) + "G"
-            }
+        MemoryWidget {
+            
         }
+
+        // StyledPopup {
+        //     contentItem: WrapperRectangle {
+        //         color: theme.backgroundColor2
+        //         radius: theme.borderRadius
+        //         margin: theme.margin + 4
+
+        //         StyledText {
+        //             text: "MEMORY"
+        //         }
+        //     }
+
+        //     StyledText {
+        //         text: Formatter.formatKBtoGB(MemoryUsage.memoryUsed) + "G"
+        //     }
+        // }
     }
 }
