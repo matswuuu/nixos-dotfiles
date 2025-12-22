@@ -30,7 +30,7 @@ StyledPopup {
 
                     paddingLeft: 60
                     paddingRight: 20
-                    paddingTop: 20
+                    paddingTop: 10
                     paddingBottom: 40
 
                     xSteps: 6

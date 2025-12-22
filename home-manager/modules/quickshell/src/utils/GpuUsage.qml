@@ -8,14 +8,25 @@ import QtQuick
 Singleton {
     property int maxHistory: 60
 
+    property int maxUsage: 100
     property int gpuUsage: 0
+
+    property int maxTemp: 100
     property int gpuTemp: 0
     property color tempColor
 
-    property int maxTemp: 100
     // Probably we need to add AMD, but I don't have one to test
     property bool isPresented: nvidia
     property bool nvidia
+
+    property list<int> usageHistory: []
+    property list<int> tempHistory: []
+
+    function pushToHistory(array, value) {
+        if (array.length >= maxHistory)
+            array.shift()
+        array.push(value)
+    }
 
     Process {
         id: checkProcess
@@ -34,6 +45,7 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 gpuUsage = parseInt(this.text)
+                pushToHistory(usageHistory, gpuUsage)
             }
         }
     }
@@ -44,6 +56,8 @@ Singleton {
         stdout: StdioCollector {
             onStreamFinished: {
                 gpuTemp = parseInt(this.text)
+                pushToHistory(tempHistory, gpuTemp)
+
                 const percent = gpuTemp / maxTemp
                 tempColor = Qt.rgba(
                     (128 + 127 * percent) / 255,

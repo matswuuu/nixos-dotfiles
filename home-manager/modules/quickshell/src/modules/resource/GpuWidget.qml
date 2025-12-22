@@ -17,24 +17,16 @@ ResourceWidget {
         {
             "title": "GPU Usage (%)",
             "stepX": 10,
-            "maxX": CpuUsage.maxHistory,
+            "maxX": GpuUsage.maxHistory,
             "maxY": CpuUsage.maxUsage,
             "history": CpuUsage.usageHistory
         },
         {
             "title": "GPU Temperature (°C)",
             "stepX": 10,
-            "maxX": CpuUsage.maxHistory,
-            "maxY": CpuUsage.maxTemp,
-            "history": CpuUsage.usageHistory
-        },
-        {
-            "title": "GPU Frequency (MHz)",
-            "stepX": 10,
-            "minY": CpuUsage.minFreq,
-            "maxX": CpuUsage.maxHistory,
-            "maxY": CpuUsage.maxFreq,
-            "history": CpuUsage.freqHistory
+            "maxX": GpuUsage.maxHistory,
+            "maxY": GpuUsage.maxTemp,
+            "history": GpuUsage.tempHistory
         }
     ]
 }

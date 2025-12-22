@@ -38,11 +38,18 @@ Item {
         canvas.requestPaint()
     }
 
-    ColumnLayout {
+    Item {
         id: header
+        width: root.width
+        height: root.height
+
         StyledText {
             text: title
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            z: 1
+            anchors {
+                right: parent.right
+                top: parent.top
+            }
         }
 
         Canvas {
@@ -193,7 +200,7 @@ Item {
                     }
 
                     if (closestPoint && closestPoint.x != -1 && closestPoint.y != -1) {
-                        chartToolTip.text = `X: ${closestPoint.x.toFixed(1)}\nY: ${closestPoint.y.toFixed(1)}`
+                        chartToolTip.text = `X: ${xFormatter(closestPoint.x)}\nY: ${yFormatter(closestPoint.y)}`
                         chartToolTip.x = mouse.x + 10
                         chartToolTip.y = mouse.y - 40
                         chartToolTip.visible = true
