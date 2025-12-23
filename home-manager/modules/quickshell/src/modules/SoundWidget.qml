@@ -30,9 +30,13 @@ WrapperRectangle {
 
         StyledPopup {
             contentItem: Rectangle {
-                implicitWidth: 100
-                implicitHeight: 100
-                color: "red"
+                width: 200
+                height: 200
+
+                VolumeIndicator {
+                    visible: true
+                    playAnimation: false
+                }
             }
 
             RowLayout {

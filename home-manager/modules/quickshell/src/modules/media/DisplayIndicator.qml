@@ -10,6 +10,7 @@ WrapperRectangle {
     property string title
     property real value
     property string icon
+    property bool playAnimation: true
 
     id: root
     color: theme.backgroundColor2
@@ -22,9 +23,10 @@ WrapperRectangle {
     // }
 
     function show() {
-        fadeAnim.stop()
-        root.visible = true
-        fadeAnim.start()
+        if (!playAnimation) return;
+        fadeAnim.stop();
+        root.visible = true;
+        fadeAnim.start();
     }
 
     RowLayout {

@@ -6,6 +6,7 @@ QtObject {
     property string backgroundColor2
     property string interactiveColor
     property string textColor
+    property string textColor2
 
     // ===== Sizes =====
     property int itemSize: 16

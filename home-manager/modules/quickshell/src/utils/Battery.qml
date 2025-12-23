@@ -6,6 +6,7 @@ import Quickshell.Services.UPower
 
 Singleton {
     property bool present: false
+    property var device: UPower.displayDevice
     property int percentage
 
     Timer {
@@ -13,7 +14,7 @@ Singleton {
         repeat: true
         running: true
         onTriggered: {
-            const device = UPower.displayDevice
+            device = UPower.displayDevice
             present = device.isLaptopBattery
             percentage = device.percentage * 100
         }
