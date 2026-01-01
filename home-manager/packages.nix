@@ -33,6 +33,10 @@
         gcc
         btop
 
+        grim
+        slurp
+        swappy
+
         (flameshot.override { enableWlrSupport = true; })
         
         gtk3
@@ -73,6 +77,8 @@
         jetbrains-toolbox 
         mongodb-compass
         insomnia
+        eclipse-mat
+        visualvm
 
         # Visual
         krita

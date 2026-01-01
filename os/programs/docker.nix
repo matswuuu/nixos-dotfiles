@@ -17,4 +17,5 @@
       setSocketVariable = true;
     };
   };
+  virtualisation.waydroid.enable = true;
 }
