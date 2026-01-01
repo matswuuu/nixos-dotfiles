@@ -6,7 +6,7 @@ Text {
     readonly property var theme: Themes.active
 
     font {
-        family: "JetBrainsMono Nerd Font"
+        family: theme.font
         weight: Font.Bold
         pixelSize: 14
     }

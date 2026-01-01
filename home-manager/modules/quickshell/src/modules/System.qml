@@ -19,26 +19,20 @@ WrapperRectangle {
     RowLayout {
         spacing: 4
 
-        StyledText {
-            text: HyprlandXkb.translatedLayout
+        LanguageWidget {
+
         }
 
-        StyledText {
-            text: Battery.percentage + "%"
-            visible: Battery.present
+        BatteryWidget {
+
         }
 
-        StyledPopup {
-            contentItem: NetworkTooltip {
-            }
+        NetworkWidget {
 
-            StyledText {
-                text: Network.connectionSymbol
-            }
         }
 
-        StyledText {
-            text: Bluetooth.stateSymbol
+        BluetoothWidget {
+            
         }
     }
 }

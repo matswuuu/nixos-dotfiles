@@ -6,13 +6,18 @@ import QtQuick
 
 Singleton {
     function formatKBtoGB(kb: int): string {
-        return (kb / 1024 / 1024).toFixed(1);
+        return (kb / 1024 / 1024).toFixed(1).replace(/([^.])0+$/, "$1") + "GB";
     }
 
-    function formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        const ss = secs < 10 ? "0" + secs : secs;
-        return mins + ":" + ss;
+    function formatTime(totalSeconds) {
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = Math.floor(totalSeconds % 60);
+
+        const hDisplay = hours < 10 ? "0" + hours : hours;
+        const mDisplay = minutes < 10 ? "0" + minutes : minutes;
+        const sDisplay = seconds < 10 ? "0" + seconds : seconds;
+
+        return `${hDisplay}:${mDisplay}:${sDisplay}`;
     }
 }

@@ -10,7 +10,6 @@
          "networkmanager" 
          "wheel"
          "docker"
-         "gamemode"
       ];
     };
   };

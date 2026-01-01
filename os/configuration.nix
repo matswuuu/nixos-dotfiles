@@ -5,14 +5,18 @@
 {
   imports = [
     ./i18n.nix
+    ./gc.nix
     ./networking.nix
     ./users.nix
     ./packages.nix
     ./hyprland.nix
     ./bluetooth.nix
+    ./qt.nix
     ./services/display-manager.nix
     ./services/flatpak.nix
     ./services/openssh.nix
+    ./services/security.nix
+    ./services/udisk.nix
     ./services/upower.nix
     ./programs/amnezia-vpn.nix
     ./programs/cooler-control.nix
@@ -28,21 +32,9 @@
 
   system.stateVersion = "25.05";
 
-  services.gnome.gnome-keyring.enable = true;
-  security.pam.services = {
-    login.enableKwallet = true;
-  };
-
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
-      # substituters = [ 
-      #   "https://aseipp-nix-cache.global.ssl.fastly.net"
-      #   "https://ezkea.cachix.org" 
-      # ];
-      # trusted-public-keys = [
-      #   "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI=" 
-      # ];
     };
     gc = {
       automatic = true;

@@ -1,6 +1,10 @@
 { pkgs, ... }:
 {
     nixpkgs.config.allowUnfree = true;
+    # TODO: Remove
+    nixpkgs.config.permittedInsecurePackages = [
+      "gradle-7.6.6"
+    ];
     home.packages = with pkgs; [
         # Cursor 
         numix-cursor-theme
@@ -74,6 +78,7 @@
 
         # Code stuff
         vscode
+        code-cursor
         jetbrains-toolbox 
         mongodb-compass
         insomnia
@@ -84,6 +89,7 @@
         krita
         blockbench
         figma-linux
+        blender
 
         # JS
         nodejs
@@ -94,6 +100,7 @@
         portaudio
         python3Packages.dbus-python
         (python3.withPackages (ps: with ps; [
+          tkinter
           dbus-python
         ]))
 
