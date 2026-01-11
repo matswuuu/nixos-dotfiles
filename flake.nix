@@ -16,13 +16,13 @@
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    quickshell = {
-      url = "github:quickshell-mirror/quickshell";
+    mtsw-bar = {
+      url = "github:matswuuu/mtsw-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, catppuccin, ... } @inputs:
+  outputs = { nixpkgs, home-manager, catppuccin, mtsw-bar, ... } @inputs:
       let
         vars = import ./vars.nix;
         profile = vars.profiles.${vars.activeProfile};
@@ -48,6 +48,7 @@
         modules = [
           ./home-manager/home.nix
           catppuccin.homeModules.catppuccin
+          mtsw-bar.homeModules.mtsw-bar
         ]; 
       };
   };

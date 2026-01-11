@@ -11,7 +11,6 @@
     ./packages.nix
     ./hyprland.nix
     ./bluetooth.nix
-    ./qt.nix
     ./services/display-manager.nix
     ./services/flatpak.nix
     ./services/openssh.nix
@@ -30,7 +29,7 @@
     efi.canTouchEfiVariables = true;
   };
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 
   nix = {
     settings = {

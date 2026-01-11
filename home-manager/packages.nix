@@ -22,7 +22,7 @@
         mtr
         jmtpfs
         simple-mtpfs
-        mtpfs
+        # mtpfs
         libmtp
         gvfs
         usbutils
@@ -78,7 +78,6 @@
 
         # Code stuff
         vscode
-        code-cursor
         jetbrains-toolbox 
         mongodb-compass
         insomnia
@@ -110,9 +109,6 @@
         mangohud
         protonup-qt
         lutris
-        gamescope
-        xdotool
-        ydotool
 
         # Anime
         ani-cli
