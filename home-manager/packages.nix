@@ -41,8 +41,6 @@
         slurp
         swappy
 
-        (flameshot.override { enableWlrSupport = true; })
-        
         gtk3
         gtk4
         adw-gtk3
