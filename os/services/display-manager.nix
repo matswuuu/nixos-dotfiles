@@ -15,10 +15,10 @@
       };
     };
   };
-  catppuccin = {
-    sddm = {
-      enable = true;
-      background = "~/.config/hypr/wallpapers/1.png";
-    };
-  };
+  # catppuccin = {
+  #   sddm = {
+  #     enable = true;
+  #     background = "~/.config/hypr/wallpapers/1.png";
+  #   };
+  # };
 }

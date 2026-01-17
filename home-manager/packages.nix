@@ -60,6 +60,8 @@
         mpvpaper
         hyprpaper
         hyprshot
+        hyprpicker
+        hyprlauncher
         wl-clipboard
         cliphist
         obs-studio

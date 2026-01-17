@@ -6,6 +6,7 @@
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     hyprland
+    
     kitty
     google-chrome
     home-manager
@@ -34,12 +35,8 @@
     cliphist
 
     catppuccin-sddm
-    
-    # TODO: Move packages to module (file)
-    nvtopPackages.nvidia
-    vulkan-tools
   ];
-  #  ++ (vars.profiles.${vars.activeProfile}.packages pkgs or []);
+
   fonts = {
     fontconfig = {
       enable = true;

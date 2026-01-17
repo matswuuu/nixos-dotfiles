@@ -1,7 +1,7 @@
 {
-  boot.kernelParams = [ "intel_pstate=enable" ];
+  # boot.kernelParams = [ "intel_pstate=enable" ];
   services.thermald = {
     enable = true;
   };
-  powerManagement.cpuFreqGovernor = "schedutil";
+  powerManagement.cpuFreqGovernor = "performance";
 }

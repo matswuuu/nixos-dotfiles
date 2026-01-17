@@ -1,4 +1,4 @@
-{ config, lib, pkgs, modulesPath, ... }: 
+{ config, ... }: 
   let
     vars = import ./../vars.nix;
     profile = vars.profiles.${vars.activeProfile};

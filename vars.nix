@@ -1,5 +1,5 @@
 {
-  activeProfile = "laptop";
+  activeProfile = "main";
   profiles = {
     "main" = {
       system = "x86_64-linux";
@@ -7,9 +7,6 @@
       hostName = "main";
       flakeLocation = "~/nixos-dotfiles";
       modules = [
-        ./os/hardware/main/hardware-configuration.nix
-        ./os/hardware/main/cpu.nix
-        ./os/hardware/main/nvidia.nix
         ./os/programs/steam.nix
       ];
       hyprland = [
@@ -25,10 +22,7 @@
       username = "matswuuu";
       hostName = "laptop";
       flakeLocation = "~/nixos-dotfiles";
-      modules = [
-        ./os/hardware/laptop/hardware-configuration.nix
-        ./os/hardware/laptop/auto-cpufreq.nix
-      ];
+      modules = [];
       hyprland = [
         "~/.config/hypr/laptop/monitor.conf"
       ];

@@ -19,8 +19,15 @@ in
     inherit system;
     modules = [
       catppuccin.nixosModules.catppuccin
-      home-manager.nixosModules.home-manager
+      home-manager.nixosModules.home-manager 
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+        };
+      }
       ./os/configuration.nix
+      ./hosts/${hostName}/configuration.nix
     ] ++ nixosModules;
   };
 
