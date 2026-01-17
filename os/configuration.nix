@@ -41,4 +41,8 @@
       options = "--delete-older-than 14d";
     };
   };
+
+  programs.home-manager = {
+    enable = true;
+  };
 }

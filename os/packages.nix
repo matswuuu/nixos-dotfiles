@@ -32,6 +32,8 @@
     xclip
     xsel
     cliphist
+
+    catppuccin-sddm
     
     # TODO: Move packages to module (file)
     nvtopPackages.nvidia

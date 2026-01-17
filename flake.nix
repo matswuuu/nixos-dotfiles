@@ -23,33 +23,31 @@
   };
 
   outputs = { nixpkgs, home-manager, catppuccin, mtsw-bar, ... } @inputs:
-      let
-        vars = import ./vars.nix;
-        profile = vars.profiles.${vars.activeProfile};
-        system = profile.system;
-        pkgs = import nixpkgs { inherit system; };
-      in 
-    {
-      nixosConfigurations.${profile.hostName} = nixpkgs.lib.nixosSystem {
-        system = system;
-        modules = [
-          catppuccin.nixosModules.catppuccin
-          home-manager.nixosModules.home-manager
-          ./os/configuration.nix
-        ];
+    let
+      mkHost = import ./mkHost.nix {
+        inherit nixpkgs home-manager catppuccin mtsw-bar;
       };
 
-      programs.home-manager = {
-        enable = true;
+      main = mkHost {
+        system = "x86_64-linux";
+        hostName = "main";
+        username = "matswuuu";
       };
+      laptop = mkHost {
+        system = "x86_64-linux";
+        hostName = "laptop";
+        username = "matswuuu";
+      };
+    in 
+  {
+    nixosConfigurations = {
+      main = main.nixos;
+      laptop = laptop.nixos;
+    };
 
-      homeConfigurations.${profile.username} = home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgs;
-        modules = [
-          ./home-manager/home.nix
-          catppuccin.homeModules.catppuccin
-          mtsw-bar.homeModules.mtsw-bar
-        ]; 
-      };
+    homeConfigurations = {
+      "${main.meta.username}@${main.meta.hostName}" = main.home;
+      "${laptop.meta.username}@${laptop.meta.hostName}" = laptop.home;
+    };
   };
 }

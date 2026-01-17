@@ -13,5 +13,29 @@
     btop = {
       enable = true;
     };
+    dunst = {
+      enable = true;
+    };
+    fish = {
+      enable = true;
+    };
+    mpv = {
+      enable = true;
+    };
+    obs = {
+      enable = true;
+    };
+    kitty = {
+      enable = true;
+    };
+    gtk = {
+      icon = {
+        enable = true;
+      };
+    };
+    # sddm = {
+    #   enable = true;
+    #   background = "~/.config/hypr/wallpapers/1.png";
+    # };
   };
 }
