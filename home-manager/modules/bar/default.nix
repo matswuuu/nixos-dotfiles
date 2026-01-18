@@ -1,6 +1,6 @@
 {
   programs.mtsw-bar = {
     enable = true;
-    monitors = [ "eDP-1" ];
+    monitors = [ "DP-1" "eDP-1" ];
   };
 }

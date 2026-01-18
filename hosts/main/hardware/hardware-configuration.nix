@@ -22,15 +22,15 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
-  fileSystems."/mnt/data" = {
-    device = "/dev/disk/by-uuid/ACB6A0E5B6A0B16E";
-    fsType = "ntfs";
-    options = [ "default" ];
-  };
-  fileSystems."/mnt/data2" = {
-    device = "/dev/disk/by-uuid/dd25fff4-b71b-4fe5-a348-9c953b812a12";
-    fsType = "ext4";
-  };
+#  fileSystems."/mnt/data" = {
+#    device = "/dev/disk/by-uuid/ACB6A0E5B6A0B16E";
+#    fsType = "ntfs";
+#    options = [ "default" ];
+#  };
+  # fileSystems."/mnt/data2" = {
+  #   device = "/dev/disk/by-uuid/dd25fff4-b71b-4fe5-a348-9c953b812a12";
+  #   fsType = "ext4";
+  # };
 
   swapDevices = [
      { device = "/dev/disk/by-uuid/97bd1f23-80ce-46a3-ab6e-2168f0685e4e"; }

@@ -36,6 +36,7 @@
         ffmpeg
         gcc
         btop
+        woeusb-ng
 
         grim
         slurp
