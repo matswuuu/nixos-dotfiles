@@ -7,16 +7,19 @@
   nixosModules ? [ ],
   homeModules ? [ ]
 }:
-
-let
-  pkgs = import nixpkgs {
-    inherit system;
-    config.allowUnfree = true;
-  };
-in
+  let
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+  in
 {
   nixos = nixpkgs.lib.nixosSystem {
     inherit system;
+    specialArgs = {
+      username = username;
+      hostName = hostName;
+    };
     modules = [
       catppuccin.nixosModules.catppuccin
       home-manager.nixosModules.home-manager 

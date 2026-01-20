@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ...}:
+{ inputs, lib, config, pkgs, username, hostName, ...}:
   let
     vars = import ./../vars.nix;
   in
@@ -20,7 +20,7 @@
     ./programs/amnezia-vpn.nix
     ./programs/cooler-control.nix
     ./programs/docker.nix
-    ./programs/fish.nix
+    ./programs/shell.nix
     ./programs/ssh.nix
   ] ++ (vars.profiles.${vars.activeProfile}.modules or []);
 

@@ -1,10 +1,6 @@
 { pkgs, ... }:
 {
     nixpkgs.config.allowUnfree = true;
-    # TODO: Remove
-    nixpkgs.config.permittedInsecurePackages = [
-      "gradle-7.6.6"
-    ];
     home.packages = with pkgs; [
         # Cursor 
         numix-cursor-theme
