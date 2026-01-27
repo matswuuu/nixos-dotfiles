@@ -11,12 +11,6 @@
   boot.extraModulePackages = [ ];
   boot.supportedFilesystems = [ "ntfs" ];
 
-  boot.loader.grub = {
-    enable = true;
-    device = "nodev";
-    useOSProber = true;
-  };
-
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/3e96cd52-7e16-4228-adc3-d20bffe64ec5";
     fsType = "ext4";
