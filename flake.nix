@@ -20,11 +20,6 @@
       url = "github:matswuuu/mtsw-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-   caelestia-shell = {
-      url = "github:caelestia-dots/shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = { nixpkgs, home-manager, catppuccin, mtsw-bar, ... } @inputs:

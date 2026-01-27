@@ -1,4 +1,4 @@
-{ pkgs, caelestia-shell, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -19,8 +19,5 @@
     username = "matswuuu";
     homeDirectory = "/home/matswuuu";
     stateVersion = "25.11";
-    packages = [
-      caelestia-shell.packages.x86_64-linux.with-cli
-    ];
   };
 }
