@@ -36,7 +36,6 @@
         ffmpeg
         gcc
         btop
-        woeusb-ng
 
         grim
         slurp
@@ -48,8 +47,6 @@
 
         # Qt
         qt6.qtdeclarative
-        kdePackages.qtgraphs
-        kdePackages.qtsvg
 
         # Dolphin
         kdePackages.dolphin
@@ -97,11 +94,8 @@
         # Python
         uv
         conda
-        portaudio
-        python3Packages.dbus-python
         (python3.withPackages (ps: with ps; [
           tkinter
-          dbus-python
         ]))
 
         # Gaming
