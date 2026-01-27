@@ -34,6 +34,7 @@
         btop
         woeusb-ng
 
+        grimblast
         grim
         slurp
         swappy
