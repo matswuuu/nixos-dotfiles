@@ -13,28 +13,100 @@ PanelWindow {
     implicitHeight: 480
     exclusionMode: PanelWindow.Exclusive
 
+    property var windowByAddress: {}
+
+
     property int currentIndex: 0
 
 
-    property var windowList: []
-
+    function reloadWindows() {
+        getClients.running = true;
+    }
 
     Process {
         id: getClients
         command: ["hyprctl", "clients", "-j"]
-        running: true
         stdout: StdioCollector {
             id: clientsCollector
             onStreamFinished: {
-                root.windowList = JSON.parse(clientsCollector.text)
-                print(windowList)
-                print(windowList)
-                print(windowList)
-                print(windowList)
-                reloadWindows()
+                const windows = JSON.parse(clientsCollector.text);
+                windowsModel.clear();
+                windowByAddress = {};
+
+                let index = 0
+                for (const c of windows) {
+                    if (!c.mapped) continue
+
+                    c.index = index++;
+                    windowByAddress[c.address] = c
+
+                    if (Hyprland.focusedWorkspace.id == c.workspace.id) {
+                        maybeCapturePreview(c)
+                    }
+
+                    windowsModel.append({
+                        title: c.title,
+                        address: c.address,
+                        className: c.class,
+                        workspace: c.workspace.id,
+                        preview: ""
+                    })
+                }
             }
         }
     }
+
+
+    Connections {
+        target: Hyprland
+
+        function onRawEvent(event) {
+            print(JSON.stringify(event))
+            switch (event.name) {
+                case "openwindow":
+                    reloadWindows();
+                    break;
+                case "closewindow":
+                    reloadWindows();
+                    break;
+                case "activewindowv2":
+                    const windowAddress = `0x${event.data}`;
+                    const window = windowByAddress[windowAddress];
+                    maybeCapturePreview(window)
+                    break;
+            }
+        }
+    }
+
+
+    Component {
+        id: previewSpawner
+
+        Process {
+            property real sizeX
+            property real sizeY
+            property real posX
+            property real posY
+            property int modelIndex
+            property string output
+
+            command: [
+                "grim",
+                `-g ${Math.floor(posX)},${Math.floor(posY)} ${Math.floor(sizeX)}x${Math.floor(sizeY)}`,
+                output
+            ]
+
+            running: true
+
+            stdout: StdioCollector {
+                onStreamFinished: {
+                    windowsModel.setProperty(modelIndex, "preview", output)
+                    destroy()
+                }
+            }
+        }
+    }
+
 
 
 
@@ -45,21 +117,21 @@ PanelWindow {
         id: windowsModel
     }
 
-    function reloadWindows() {
-        windowsModel.clear()
-        for (const c of windowList) {
-            print(JSON.stringify(c))
-            if (!c.mapped) continue
-            windowsModel.append({
-                title: c.title,
-                address: c.address,
-                className: c.class,
-                workspace: c.workspace.id
-            })
-        }
+    function maybeCapturePreview(window) {
+        print(JSON.stringify(window))
+        previewSpawner.createObject(root, { 
+            sizeX: window.size[0],
+            sizeY: window.size[1],
+            posX: window.at[0],
+            posY: window.at[1],
+            modelIndex: window.index,
+            output: `/tmp/hypr-previews/${window.address}.png`
+        })
     }
 
-    Component.onCompleted: reloadWindows()
+    Component.onCompleted: {
+        getClients.running = true;
+    }
 
     // -------------------------
     // BACKGROUND
@@ -119,12 +191,22 @@ PanelWindow {
                     radius: 8
                     color: "#111"
 
-                    Text {
-                        anchors.centerIn: parent
-                        text: "preview"
-                        color: "#555"
-                        font.pixelSize: 14
+                    Image {
+                        anchors.fill: parent
+                        source: model.preview
+                        asynchronous: true
+                        cache: false
+                        fillMode: Image.PreserveAspectCrop
+                        smooth: true
                     }
+
+
+                    // Text {
+                    //     anchors.centerIn: parent
+                    //     text: "preview"
+                    //     color: "#555"
+                    //     font.pixelSize: 14
+                    // }
                 }
             }
 

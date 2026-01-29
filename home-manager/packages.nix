@@ -102,6 +102,10 @@
         protonup-qt
         lutris
 
+        arduino-ide
+
+
+
         # Anime
         ani-cli
     ];
