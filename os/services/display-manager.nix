@@ -1,4 +1,17 @@
 {
+  programs.niri.enable = true;
+  programs.niri.settings = {
+    binds = {
+      "Mod+Return" = { spawn = "kitty"; };
+    };
+    outputs = {
+      "eDP-1" = {
+        scale = 1.25;
+        transform = "normal";
+      };
+    };
+  };
+
   services.displayManager = {
     defaultSession = "hyprland";
     sddm = {
@@ -15,10 +28,4 @@
       };
     };
   };
-  # catppuccin = {
-  #   sddm = {
-  #     enable = true;
-  #     background = "~/.config/hypr/wallpapers/1.png";
-  #   };
-  # };
 }
