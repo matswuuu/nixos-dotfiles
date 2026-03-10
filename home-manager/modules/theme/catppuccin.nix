@@ -33,9 +33,5 @@
         enable = true;
       };
     };
-    # sddm = {
-    #   enable = true;
-    #   background = "~/.config/hypr/wallpapers/1.png";
-    # };
   };
 }

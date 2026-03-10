@@ -1,7 +1,4 @@
 { inputs, lib, config, pkgs, ...}:
-  let
-    vars = import ./../../../vars.nix;
-  in
 {
   gtk = {
     enable = true;
