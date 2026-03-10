@@ -76,13 +76,14 @@
         jetbrains-toolbox 
         mongodb-compass
         insomnia
-        eclipse-mat
         visualvm
 
+        # AI
+        claude-code
+
         # Visual
-        krita
+        # krita
         blockbench
-        figma-linux
         blender
 
         # JS
@@ -91,9 +92,6 @@
         # Python
         uv
         conda
-        (python3.withPackages (ps: with ps; [
-          tkinter
-        ]))
 
         # Gaming
         steam
