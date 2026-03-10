@@ -34,6 +34,7 @@
         btop
         ripgrep
 
+        grimblast
         grim
         slurp
         swappy
@@ -99,6 +100,10 @@
         mangohud
         protonup-qt
         lutris
+
+        arduino-ide
+
+
 
         # Anime
         ani-cli
