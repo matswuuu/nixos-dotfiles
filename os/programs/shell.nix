@@ -14,7 +14,7 @@
         set fish_greeting
       '';
       shellAliases = {
-        os-rebuild = "cd ${flakeLocation}; git add --all; sudo nixos-rebuild switch --flake .#${hostName}";
+        os-rebuild = "echo ${hostName}; cd ${flakeLocation}; git add --all; sudo nixos-rebuild switch --flake .#${hostName}";
         home-rebuild = "cd ${flakeLocation}; git add --all; home-manager switch --flake .#${username}@${hostName}";
         shtd = "hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown -P 0'";
 

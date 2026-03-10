@@ -32,6 +32,7 @@
         ffmpeg
         gcc
         btop
+        ripgrep
 
         grim
         slurp
