@@ -1,27 +1,23 @@
 { pkgs, ...}:
-  let
-    vars = import ./../vars.nix;
-  in
 {
-  services = {
-    xserver.xkb = {
-      layout = "us,ru";
-      variant = "";
-    };
-    seatd = {
-      enable = true;
-    };
-    dbus = {
-      enable = true;
-    };
-  };
+#   services = {
+#     xserver.xkb = {
+#       layout = "us,ru";
+#       variant = "";
+#     };
+#     seatd = {
+#       enable = true;
+#     };
+#     dbus = {
+#       enable = true;
+#     };
+#   };
 
   xdg = {
     portal = {
       enable = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
-        xdg-desktop-portal-hyprland 
       ];
     };
     mime = {
@@ -33,7 +29,7 @@
     };
   };
 
-  programs.hyprland = {
+  programs.niri = {
     enable = true;
   };
 }

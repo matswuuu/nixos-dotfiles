@@ -4,12 +4,12 @@
   imports = [
     ./packages.nix
     ./cursor.nix
+    ./modules/alacritty/default.nix
     ./modules/bar/default.nix
-    ./modules/kitty/kitty.nix
     ./modules/java.nix
     ./modules/wofi/wofi.nix
-    ./modules/hyprland/hyprland.nix
     ./modules/btop/default.nix
+    ./modules/niri/default.nix
     ./modules/theme/gtk.nix
     ./modules/theme/qt.nix
     ./modules/theme/catppuccin.nix

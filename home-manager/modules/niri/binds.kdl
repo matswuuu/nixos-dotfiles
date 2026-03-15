@@ -1,0 +1,91 @@
+binds {
+    Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+    Mod+Q repeat=false { close-window; }
+    Mod+O repeat=false { toggle-overview; }
+
+    // Toggle floating
+    Mod+F { toggle-window-floating; }
+
+    // Application launcher
+    Mod+D { spawn "sh" "-c" "pgrep -x wofi >/dev/null 2>&1 && killall wofi || wofi --dmenu --show drun"; }
+
+    // Pin window
+    Mod+P { toggle-window-floating; } // niri has no pin; floating is closest
+
+    // Screenshot region
+    Mod+Shift+S { screenshot; }
+
+    // Screenshot with slurp + swappy
+    Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | swappy -f -"; }
+
+    // Clipboard history
+    Mod+V { spawn "sh" "-c" "cliphist list | wofi --dmenu | cliphist decode | wl-copy"; }
+
+    // Quickshell
+    Mod+Shift+R { spawn "sh" "-c" "pkill quickshell; quickshell -p ~/.config/mtsw-bar/src/shell.qml"; }
+    Mod+Shift+W { spawn "pkill" "quickshell"; }
+
+    // Move windows (swap columns / move in column)
+    Mod+Shift+Left { move-column-left; }
+    Mod+Shift+Right { move-column-right; }
+    Mod+Shift+Up { move-window-up; }
+    Mod+Shift+Down { move-window-down; }
+
+    // Move columns between monitors
+    Mod+Shift+Ctrl+Left { move-column-to-monitor-left; }
+    Mod+Shift+Ctrl+Down { move-column-to-monitor-down; }
+    Mod+Shift+Ctrl+Up { move-column-to-monitor-up; }
+    Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+
+    // Switch workspaces
+    Mod+1 { focus-workspace "1"; }
+    Mod+2 { focus-workspace "2"; }
+    Mod+3 { focus-workspace "3"; }
+    Mod+4 { focus-workspace "4"; }
+    Mod+5 { focus-workspace "5"; }
+    Mod+6 { focus-workspace "6"; }
+    Mod+7 { focus-workspace "7"; }
+    Mod+8 { focus-workspace "8"; }
+    Mod+9 { focus-workspace "9"; }
+    Mod+0 { focus-workspace "10"; }
+
+    // Move window to workspace
+    Mod+Shift+1 { move-window-to-workspace "1"; }
+    Mod+Shift+2 { move-window-to-workspace "2"; }
+    Mod+Shift+3 { move-window-to-workspace "3"; }
+    Mod+Shift+4 { move-window-to-workspace "4"; }
+    Mod+Shift+5 { move-window-to-workspace "5"; }
+    Mod+Shift+6 { move-window-to-workspace "6"; }
+    Mod+Shift+7 { move-window-to-workspace "7"; }
+    Mod+Shift+8 { move-window-to-workspace "8"; }
+    Mod+Shift+9 { move-window-to-workspace "9"; }
+    Mod+Shift+0 { move-window-to-workspace "10"; }
+
+    // Scrolling layout — column navigation (niri is column-native)
+    Mod+R { focus-column-left; }
+    Mod+T { focus-column-right; }
+
+    // Expand column to fill
+    Mod+G { maximize-column; }
+
+    // Column resize (fine-grained)
+    Mod+H { set-column-width "-5%"; }
+    Mod+L { set-column-width "+5%"; }
+
+    XF86AudioRaiseVolume { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
+    XF86AudioLowerVolume { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioMute { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioMicMute { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+
+    XF86AudioPlay { spawn-sh "playerctl play-pause"; }
+    XF86AudioStop { spawn-sh "playerctl stop"; }
+    XF86AudioPrev { spawn-sh "playerctl previous"; }
+    XF86AudioNext { spawn-sh "playerctl next"; }
+
+    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+5%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "5%-"; }
+
+    // Keyboard backlight (laptop)
+    Mod+F3 { spawn "brightnessctl" "-d" "*::kbd_backlight" "set" "+33%"; }
+    Mod+F2 { spawn "brightnessctl" "-d" "*::kbd_backlight" "set" "33%-"; }
+}

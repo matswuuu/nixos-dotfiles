@@ -5,9 +5,7 @@
 {
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    hyprland
-    
-    kitty
+    alacritty
     google-chrome
     home-manager
     amnezia-vpn
@@ -28,7 +26,8 @@
 
     docker-compose
 
-    xwayland
+    # xwayland
+    xwayland-satellite
     wl-clipboard-rs
     xclip
     xsel

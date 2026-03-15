@@ -9,9 +9,9 @@
     ./networking.nix
     ./users.nix
     ./packages.nix
-    ./hyprland.nix
     ./bluetooth.nix
-    ./services/display-manager.nix
+    ./niri.nix
+    ./services/greetd.nix
     ./services/flatpak.nix
     ./services/openssh.nix
     ./services/security.nix

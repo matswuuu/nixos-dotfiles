@@ -1,0 +1,153 @@
+include "binds.kdl"
+include "main.kdl"
+
+prefer-no-csd
+screenshot-path "~/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+environment {
+    XDG_CURRENT_DESKTOP "Niri"
+    XDG_SESSION_TYPE "wayland"
+    XDG_SESSION_DESKTOP "Niri"
+    GDK_BACKEND "wayland,x11,*"
+    XCURSOR_SIZE "24"
+    QT_QPA_PLATFORM "wayland"
+    XDG_SCREENSHOTS_DIR "~/screenshots"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+}
+
+xwayland-satellite {
+    path "xwayland-satellite"
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+input {
+    keyboard {
+        xkb {
+            layout "us,ru"
+            options "grp:win_space_toggle"
+        }
+
+        // Enable numlock on startup, omitting this setting disables it.
+        numlock 
+    }
+
+    // Next sections include libinput settings.
+    // Omitting settings disables them, or leaves them at their default values.
+    // All commented-out settings here are examples, not defaults.
+    touchpad {
+        // off
+        tap
+        // dwt
+        // dwtp
+        // drag false
+        // drag-lock
+        natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "two-finger"
+        // disabled-on-external-mouse
+    }
+
+    mouse {
+        // off
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "no-scroll"
+    }
+
+    trackpoint {
+        // off
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+        // scroll-method "on-button-down"
+        // scroll-button 273
+        // scroll-button-lock
+        // middle-emulation
+    }
+
+    warp-mouse-to-focus
+    focus-follows-mouse
+}
+
+layout {
+    gaps 10
+    center-focused-column "never"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    default-column-width { 
+        proportion 1.0; 
+    }
+    
+    focus-ring {
+        active-color "#ffffffff"
+        inactive-color "#595959aa"
+        width 1
+    }
+}
+
+animations {
+    window-open {
+        duration-ms 250
+        curve "ease-out-expo"
+    }
+
+    window-close {
+        duration-ms 400
+        curve "ease-out-expo"
+    }
+
+    window-movement {
+        duration-ms 250
+        curve "ease-out-expo"
+    }
+
+    window-resize {
+        duration-ms 250
+        curve "ease-out-expo"
+    }
+
+    workspace-switch {
+        off
+    }
+
+    horizontal-view-movement {
+        off
+    }
+}
+
+overview {
+    zoom 0.45
+    backdrop-color "#262626"
+
+    workspace-shadow {
+        softness 40
+        spread 10
+        offset x=0 y=10
+        color "#00000050"
+    }
+}
+
+window-rule {
+    match title="Picture in picture"
+    open-floating true
+}
+
+window-rule {
+    geometry-corner-radius 10
+    clip-to-geometry true
+}
+
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
+}

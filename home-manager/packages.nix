@@ -54,10 +54,7 @@
         wofi
         mpv
         mpvpaper
-        hyprpaper
-        hyprshot
-        hyprpicker
-        hyprlauncher
+        swww
         wl-clipboard
         cliphist
         obs-studio
@@ -91,6 +88,7 @@
         nodejs
 
         # Python
+        python3
         uv
         conda
 

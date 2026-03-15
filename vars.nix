@@ -1,5 +1,5 @@
 {
-  activeProfile = "laptop";
+  activeProfile = "main";
   profiles = {
     "main" = {
       system = "x86_64-linux";
@@ -8,9 +8,6 @@
       flakeLocation = "~/nixos-dotfiles";
       modules = [
         ./os/programs/steam.nix
-      ];
-      hyprland = [
-        "~/.config/hypr/main/monitor.conf"
       ];
       catppuccin = {
         flavor = "macchiato";
@@ -23,9 +20,6 @@
       hostName = "laptop";
       flakeLocation = "~/nixos-dotfiles";
       modules = [];
-      hyprland = [
-        "~/.config/hypr/laptop/monitor.conf"
-      ];
       catppuccin = {
         flavor = "macchiato";
         accent = "mauve";
