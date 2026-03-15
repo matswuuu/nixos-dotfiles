@@ -2,7 +2,7 @@ include "binds.kdl"
 include "main.kdl"
 
 prefer-no-csd
-screenshot-path "~/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+screenshot-path "screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
 environment {
     XDG_CURRENT_DESKTOP "Niri"
