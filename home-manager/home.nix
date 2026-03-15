@@ -8,7 +8,6 @@
     ./modules/bar/default.nix
     ./modules/java.nix
     ./modules/wofi/wofi.nix
-    ./modules/kitty/default.nix
     ./modules/java/default.nix
     ./modules/wofi/default.nix
     ./modules/btop/default.nix
