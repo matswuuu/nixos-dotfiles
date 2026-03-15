@@ -1,11 +1,7 @@
 { config, ... }: 
-  let
-    vars = import ./../vars.nix;
-    profile = vars.profiles.${vars.activeProfile};
-  in
 {
   networking = {
-    hostName = profile.hostName;
+    hostName = "main";
     networkmanager = {
       enable = true;
     };

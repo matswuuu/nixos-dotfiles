@@ -6,7 +6,6 @@
   imports = [
     ./i18n.nix
     ./gc.nix
-    ./networking.nix
     ./users.nix
     ./packages.nix
     ./bluetooth.nix
@@ -22,7 +21,7 @@
     ./programs/docker.nix
     ./programs/shell.nix
     ./programs/ssh.nix
-  ] ++ (vars.profiles.${vars.activeProfile}.modules or []);
+  ];
 
   boot.loader = {
     systemd-boot.enable = true;
