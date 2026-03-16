@@ -27,7 +27,6 @@
         jq
         unzip
         overskride # Bluetooth manager
-        coolercontrol.coolercontrol-gui # Fan controller
         yt-dlp
         ffmpeg
         gcc

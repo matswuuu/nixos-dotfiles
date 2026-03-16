@@ -1,27 +1,38 @@
-{ pkgs, ... }:
-
+{ config, lib, pkgs, ... }:
+  let
+    cfg = config.session.niri;
+  in
 {
   imports = [
     ./swww.nix
   ];
 
-  home.file = {
-    ".config/niri/config.kdl".source = ./config.kdl;
-    ".config/niri/binds.kdl".source = ./binds.kdl;
-    ".config/niri/main.kdl".source = ./main.kdl;
+  options.session.niri = {
+    main-path = lib.mkOption {
+      type = lib.types.path;
+      description = "Path for the main niri config";
+    };
   };
 
-  systemd.user.services.xwayland-satellite = {
-    Unit = {
-      Description = "Rootless Xwayland inside Wayland";
-      After = [ "graphical-session-pre.target" ];
+  config = {
+    home.file = {
+      ".config/niri/config.kdl".source = cfg.main-path;
+      ".config/niri/common.kdl".source = ./common.kdl;
+      ".config/niri/binds.kdl".source = ./binds.kdl;
     };
-    Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
+
+    systemd.user.services.xwayland-satellite = {
+      Unit = {
+        Description = "Rootless Xwayland inside Wayland";
+        After = [ "graphical-session-pre.target" ];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.xwayland-satellite}/bin/xwayland-satellite";
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
     };
   };
 }

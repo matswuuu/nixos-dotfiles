@@ -1,7 +1,4 @@
 { inputs, pkgs, ...}:
-  let
-    vars = import ./../vars.nix;
-  in
 {
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
@@ -12,7 +9,6 @@
     ntfs3g
     libsecret
     gnome-keyring
-    kdePackages.kwallet
 
     linuxPackages.cpupower
     dunst
@@ -21,8 +17,6 @@
     # Bluetooth
     bluez
     bluez-tools
-
-    coolercontrol.coolercontrold
 
     docker-compose
 

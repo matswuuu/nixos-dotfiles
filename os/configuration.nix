@@ -1,7 +1,4 @@
 { inputs, lib, config, pkgs, username, hostName, ...}:
-  let
-    vars = import ./../vars.nix;
-  in
 {
   imports = [
     ./i18n.nix
@@ -17,7 +14,6 @@
     ./services/udisk.nix
     ./services/upower.nix
     ./programs/amnezia-vpn.nix
-    ./programs/cooler-control.nix
     ./programs/docker.nix
     ./programs/shell.nix
     ./programs/ssh.nix

@@ -6,7 +6,7 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
     nixpkgs-stable = {
-      url = "github:nixos/nixpkgs/nixos-25.05";
+      url = "github:nixos/nixpkgs/nixos-25.11";
     };
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -37,6 +37,9 @@
         system = "x86_64-linux";
         hostName = "laptop";
         username = "matswuuu";
+        homeModules = [
+          ./hosts/laptop/home/home.nix
+        ];
       };
     in
   {
