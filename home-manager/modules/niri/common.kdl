@@ -115,6 +115,11 @@ window-rule {
 }
 
 window-rule {
+    match app-id="org.gnome.FileRoller"
+    open-floating true
+}
+
+window-rule {
     geometry-corner-radius 10
     clip-to-geometry true
 }
