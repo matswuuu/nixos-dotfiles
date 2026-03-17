@@ -2,7 +2,7 @@
 
 {
   imports = [
-    
+    ./packages.nix
   ];
 
   session.niri = {  

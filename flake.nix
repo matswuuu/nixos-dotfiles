@@ -32,6 +32,9 @@
         system = "x86_64-linux";
         hostName = "main";
         username = "matswuuu";
+        homeModules = [
+          ./hosts/main/home/home.nix
+        ];
       };
       laptop = mkHost {
         system = "x86_64-linux";

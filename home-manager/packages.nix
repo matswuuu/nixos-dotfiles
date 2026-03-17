@@ -30,8 +30,10 @@
         yt-dlp
         ffmpeg
         gcc
-        btop
         ripgrep
+        ncdu # cli disk analyzer
+        pwgen # cli password generator
+        mpv # video player
 
         grimblast
         grim
@@ -51,14 +53,12 @@
 
         # Wayland
         wofi
-        mpv
-        mpvpaper
-        swww
         wl-clipboard
         cliphist
-        obs-studio
-        wayvnc
-        tigervnc
+
+        # Wallpaper
+        mpvpaper
+        swww
 
         # Catppuccin
         catppuccin-kvantum
@@ -73,15 +73,9 @@
         jetbrains-toolbox 
         mongodb-compass
         insomnia
+
+        # Java
         visualvm
-
-        # AI
-        claude-code
-
-        # Visual
-        # krita
-        blockbench
-        blender
 
         # JS
         nodejs
@@ -91,16 +85,20 @@
         uv
         conda
 
+        # AI
+        claude-code
+
+        # Visual
+        krita
+        blockbench
+        obs-studio
+
         # Gaming
         steam
         protontricks
         mangohud
         protonup-qt
         lutris
-
-        arduino-ide
-
-
 
         # Anime
         ani-cli

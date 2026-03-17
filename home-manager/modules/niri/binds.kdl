@@ -1,4 +1,5 @@
 binds {
+    Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     Mod+Q repeat=false { close-window; }
     Mod+O repeat=false { toggle-overview; }
@@ -10,7 +11,7 @@ binds {
     Mod+D { spawn "sh" "-c" "pgrep -x wofi >/dev/null 2>&1 && killall wofi || wofi --dmenu --show drun"; }
 
     // Pin window
-    Mod+P { toggle-window-floating; } // niri has no pin; floating is closest
+    Mod+P { toggle-window-floating; }
 
     // Screenshot region
     Mod+Shift+S { screenshot; }
@@ -47,7 +48,7 @@ binds {
     Mod+7 { focus-workspace "7"; }
     Mod+8 { focus-workspace "8"; }
     Mod+9 { focus-workspace "9"; }
-    Mod+0 { focus-workspace "10"; }
+    Mod+0 { focus-workspace "0"; }
 
     // Move window to workspace
     Mod+Shift+1 { move-window-to-workspace "1"; }
@@ -59,7 +60,7 @@ binds {
     Mod+Shift+7 { move-window-to-workspace "7"; }
     Mod+Shift+8 { move-window-to-workspace "8"; }
     Mod+Shift+9 { move-window-to-workspace "9"; }
-    Mod+Shift+0 { move-window-to-workspace "10"; }
+    Mod+Shift+0 { move-window-to-workspace "0"; }
 
     // Scrolling layout — column navigation (niri is column-native)
     Mod+R { focus-column-left; }
