@@ -6,9 +6,9 @@
     ./cursor.nix
     ./modules/alacritty/default.nix
     ./modules/bar/default.nix
+    ./modules/cliphist/default.nix
     ./modules/wofi/default.nix
     ./modules/java/default.nix
-    ./modules/wofi/default.nix
     ./modules/btop/default.nix
     ./modules/niri/default.nix
     ./modules/theme/gtk.nix

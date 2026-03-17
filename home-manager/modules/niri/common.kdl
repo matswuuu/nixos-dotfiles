@@ -57,6 +57,9 @@ layout {
         inactive-color "#595959aa"
         width 1
     }
+    border {
+        off
+    }
 }
 
 animations {
