@@ -120,6 +120,11 @@ window-rule {
 }
 
 window-rule {
+    match app-id="AmneziaVPN"
+    open-floating true
+}
+
+window-rule {
     geometry-corner-radius 10
     clip-to-geometry true
 }
@@ -128,3 +133,5 @@ layer-rule {
     match namespace="^wallpaper$"
     place-within-backdrop true
 }
+
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
