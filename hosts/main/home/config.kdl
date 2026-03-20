@@ -101,4 +101,4 @@ spawn-at-startup "lutris"
 spawn-at-startup "AmneziaVPN"
 
 spawn-at-startup "swww-daemon"
-spawn-at-startup "swww img ~/.configs/swww/wallpapers/4.png --mode fill"
+spawn-at-startup "swww img ~/.configs/swww/wallpapers/5.png"

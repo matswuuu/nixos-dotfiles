@@ -34,6 +34,7 @@
         ncdu # cli disk analyzer
         pwgen # cli password generator
         mpv # video player
+        speedtest-cli # Internet speed test
 
         grimblast
         grim

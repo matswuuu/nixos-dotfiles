@@ -62,14 +62,18 @@ binds {
     Mod+Shift+9 { move-window-to-workspace "9"; }
     Mod+Shift+0 { move-window-to-workspace "0"; }
 
-    // Scrolling layout — column navigation (niri is column-native)
     Mod+R { focus-column-left; }
     Mod+T { focus-column-right; }
+
+    Mod+Left { focus-column-left; }
+    Mod+Right { focus-column-right; }
+    Mod+Up { focus-window-up; }
+    Mod+Down { focus-window-down; }
 
     // Expand column to fill
     Mod+G { maximize-column; }
 
-    // Column resize (fine-grained)
+    // Column resize
     Mod+H { set-column-width "-5%"; }
     Mod+L { set-column-width "+5%"; }
 
