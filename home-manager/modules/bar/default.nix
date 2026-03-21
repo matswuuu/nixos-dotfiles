@@ -1,6 +1,16 @@
 {
   programs.mtsw-bar = {
     enable = true;
-    monitors = [ "DP-1" "eDP-1" ];
+    settings = {
+      monitors = [ "DP-1" "eDP-1" ];
+      bar = {
+        tray = {
+          iconOrder = [
+              "chrome_status_icon_1" # Discord
+              "telegram"
+          ];
+        };
+      };
+    };
   };
 }
