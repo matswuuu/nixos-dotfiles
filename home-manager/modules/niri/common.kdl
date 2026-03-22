@@ -1,0 +1,152 @@
+prefer-no-csd
+screenshot-path "screenshots/screenshot_%Y-%m-%d_%H-%M-%S.png"
+
+environment {
+    XDG_CURRENT_DESKTOP "Niri"
+    XDG_SESSION_TYPE "wayland"
+    XDG_SESSION_DESKTOP "Niri"
+    GDK_BACKEND "wayland,x11,*"
+    XCURSOR_SIZE "24"
+    QT_QPA_PLATFORM "wayland"
+    XDG_SCREENSHOTS_DIR "~/screenshots"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    NIXOS_OZONE_WL "1"
+}
+
+xwayland-satellite {
+    path "xwayland-satellite"
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+input {
+    keyboard {
+        xkb {
+            layout "us,ru"
+            options "grp:win_space_toggle"
+        }
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+    }
+
+    warp-mouse-to-focus
+    focus-follows-mouse
+}
+
+layout {
+    gaps 10
+    center-focused-column "never"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    default-column-width { 
+        proportion 1.0; 
+    }
+    
+    focus-ring {
+        active-color "#ffffffff"
+        inactive-color "#595959aa"
+        width 1
+    }
+    border {
+        off
+    }
+}
+
+animations {
+    window-open {
+        duration-ms 250
+        curve "ease-out-expo"
+    }
+
+    window-close {
+        duration-ms 400
+        curve "ease-out-expo"
+    }
+
+    window-movement {
+        duration-ms 250
+        curve "ease-out-expo"
+    }
+
+    window-resize {
+        duration-ms 250
+        curve "ease-out-expo"
+    }
+
+    workspace-switch {
+        off
+    }
+
+    horizontal-view-movement {
+        off
+    }
+}
+
+overview {
+    zoom 0.45
+    backdrop-color "#262626"
+
+    workspace-shadow {
+        softness 40
+        spread 10
+        offset x=0 y=10
+        color "#00000050"
+    }
+}
+
+window-rule {
+    match title="Picture in picture"
+    open-floating true
+}
+
+window-rule {
+    match app-id="org.kde.dolphin"
+    open-floating true
+}
+
+window-rule {
+    match app-id="org.gnome.FileRoller"
+    open-floating true
+}
+
+window-rule {
+    match app-id="AmneziaVPN"
+    open-floating true
+}
+
+window-rule {
+    match app-id="jetbrains-idea" is-floating=true 
+
+    open-focused true
+    open-floating true
+    open-maximized true
+
+    default-floating-position x=0 y=300 relative-to="top"
+
+    min-width 500
+    max-width 500
+    min-height 600
+    max-height 600
+}
+
+window-rule {
+    geometry-corner-radius 10
+    clip-to-geometry true
+}
+
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
+}
+
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"

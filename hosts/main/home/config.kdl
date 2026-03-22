@@ -1,0 +1,104 @@
+include "./common.kdl"
+include "./binds.kdl"
+
+workspace "0" {
+    open-on-output "DP-1"
+}
+
+workspace "1" {
+    open-on-output "DP-2"
+}
+
+workspace "2" {
+    open-on-output "DP-1"
+}
+
+workspace "3" {
+    open-on-output "DP-1"
+}
+
+workspace "4" {
+    open-on-output "DP-2"
+}
+
+workspace "5" {
+    open-on-output "DP-2"
+}
+
+workspace "6" {
+    
+}
+
+workspace "7" {
+    open-on-output "DP-1"
+}
+
+workspace "8" {
+    open-on-output "DP-1"
+}
+
+workspace "9" {
+    
+}
+
+output "DP-1" {
+    mode "1920x1080@165.001"
+    position x=0 y=0
+    focus-at-startup
+
+    hot-corners {
+        off
+    }
+}
+
+output "DP-2" {
+    mode "1920x1080@144"
+    position x=0 y=1080
+    
+    hot-corners {
+        off
+    }
+}
+
+window-rule {
+    match app-id="google-chrome"
+    open-on-workspace "1";
+}
+
+window-rule {
+    match app-id="discord" at-startup=true
+    open-on-workspace "3";
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    match app-id="org.telegram.desktop" at-startup=true
+    open-on-workspace "3";
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    match app-id="alacritty" at-startup=true
+    open-on-workspace "4";
+}
+
+window-rule {
+    match app-id="lutris" at-startup=true
+    open-on-workspace "5";
+}
+
+window-rule {
+    match app-id="AmneziaVPN" at-startup=true
+    open-on-workspace "9";
+}
+
+spawn-at-startup "google-chrome-stable"
+spawn-at-startup "discordptb"
+spawn-at-startup "Telegram"
+spawn-at-startup "alacritty"
+spawn-at-startup "alacritty"
+spawn-at-startup "lutris"
+spawn-at-startup "AmneziaVPN"
+
+spawn-at-startup "swww-daemon"
+spawn-at-startup "swww img ~/.configs/swww/wallpapers/5.png"

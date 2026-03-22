@@ -1,0 +1,75 @@
+include "./common.kdl"
+include "./binds.kdl"
+
+workspace "0" {
+    
+}
+
+workspace "1" {
+    
+}
+
+workspace "2" {
+    
+}
+
+workspace "3" {
+    
+}
+
+workspace "4" {
+    
+}
+
+workspace "5" {
+    
+}
+
+workspace "6" {
+    
+}
+
+workspace "7" {
+    
+}
+
+workspace "8" {
+    
+}
+
+workspace "9" {
+    
+}
+
+output "eDP-1" {
+    mode "1920x1080@60"
+    scale 1.2
+    position x=0 y=0
+    focus-at-startup
+
+    hot-corners {
+        off
+    }
+}
+
+window-rule {
+    match app-id="google-chrome"
+    open-on-workspace "1";
+}
+
+window-rule {
+    match app-id="org.telegram.desktop" at-startup=true
+    open-on-workspace "3";
+}
+
+window-rule {
+    match app-id="AmneziaVPN" at-startup=true
+    open-on-workspace "9";
+}
+
+spawn-at-startup "google-chrome-stable"
+spawn-at-startup "Telegram"
+spawn-at-startup "AmneziaVPN"
+
+spawn-at-startup "swww-daemon"
+spawn-at-startup "swww img ~/.config/swww/wallpapers/4.png"
