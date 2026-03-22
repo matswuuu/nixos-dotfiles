@@ -3,11 +3,14 @@
     enable = true;
     enableOnBoot = true;
     daemon.settings = {
-      experimental = true;
+      dns = [ "192.168.1.1" "1.1.1.1" "8.8.8.8" ];
     };
     rootless = {
       enable = true;
       setSocketVariable = true;
+      daemon.settings = {
+        dns = [ "192.168.1.1" "1.1.1.1" "8.8.8.8" ];
+      };
     };
   };
 }

@@ -6,8 +6,8 @@
       bar = {
         tray = {
           iconOrder = [
-              "chrome_status_icon_1" # Discord
-              "telegram"
+            "chrome_status_icon_1" # Discord
+            "telegram"
           ];
         };
       };
