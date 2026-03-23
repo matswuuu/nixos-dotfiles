@@ -7,7 +7,7 @@
 
         # Utils
         brightnessctl
-        screenfetch
+        fastfetch
         htop
         lm_sensors
         wget
