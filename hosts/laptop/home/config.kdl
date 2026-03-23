@@ -72,4 +72,4 @@ spawn-at-startup "Telegram"
 spawn-at-startup "AmneziaVPN"
 
 spawn-at-startup "swww-daemon"
-spawn-at-startup "swww img ~/.config/swww/wallpapers/4.png"
+spawn-at-startup "swww img ~/.config/swww/wallpapers/5.png"
