@@ -1,0 +1,138 @@
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+    "logo": {
+        "type": "auto",
+        "padding": {
+            "top": 1,
+            "left": 1
+        }
+    },
+    "display": {
+        "separator": " › "
+    },
+    "modules": [
+        {
+            "type": "title"
+        },
+        "break",
+        {
+            "type": "host",
+            "key": "PC",
+            "keyColor": "green"
+        },
+        {
+            "type": "cpu",
+            "key": "CPU",
+            "keyColor": "green",
+            "format": "{name}"
+        },
+        {
+            "type": "gpu",
+            "key": "GPU",
+            "keyColor": "green",
+            "temp": true,
+            "format": "{name}" 
+        },
+        {
+            "type": "memory",
+            "key": "RAM",
+            "keyColor": "green"
+        },
+        {
+            "type": "swap",
+            "key": "Swap",
+            "keyColor": "green"
+        },
+        {
+            "type": "disk",
+            "key": "Disk ({mountpoint})",
+            "keyColor": "green",
+            "format": "{size-used} / {size-total} ({size-percentage})"
+        },
+        {
+            "type": "display",
+            "key": "Monitor ({name})",
+            "keyColor": "green",
+            "format": "{inch}\", {width}x{height} @ {refresh-rate}Hz"
+        },
+        "break",
+        {
+            "type": "os",
+            "key": "OS",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "kernel",
+            "key": "Kernel",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "wm",
+            "key": "WM",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "de",
+            "key": "DE",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "lm",
+            "key": "LM",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "terminal",
+            "key": "Terminal",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "shell",
+            "key": "Shell",
+            "keyColor": "yellow"
+        },
+        "break",
+        {
+            "type": "wmtheme",
+            "key": "WM Theme",
+            "keyColor": "cyan"
+        },
+        {
+            "type": "theme",
+            "key": "Theme",
+            "keyColor": "cyan"
+        },
+        {
+            "type": "icons",
+            "key": "Icons",
+            "keyColor": "cyan"
+        },
+        {
+            "type": "font",
+            "key": "Font",
+            "keyColor": "cyan"
+        },
+        {
+            "type": "cursor",
+            "key": "Cursor",
+            "keyColor": "cyan"
+        },
+        "break",
+        {
+            "type": "command",
+            "key": "OS Age",
+            "keyColor": "magenta",
+            "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
+        },
+        {
+            "type": "uptime",
+            "key": "Uptime",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "datetime",
+            "key": "DateTime",
+            "keyColor": "magenta"
+        }
+    ]
+}
