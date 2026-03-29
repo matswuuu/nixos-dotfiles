@@ -5,7 +5,11 @@
     alacritty
     google-chrome
     home-manager
+
     amnezia-vpn
+    amneziawg-go
+    amneziawg-tools
+
     ntfs3g
     libsecret
     gnome-keyring

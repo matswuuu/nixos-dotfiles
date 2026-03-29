@@ -35,6 +35,7 @@
         pwgen # cli password generator
         mpv # video player
         speedtest-cli # Internet speed test
+        sshpass # Non-interactive ssh password auth
 
         grimblast
         grim
