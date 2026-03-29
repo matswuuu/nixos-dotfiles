@@ -69,7 +69,6 @@ window-rule {
 
 spawn-at-startup "google-chrome-stable"
 spawn-at-startup "Telegram"
-spawn-at-startup "AmneziaVPN"
 
 spawn-at-startup "swww-daemon"
-spawn-at-startup "swww img ~/.config/swww/wallpapers/5.png"
+spawn-at-startup "swww img ~/.config/swww/wallpapers/5.jpg"
