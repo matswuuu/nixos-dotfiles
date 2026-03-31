@@ -1,15 +1,10 @@
 {
-  services.auto-cpufreq = {
+  powerManagement = {
     enable = true;
-    settings = {
-      battery = {
-        governor = "powersave";
-        turbo = "never";
-      };
-      charger = {
-        governor = "performance";
-        turbo = "auto";
-      };
+    cpuFreqGovernor = "powersave";
+    cpufreq = {
+      min = 400000;
+      max = 3000000;
     };
   };
 }
