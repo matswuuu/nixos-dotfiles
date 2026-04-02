@@ -30,8 +30,6 @@
     xclip
     xsel
     cliphist
-
-    catppuccin-sddm
   ];
 
   fonts = {

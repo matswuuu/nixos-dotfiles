@@ -19,9 +19,13 @@
     ./programs/ssh.nix
   ];
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    extraModulePackages = [ config.boot.kernelPackages.amneziawg ];
+    kernelModules = [ "amneziawg" ];
   };
 
   system.stateVersion = "25.11";

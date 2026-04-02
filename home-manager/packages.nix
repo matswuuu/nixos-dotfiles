@@ -68,13 +68,14 @@
 
         # Social
         telegram-desktop
-        discord-ptb
+        #discord-ptb
 
         # Code stuff
         vscode
         jetbrains-toolbox 
         mongodb-compass
         insomnia
+        awscli2
 
         # Java
         visualvm
@@ -91,7 +92,7 @@
         claude-code
 
         # Visual
-        krita
+        #krita
         blockbench
         obs-studio
 
@@ -101,8 +102,5 @@
         mangohud
         protonup-qt
         lutris
-
-        # Anime
-        ani-cli
     ];
 }
