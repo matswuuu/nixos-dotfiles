@@ -60,7 +60,7 @@
 
         # Wallpaper
         mpvpaper
-        swww
+        awww
 
         # Catppuccin
         catppuccin-kvantum
@@ -68,14 +68,13 @@
 
         # Social
         telegram-desktop
-        #discord-ptb
+        discord-ptb
 
         # Code stuff
         vscode
         jetbrains-toolbox 
         mongodb-compass
         insomnia
-        awscli2
 
         # Java
         visualvm
@@ -84,15 +83,12 @@
         nodejs
 
         # Python
-        python3
+        python314
         uv
         conda
 
-        # AI
-        claude-code
-
         # Visual
-        #krita
+        krita
         blockbench
         obs-studio
 

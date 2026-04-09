@@ -1,6 +1,6 @@
 {
   home.file = {
-    ".config/swww/wallpapers" = {
+    ".config/awww/wallpapers" = {
       source = ./wallpapers;
       recursive = true;
     };
