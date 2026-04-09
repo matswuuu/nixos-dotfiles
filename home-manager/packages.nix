@@ -36,6 +36,7 @@
         mpv # video player
         speedtest-cli # Internet speed test
         sshpass # Non-interactive ssh password auth
+        iperf # TCP/UDP bandwidth measurement
 
         grimblast
         grim
