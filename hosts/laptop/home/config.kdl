@@ -70,5 +70,5 @@ window-rule {
 spawn-at-startup "google-chrome-stable"
 spawn-at-startup "Telegram"
 
-spawn-at-startup "swww-daemon"
-spawn-at-startup "swww img ~/.config/swww/wallpapers/5.jpg"
+spawn-at-startup "awww-daemon"
+spawn-at-startup "awww img ~/.config/awww/wallpapers/5.jpg"

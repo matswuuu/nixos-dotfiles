@@ -4,7 +4,7 @@
   in
 {
   imports = [
-    ./swww.nix
+    ./awww.nix
   ];
 
   options.session.niri = {

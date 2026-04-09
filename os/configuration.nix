@@ -13,7 +13,7 @@
     ./services/security.nix
     ./services/udisk.nix
     ./services/upower.nix
-    ./programs/amnezia-vpn.nix
+    ./programs/amnezia/amnezia-vpn.nix
     ./programs/docker.nix
     ./programs/shell.nix
     ./programs/ssh.nix
