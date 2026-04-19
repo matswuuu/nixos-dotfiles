@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-    nixpkgs.config.allowUnfree = true;
     home.packages = with pkgs; [
         # Cursor 
         numix-cursor-theme
@@ -36,7 +35,7 @@
         mpv # video player
         speedtest-cli # Internet speed test
         sshpass # Non-interactive ssh password auth
-        iperf # TCP/UDP bandwidth measurement
+        ydotool # Clicker
 
         grimblast
         grim
@@ -83,10 +82,8 @@
         # JS
         nodejs
 
-        # Python
-        python314
-        uv
-        conda
+        # AI
+        claude-code
 
         # Visual
         krita

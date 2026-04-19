@@ -12,9 +12,11 @@
     ./modules/java/default.nix
     ./modules/btop/default.nix
     ./modules/niri/default.nix
+    ./modules/python/default.nix
     ./modules/theme/gtk.nix
     ./modules/theme/qt.nix
     ./modules/theme/catppuccin.nix
+    ../modules/sops/default.nix
   ];
 
   home = {

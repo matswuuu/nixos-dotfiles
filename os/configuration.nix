@@ -7,7 +7,6 @@
     ./packages.nix
     ./bluetooth.nix
     ./niri.nix
-    ./sops/default.nix
     ./services/greetd.nix
     ./services/flatpak.nix
     ./services/openssh.nix
