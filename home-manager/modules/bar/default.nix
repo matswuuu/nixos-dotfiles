@@ -20,20 +20,20 @@
         network = {
           hosts = [
             {
-              host = "ru.nevergodz.dev";
-              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST 443";
+              host = secret "bar/network/host1/ip";
+              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST ${secret "bar/network/host1/port"}";
             }
             {
-              host = "de.nevergodz.dev";
-              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST 44443";
+              host = secret "bar/network/host2/ip";
+              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST ${secret "bar/network/host2/port"}";
             }
             {
-              host = "se.nevergodz.dev";
-              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST 443";
+              host = secret "bar/network/host3/ip";
+              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST ${secret "bar/network/host3/port"}";
             }
             {
-              host = "jp.nevergodz.dev";
-              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST 44443";
+              host = secret "bar/network/host4/ip";
+              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST ${secret "bar/network/host4/port"}";
             }
           ];
         };
