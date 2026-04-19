@@ -7,6 +7,7 @@
     ./packages.nix
     ./bluetooth.nix
     ./niri.nix
+    ./sops/default.nix
     ./services/greetd.nix
     ./services/flatpak.nix
     ./services/openssh.nix
@@ -25,8 +26,13 @@
       efi.canTouchEfiVariables = true;
     };
     extraModulePackages = [ config.boot.kernelPackages.amneziawg ];
-    kernelModules = [ "amneziawg" ];
+    kernelModules = [ "amneziawg" "uinput" ];
   };
+
+  services.udev.extraRules = ''
+    KERNEL=="uinput", MODE="0660", GROUP="input"
+  '';
+  users.groups.input.members = [ "matswuuu" ];
 
   system.stateVersion = "25.11";
 

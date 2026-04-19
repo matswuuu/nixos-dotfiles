@@ -24,6 +24,9 @@
 
     docker-compose
 
+    sops
+    age
+
     # xwayland
     xwayland-satellite
     wl-clipboard-rs
