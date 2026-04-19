@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, catppuccin, mtsw-bar }:
+{ nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, inputs }:
 
 { 
   system,
@@ -16,31 +16,38 @@
 {
   nixos = nixpkgs.lib.nixosSystem {
     inherit system;
+
     specialArgs = {
       username = username;
       hostName = hostName;
     };
+
     modules = [
-      catppuccin.nixosModules.catppuccin
       home-manager.nixosModules.home-manager 
+      sops-nix.nixosModules.sops
+      catppuccin.nixosModules.catppuccin
+      
       {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
+          users.${username} = import ./home-manager/home.nix;
+
+          extraSpecialArgs = {
+            inputs = inputs;
+          };
+
+          sharedModules = [
+            sops-nix.homeManagerModules.sops
+            catppuccin.homeModules.catppuccin
+            mtsw-bar.homeModules.mtsw-bar
+          ] ++ homeModules;
         };
       }
+
       ./os/configuration.nix
       ./hosts/${hostName}/configuration.nix
     ] ++ nixosModules;
-  };
-
-  home = home-manager.lib.homeManagerConfiguration {
-    inherit pkgs;
-    modules = [
-      ./home-manager/home.nix
-      catppuccin.homeModules.catppuccin
-      mtsw-bar.homeModules.mtsw-bar
-    ] ++ homeModules;
   };
 
   meta = {
