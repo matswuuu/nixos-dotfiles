@@ -12,6 +12,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     catppuccin = {
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,10 +26,10 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, catppuccin, mtsw-bar, ... } @inputs:
+  outputs = { nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, ... } @inputs:
     let
       mkHost = import ./mkHost.nix {
-        inherit nixpkgs home-manager catppuccin mtsw-bar;
+        inherit nixpkgs home-manager sops-nix catppuccin mtsw-bar inputs;
       };
 
       main = mkHost {
