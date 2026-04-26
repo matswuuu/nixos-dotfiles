@@ -1,0 +1,189 @@
+{
+  "log": {
+    "level": "warn",
+    "timestamp": true
+  },
+  "dns": {
+    "strategy": "ipv4_only",
+    "reverse_mapping": true,
+    "servers": [
+      {
+        "type": "https",
+        "tag": "dns-secure",
+        "server": "8.8.8.8",
+        "tls": {
+          "server_name": "dns.google"
+        },
+        "detour": "proxy-select"
+      },
+      {
+        "type": "https",
+        "tag": "dns-direct",
+        "server": "77.88.8.88",
+        "tls": {
+          "server_name": "safe.dot.dns.yandex.net"
+        }
+      }
+    ],
+    "rules": [
+      {
+        "rule_set": [
+          "sites-direct"
+        ],
+        "server": "dns-direct"
+      }
+    ],
+    "final": "dns-secure"
+  },
+  "inbounds": [
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "127.0.0.1",
+      "listen_port": 1080
+    },
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "address": [
+        "172.19.0.1/30",
+        "fdfe:dcba:9876::1/126"
+      ],
+      "auto_route": true,
+      "stack": "mixed",
+      "mtu": 1400,
+      "route_exclude_address": [
+        "192.168.0.0/16",
+        "224.0.0.0/4",
+        "255.255.255.255/32"
+      ],
+      "exclude_package": [
+        "ru.oneme.app"
+      ]
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "selector",
+      "tag": "proxy-select",
+      "outbounds": [
+        "Proxy1",
+        "Proxy2",
+        "direct"
+      ],
+      "default": "Proxy1",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "naive",
+      "tag": "Proxy1",
+      "server": "1.2.3.4",
+      "server_port": 443,
+      "username": "naive",
+      "password": "change-me",
+      "insecure_concurrency": 2,
+      "udp_over_tcp": {
+        "enabled": true
+      },
+      "quic": false,
+      "tls": {
+        "enabled": true,
+        "server_name": "example.com"
+      }
+    },
+    {
+      "type": "anytls",
+      "tag": "Proxy2",
+      "server": "5.6.7.8",
+      "server_port": 443,
+      "password": "change-me",
+      "idle_session_check_interval": "30s",
+      "idle_session_timeout": "60s",
+      "min_idle_session": 0,
+      "tls": {
+        "enabled": true,
+        "server_name": "example.org",
+        "utls": {
+          "enabled": false
+        }
+      }
+    }
+  ],
+  "route": {
+    "final": "proxy-select",
+    "auto_detect_interface": true,
+    "default_domain_resolver": {
+      "server": "dns-secure"
+    },
+    "rule_set": [
+      {
+        "tag": "sites-direct",
+        "rules": [
+          {
+            "domain_suffix": [
+              ".ru",
+              ".su",
+              ".xn--p1ai",
+              "yandex.net",
+              "yastatic.net",
+              "vk.com",
+              "vk-portal.net",
+              "2gis.com"
+            ]
+          }
+        ]
+      }
+    ],
+    "rules": [
+      {
+        "action": "sniff",
+        "sniffer": [
+          "http",
+          "tls",
+          "dns",
+          "quic"
+        ],
+        "timeout": "300ms"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+      {
+        "action": "resolve"
+      },
+      {
+        "ip_is_private": true,
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "package_name": [
+          "ru.oneme.app"
+        ],
+        "action": "route",
+        "outbound": "direct"
+      },
+      {
+        "rule_set": [
+          "sites-direct"
+        ],
+        "action": "route",
+        "outbound": "direct"
+      }
+    ]
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true
+    },
+    "clash_api": {
+      "external_controller": "127.0.0.1:9090",
+      "secret": "change-me"
+    }
+  }
+}

@@ -23,7 +23,8 @@
         usbutils
         upower
         playerctl
-        jq
+        jq # Json parser
+        jc # Json parser
         unzip
         overskride # Bluetooth manager
         yt-dlp

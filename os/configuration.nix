@@ -7,6 +7,7 @@
     ./packages.nix
     ./bluetooth.nix
     ./niri.nix
+    ../modules/sing-box/default.nix
     ./services/greetd.nix
     ./services/flatpak.nix
     ./services/openssh.nix
