@@ -9,6 +9,7 @@
     amnezia-vpn
     amneziawg-go
     amneziawg-tools
+    sing-box
 
     ntfs3g
     libsecret

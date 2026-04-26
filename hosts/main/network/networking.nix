@@ -7,6 +7,7 @@
     };
     timeServers = [ "0.pool.ntp.org" "1.pool.ntp.org" ];
     firewall = {
+      enable = true;
       allowedTCPPorts = [ 
         7878
         8081 
@@ -18,6 +19,9 @@
         9117
         9696
       ];
+    };
+    nftables = {
+      enable = true;
     };
   };
 }
