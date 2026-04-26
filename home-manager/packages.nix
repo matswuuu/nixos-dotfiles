@@ -79,6 +79,7 @@
 
         # Java
         visualvm
+        eclipse-mat
 
         # JS
         nodejs
