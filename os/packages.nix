@@ -50,4 +50,12 @@
       noto-fonts-color-emoji
     ];
   };
+
+  nixpkgs.overlays = [
+  (final: prev: {
+    openldap = prev.openldap.overrideAttrs (old: {
+      doCheck = false;
+    });
+  })
+];
 }
