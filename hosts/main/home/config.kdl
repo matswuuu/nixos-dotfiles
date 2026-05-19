@@ -78,11 +78,6 @@ window-rule {
 }
 
 window-rule {
-    match app-id="alacritty" at-startup=true
-    open-on-workspace "4";
-}
-
-window-rule {
     match app-id="lutris" at-startup=true
     open-on-workspace "5";
 }
@@ -90,8 +85,6 @@ window-rule {
 spawn-at-startup "google-chrome-stable"
 spawn-at-startup "vesktop"
 spawn-at-startup "Telegram"
-spawn-at-startup "alacritty"
-spawn-at-startup "alacritty"
 spawn-at-startup "lutris"
 
 spawn-at-startup "awww-daemon"
