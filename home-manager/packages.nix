@@ -89,7 +89,6 @@
         # AI
         claude-code
         antigravity
-        ollama
 
         # Visual
         #krita
