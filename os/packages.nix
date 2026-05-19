@@ -1,6 +1,11 @@
 { inputs, pkgs, ...}:
 {
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config = {
+    allowUnfree = true;
+    permittedInsecurePackages = [
+      "openssl-1.1.1w"
+    ];
+  };
   environment.systemPackages = with pkgs; [
     alacritty
     google-chrome

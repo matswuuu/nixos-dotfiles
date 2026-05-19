@@ -34,6 +34,18 @@
   '';
   users.groups.input.members = [ "matswuuu" ];
 
+  services.dbus.implementation = "broker";
+
+  services.ollama = {
+    enable = true;
+    package = pkgs.ollama-cuda;
+
+    environmentVariables = {
+      OLLAMA_LLM_LIBRARY = "cuda";
+      OLLAMA_NUM_GPU = "999";
+    };
+  };
+
   system.stateVersion = "25.11";
 
   nix = {

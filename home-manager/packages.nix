@@ -69,7 +69,8 @@
 
         # Social
         telegram-desktop
-        discord-ptb
+        #discord-ptb
+        vesktop
 
         # Code stuff
         vscode
@@ -83,12 +84,15 @@
 
         # JS
         nodejs
+        pnpm
 
         # AI
         claude-code
+        antigravity
+        ollama
 
         # Visual
-        krita
+        #krita
         blockbench
         obs-studio
 
