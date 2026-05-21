@@ -36,6 +36,9 @@
         mpv # video player
         speedtest-cli # Internet speed test
         sshpass # Non-interactive ssh password auth
+        iptables
+        nftables
+        tcpdump
         ydotool # Clicker
 
         grimblast
