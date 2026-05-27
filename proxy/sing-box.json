@@ -1,0 +1,222 @@
+{
+  "log": {
+    "level": "warn",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "type": "udp",
+        "tag": "cloudflare",
+        "server": "1.1.1.1"
+      },
+      {
+        "type": "udp",
+        "tag": "google",
+        "server": "8.8.8.8"
+      },
+      {
+        "type": "udp",
+        "tag": "yandex",
+        "server": "77.88.8.8"
+      }
+    ],
+    "rules": [
+      {
+        "rule_set": [
+          "geoip-ru",
+          "geosite-ru"
+        ],
+        "server": "yandex"
+      }
+    ],
+    "final": "cloudflare",
+    "strategy": "ipv4_only"
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "tun0",
+      "address": ["198.18.0.0/15"],
+      "route_address": [
+        "0.0.0.0/1",
+        "128.0.0.0/1"
+      ],
+      "auto_route": true,
+      "auto_redirect": true
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "direct",
+      "bind_interface": "wlo1"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    },
+
+    {
+      "type": "socks",
+      "tag": "default-proxy",
+      "server": "127.0.0.1",
+      "server_port": 1080
+    },
+    {
+      "type": "socks",
+      "tag": "socks-de",
+      "server": "127.0.0.1",
+      "server_port": 1080
+    },
+    {
+      "type": "socks",
+      "tag": "socks-jp",
+      "server": "127.0.0.1",
+      "server_port": 1081
+    },
+    {
+      "type": "socks",
+      "tag": "socks-se",
+      "server": "127.0.0.1",
+      "server_port": 1082
+    },
+    {
+      "type": "socks",
+      "tag": "socks-fi",
+      "server": "127.0.0.1",
+      "server_port": 1083
+    },
+    {
+      "type": "socks",
+      "tag": "socks-pl",
+      "server": "127.0.0.1",
+      "server_port": 1084
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+      "ip_cidr": [
+        "10.0.0.0/8",
+        "172.16.0.0/12",
+        "192.168.0.0/16",
+        "169.254.0.0/16",
+        "224.0.0.0/4"
+      ],
+      "outbound": "direct"
+      },
+
+      {
+        "port": 22,
+        "outbound": "direct"
+      },
+      {
+        "network": "icmp",
+        "outbound": "direct"
+      },
+
+      {
+        "action": "sniff"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
+
+      {
+        "domain": [
+          "storage.dedi.c7x.dev",
+          "star.dedi.c7x.dev",
+          "mokou.dedi.c7x.dev",
+          "new2b2t.dedi.c7x.dev"
+        ],
+        "outbound": "direct"
+      },
+
+      {
+        "rule_set": [
+          "geoip-jp"
+        ],
+        "outbound": "socks-jp"
+      },
+      {
+        "rule_set": [
+          "geoip-ru",
+          "geosite-ru",
+          "geosite-hoyoverse"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "rule_set": [
+          "geosite-openai"
+        ],
+        "outbound": "socks-de"
+      }
+    ],
+    "rule_set": [
+      {
+        "tag": "geoip-ru",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-ru.srs",
+        "download_detour": "default-proxy"
+      },
+      {
+        "tag": "geosite-ru",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-category-ru.srs",
+        "download_detour": "default-proxy"
+      },
+      {
+        "tag": "geoip-jp",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-jp.srs",
+        "download_detour": "default-proxy"
+      },
+
+      {
+        "tag": "geosite-google",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-google.srs",
+        "download_detour": "default-proxy"
+      },
+      {
+        "tag": "geosite-youtube",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-youtube.srs",
+        "download_detour": "default-proxy"
+      },
+      {
+        "tag": "geosite-openai",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-openai.srs",
+        "download_detour": "default-proxy"
+      },
+
+      {
+        "tag": "geosite-hoyoverse",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-hoyoverse.srs",
+        "download_detour": "default-proxy"
+      }
+    ],
+    "auto_detect_interface": true,
+    "default_domain_resolver": "cloudflare",
+    "default_interface": "wlo1",
+    "final": "default-proxy"
+  },
+  "experimental": {
+    "cache_file": {
+      "enabled": true
+    }
+  }
+}

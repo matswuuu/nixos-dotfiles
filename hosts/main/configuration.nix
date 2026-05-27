@@ -1,6 +1,7 @@
 { inputs, lib, config, pkgs, ...}:
 {
   imports = [
+    ../../nixos/profiles/desktop-niri.nix
     ./game/steam.nix
     ./network/networking.nix
     ./packages.nix

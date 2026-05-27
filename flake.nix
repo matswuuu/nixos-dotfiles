@@ -28,9 +28,10 @@
 
   outputs = { nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, ... } @inputs:
     let
-      username = "matswuuu";
+      user = import ./users/matswuuu;
+      username = user.username;
 
-      mkHost = import ./mkHost.nix {
+      mkHost = import ./lib/mkHost.nix {
         inherit nixpkgs home-manager sops-nix catppuccin mtsw-bar inputs;
       };
 

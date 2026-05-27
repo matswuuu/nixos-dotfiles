@@ -1,0 +1,58 @@
+x-awg-defaults: &awg-defaults
+  build:
+    context: .
+  cap_add:
+    - NET_ADMIN
+  sysctls:
+    - net.ipv4.conf.all.src_valid_mark=1
+  devices:
+    - /dev/net/tun:/dev/net/tun
+  restart: unless-stopped
+
+services:
+  awg-de:
+    <<: *awg-defaults
+    ports:
+      - "127.0.0.1:1080:1080"
+      - "127.0.0.1:1080:1080/udp"
+    volumes:
+      - ./config/de.conf:/etc/amnezia/amneziawg/awg0.conf:ro
+
+  awg-jp:
+    <<: *awg-defaults
+    ports:
+      - "127.0.0.1:1081:1080"
+      - "127.0.0.1:1081:1080/udp"
+    volumes:
+      - ./config/jp.conf:/etc/amnezia/amneziawg/awg0.conf:ro
+
+  awg-se:
+    <<: *awg-defaults
+    ports:
+      - "127.0.0.1:1082:1080"
+      - "127.0.0.1:1082:1080/udp"
+    volumes:
+      - ./config/se.conf:/etc/amnezia/amneziawg/awg0.conf:ro
+
+  awg-fi:
+    <<: *awg-defaults
+    ports:
+      - "127.0.0.1:1083:1080"
+      - "127.0.0.1:1083:1080/udp"
+    volumes:
+      - ./config/fi.conf:/etc/amnezia/amneziawg/awg0.conf:ro
+
+  awg-pl:
+    <<: *awg-defaults
+    ports:
+      - "127.0.0.1:1084:1080"
+      - "127.0.0.1:1084:1080/udp"
+    volumes:
+      - ./config/pl.conf:/etc/amnezia/amneziawg/awg0.conf:ro
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.enable_icc: "true"
+      com.docker.network.bridge.enable_ip_masquerade: "true"

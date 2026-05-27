@@ -24,4 +24,6 @@
       enable = true;
     };
   };
+
+  services.sing-box.defaultInterface = "wlo1";
 }

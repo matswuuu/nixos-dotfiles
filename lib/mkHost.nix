@@ -1,41 +1,33 @@
 { nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, inputs }:
 
-{ 
+{
   system,
   hostName,
   username,
   nixosModules ? [ ],
   homeModules ? [ ]
 }:
-  let
-    pkgs = import nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
-  in
 {
   nixos = nixpkgs.lib.nixosSystem {
     inherit system;
 
     specialArgs = {
-      username = username;
-      hostName = hostName;
+      inherit username hostName;
     };
 
     modules = [
-      home-manager.nixosModules.home-manager 
+      home-manager.nixosModules.home-manager
       sops-nix.nixosModules.sops
       catppuccin.nixosModules.catppuccin
-      
+
       {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
-          users.${username} = import ./home-manager/home.nix;
+          users.${username} = import ../home/default.nix;
 
           extraSpecialArgs = {
-            inputs = inputs;
-            username = username;
+            inherit inputs username;
           };
 
           sharedModules = [
@@ -46,8 +38,8 @@
         };
       }
 
-      ./os/configuration.nix
-      ./hosts/${hostName}/configuration.nix
+      ../nixos/profiles/base.nix
+      ../hosts/${hostName}/configuration.nix
     ] ++ nixosModules;
   };
 
