@@ -35,6 +35,7 @@
 
           extraSpecialArgs = {
             inputs = inputs;
+            username = username;
           };
 
           sharedModules = [

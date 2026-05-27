@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   users = {
     mutableUsers = true;
-    users.matswuuu = {
+    users.${username} = {
       isNormalUser = true;
       shell = pkgs.fish;
       extraGroups = [

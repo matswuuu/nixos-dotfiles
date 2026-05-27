@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   imports = [
@@ -20,8 +20,8 @@
   ];
 
   home = {
-    username = "matswuuu";
-    homeDirectory = "/home/matswuuu";
+    inherit username;
+    homeDirectory = "/home/${username}";
     stateVersion = "25.11";
   };
 }

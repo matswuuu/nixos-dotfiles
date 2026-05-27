@@ -28,6 +28,8 @@
 
   outputs = { nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, ... } @inputs:
     let
+      username = "matswuuu";
+
       mkHost = import ./mkHost.nix {
         inherit nixpkgs home-manager sops-nix catppuccin mtsw-bar inputs;
       };
@@ -35,7 +37,7 @@
       main = mkHost {
         system = "x86_64-linux";
         hostName = "main";
-        username = "matswuuu";
+        inherit username;
         homeModules = [
           ./hosts/main/home/home.nix
         ];
@@ -43,7 +45,7 @@
       laptop = mkHost {
         system = "x86_64-linux";
         hostName = "laptop";
-        username = "matswuuu";
+        inherit username;
         homeModules = [
           ./hosts/laptop/home/home.nix
         ];

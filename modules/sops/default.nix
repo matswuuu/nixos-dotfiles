@@ -1,8 +1,8 @@
-{ inputs, ... }: 
+{ inputs, username, ... }: 
 {
   sops = {
     defaultSopsFile = "${inputs.self}/secrets.yaml";
-    age.keyFile = "/home/matswuuu/.config/sops/age/keys.txt";
+    age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
     secrets = {
       "bar/network/host1/ip" = {};
       "bar/network/host1/port" = {};

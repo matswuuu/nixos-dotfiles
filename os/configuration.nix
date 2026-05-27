@@ -32,7 +32,7 @@
   services.udev.extraRules = ''
     KERNEL=="uinput", MODE="0660", GROUP="input"
   '';
-  users.groups.input.members = [ "matswuuu" ];
+  users.groups.input.members = [ username ];
 
   services.dbus.implementation = "broker";
 
