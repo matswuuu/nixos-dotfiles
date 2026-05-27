@@ -11,6 +11,7 @@
     ./modules/wofi/default.nix
     ./modules/java/default.nix
     ./modules/btop/default.nix
+    ./modules/yazi/default.nix
     ./modules/niri/default.nix
     ./modules/python/default.nix
     ./modules/theme/gtk.nix

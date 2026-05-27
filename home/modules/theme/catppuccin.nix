@@ -24,6 +24,9 @@
     kitty = {
       enable = true;
     };
+    yazi = {
+      enable = true;
+    };
     gtk = {
       icon = {
         enable = true;
