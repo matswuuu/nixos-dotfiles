@@ -40,6 +40,7 @@
         nftables
         tcpdump
         ydotool # Clicker
+        translate-shell # Translator
 
         grimblast
         grim
@@ -52,10 +53,6 @@
 
         # Qt
         qt6.qtdeclarative
-
-        # Dolphin
-        kdePackages.dolphin
-        kdePackages.kio-extras
 
         # Wayland
         wofi
