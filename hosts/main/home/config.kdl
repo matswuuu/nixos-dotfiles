@@ -66,7 +66,18 @@ window-rule {
 }
 
 window-rule {
+    match app-id="jetbrains-idea"
+    open-on-workspace "2";
+}
+
+window-rule {
     match app-id="discord" at-startup=true
+    open-on-workspace "3";
+    default-column-width { proportion 0.5; }
+}
+
+window-rule {
+    match app-id="vesktop" at-startup=true
     open-on-workspace "3";
     default-column-width { proportion 0.5; }
 }
@@ -83,6 +94,7 @@ window-rule {
 }
 
 spawn-at-startup "google-chrome-stable"
+spawn-at-startup "$HOME/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea"
 spawn-at-startup "vesktop"
 spawn-at-startup "Telegram"
 spawn-at-startup "lutris"

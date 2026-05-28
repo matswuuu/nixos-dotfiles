@@ -16,7 +16,7 @@ services:
       - "127.0.0.1:1080:1080"
       - "127.0.0.1:1080:1080/udp"
     volumes:
-      - ./config/de.conf:/etc/amnezia/amneziawg/awg0.conf:ro
+      - ${AWG_CONFIG_DIR:-./config}/de.conf:/etc/amnezia/amneziawg/awg0.conf:ro
 
   awg-jp:
     <<: *awg-defaults
@@ -24,7 +24,7 @@ services:
       - "127.0.0.1:1081:1080"
       - "127.0.0.1:1081:1080/udp"
     volumes:
-      - ./config/jp.conf:/etc/amnezia/amneziawg/awg0.conf:ro
+      - ${AWG_CONFIG_DIR:-./config}/jp.conf:/etc/amnezia/amneziawg/awg0.conf:ro
 
   awg-se:
     <<: *awg-defaults
@@ -32,7 +32,7 @@ services:
       - "127.0.0.1:1082:1080"
       - "127.0.0.1:1082:1080/udp"
     volumes:
-      - ./config/se.conf:/etc/amnezia/amneziawg/awg0.conf:ro
+      - ${AWG_CONFIG_DIR:-./config}/se.conf:/etc/amnezia/amneziawg/awg0.conf:ro
 
   awg-fi:
     <<: *awg-defaults
@@ -40,7 +40,7 @@ services:
       - "127.0.0.1:1083:1080"
       - "127.0.0.1:1083:1080/udp"
     volumes:
-      - ./config/fi.conf:/etc/amnezia/amneziawg/awg0.conf:ro
+      - ${AWG_CONFIG_DIR:-./config}/fi.conf:/etc/amnezia/amneziawg/awg0.conf:ro
 
   awg-pl:
     <<: *awg-defaults
@@ -48,7 +48,7 @@ services:
       - "127.0.0.1:1084:1080"
       - "127.0.0.1:1084:1080/udp"
     volumes:
-      - ./config/pl.conf:/etc/amnezia/amneziawg/awg0.conf:ro
+      - ${AWG_CONFIG_DIR:-./config}/pl.conf:/etc/amnezia/amneziawg/awg0.conf:ro
 
 networks:
   default:

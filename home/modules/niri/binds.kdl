@@ -1,6 +1,7 @@
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
+    Mod+Shift+E hotkey-overlay-title="Open Yazi" { spawn "alacritty" "-e" "yazi"; }
     Mod+Q repeat=false { close-window; }
     Mod+O repeat=false { toggle-overview; }
 
