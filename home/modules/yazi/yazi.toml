@@ -1,17 +1,2 @@
 [mgr]
 show_hidden = true
-
-[opener]
-chrome-office = [
-  { run = 'google-chrome-stable "$@"', orphan = true, desc = "Open in Chrome" },
-]
-
-[open]
-prepend_rules = [
-  { name = "*.doc", use = "chrome-office" },
-  { name = "*.docx", use = "chrome-office" },
-  { name = "*.ppt", use = "chrome-office" },
-  { name = "*.pptx", use = "chrome-office" },
-  { name = "*.xls", use = "chrome-office" },
-  { name = "*.xlsx", use = "chrome-office" },
-]

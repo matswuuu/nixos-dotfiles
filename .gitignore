@@ -9,3 +9,4 @@ proxy/config/*
 !proxy/config/*.example
 proxy/data/
 proxy/cache/
+proxy/cache.db

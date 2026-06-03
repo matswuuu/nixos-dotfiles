@@ -62,37 +62,43 @@
       "type": "socks",
       "tag": "default-proxy",
       "server": "127.0.0.1",
-      "server_port": 1080
+      "server_port": 1080,
+      "version": "5"
     },
     {
       "type": "socks",
       "tag": "socks-de",
       "server": "127.0.0.1",
-      "server_port": 1080
+      "server_port": 1080,
+      "version": "5"
     },
     {
       "type": "socks",
       "tag": "socks-jp",
       "server": "127.0.0.1",
-      "server_port": 1081
+      "server_port": 1081,
+      "version": "5"
     },
     {
       "type": "socks",
       "tag": "socks-se",
       "server": "127.0.0.1",
-      "server_port": 1082
+      "server_port": 1082,
+      "version": "5"
     },
     {
       "type": "socks",
       "tag": "socks-fi",
       "server": "127.0.0.1",
-      "server_port": 1083
+      "server_port": 1083,
+      "version": "5"
     },
     {
       "type": "socks",
       "tag": "socks-pl",
       "server": "127.0.0.1",
-      "server_port": 1084
+      "server_port": 1084,
+      "version": "5"
     }
   ],
   "route": {
@@ -116,6 +122,22 @@
         "network": "icmp",
         "outbound": "direct"
       },
+      {
+        "process_name": [
+          "dota2",
+          "dota.sh",
+          "dota_linux",
+          "dota2_linux"
+        ],
+        "action": "bypass",
+        "outbound": "direct"
+      },
+      {
+        "process_name": "steam",
+        "port_range": "27000:27100",
+        "action": "bypass",
+        "outbound": "direct"
+      },
 
       {
         "action": "sniff"
@@ -123,6 +145,13 @@
       {
         "protocol": "dns",
         "action": "hijack-dns"
+      },
+
+      {
+        "rule_set": [
+          "discord-full"
+        ],
+        "outbound": "socks-de"
       },
 
       {
@@ -198,6 +227,13 @@
         "type": "remote",
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-openai.srs",
+        "download_detour": "default-proxy"
+      },
+      {
+        "tag": "discord-full",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://github.com/vernette/rulesets/raw/master/srs/discord-full.srs",
         "download_detour": "default-proxy"
       },
 

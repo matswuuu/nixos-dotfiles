@@ -47,6 +47,9 @@
         slurp
         swappy
 
+        whisper-cpp-vulkan
+        voxtype-vulkan
+        
         gtk3
         gtk4
         adw-gtk3
