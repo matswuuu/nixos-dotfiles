@@ -7,22 +7,6 @@
     "servers": [
       {
         "type": "udp",
-        "tag": "direct_dns_resolver",
-        "server": "9.9.9.9",
-        "server_port": 53
-      },
-
-      {
-        "type": "https",
-        "tag": "google_doh",
-        "server": "8.8.8.8",
-        "server_port": 443,
-        "path": "/dns-query",
-        "detour": "default-proxy"
-      },
-
-      {
-        "type": "udp",
         "tag": "cloudflare",
         "server": "1.1.1.1"
       },
@@ -40,6 +24,7 @@
     "rules": [
       {
         "rule_set": [
+          "geosite-ru",
           "geosite-ru"
         ],
         "server": "yandex"
@@ -53,15 +38,13 @@
       "type": "tun",
       "tag": "tun-in",
       "interface_name": "tun0",
-      "address": ["172.18.0.1/30"],
+      "address": ["198.18.0.0/15"],
       "route_address": [
         "0.0.0.0/1",
         "128.0.0.0/1"
       ],
-      "mtu": 1492,
       "auto_route": true,
-      "auto_redirect": true,
-      "strict_route": false
+      "auto_redirect": true
     }
   ],
   "outbounds": [
@@ -121,12 +104,26 @@
   "route": {
     "rules": [
       {
-        "inbound": "tun-in",
+        "ip_cidr": [
+          "10.0.0.0/8",
+          "172.16.0.0/12",
+          "192.168.0.0/16",
+          "169.254.0.0/16",
+          "224.0.0.0/4"
+        ],
+        "outbound": "direct"
+      },
+
+      {
+        "port": 22,
+        "outbound": "direct"
+      },
+
+      {
         "action": "resolve",
         "strategy": "prefer_ipv4"
       },
       {
-        "inbound": "tun-in",
         "action": "sniff",
         "timeout": "1s"
       },
@@ -134,33 +131,18 @@
         "protocol": "dns",
         "action": "hijack-dns"
       },
-      {
-        "action": "reject",
-        "method": "drop",
-        "network": ["udp"],
-        "port": [443]
-      },
-      {
-        "ip_is_private": true,
-        "outbound": "direct"
-      },
-      {
-        "domain_suffix": ["local"],
-        "outbound": "direct"
-      },
 
       {
         "rule_set": [
           "geoip-ru",
-          "geosite-ru",
-          "geosite-hoyoverse"
+          "geosite-ru"
         ],
         "outbound": "direct"
       },
       {
         "rule_set": "games",
         "network": ["tcp", "udp"],
-        "outbound": "direct-out"
+        "outbound": "direct"
       },
       {
         "port_range": "27000:27100",
@@ -243,7 +225,7 @@
       }
     ],
     "auto_detect_interface": true,
-    "default_domain_resolver": "direct_dns_resolver",
+    "default_domain_resolver": "cloudflare",
     "default_interface": "wlo1",
     "final": "default-proxy"
   },
