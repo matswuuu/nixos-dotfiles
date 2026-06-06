@@ -8,10 +8,9 @@
     timeServers = [ "0.pool.ntp.org" "1.pool.ntp.org" ];
     firewall = {
       enable = true;
-      trustedInterfaces = ["tun0"];
-      allowedTCPPorts = [ 
+      allowedTCPPorts = [
         7878
-        8081 
+        8081
         8080
         8085
         8096
