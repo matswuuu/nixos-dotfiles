@@ -20,5 +20,10 @@
     xclip
     xsel
     xwayland-satellite
+
+        mesa-demos
+        vulkan-tools
   ];
+
+    hardware.graphics.enable = true;
 }
