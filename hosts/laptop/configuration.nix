@@ -6,4 +6,18 @@
     ./hardware/auto-cpufreq.nix
     ./hardware/hardware-configuration.nix
   ];
+
+  services.xserver = {
+    enable = true;
+  };
+
+  
+  environment.systemPackages = with pkgs; [
+    openbox
+    xterm
+    xdotool
+    xclip
+    xsel
+    xwayland-satellite
+  ];
 }
