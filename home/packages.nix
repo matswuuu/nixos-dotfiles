@@ -39,6 +39,7 @@
         iptables
         nftables
         tcpdump
+        tmux
         ydotool # Clicker
         translate-shell # Translator
 
@@ -47,8 +48,8 @@
         slurp
         swappy
 
-        whisper-cpp-vulkan
-        voxtype-vulkan
+        # whisper-cpp-vulkan
+        # voxtype-vulkan
         
         gtk3
         gtk4
@@ -100,6 +101,7 @@
 
         # Gaming
         steam
+        umu-launcher
         protontricks
         mangohud
         protonup-qt

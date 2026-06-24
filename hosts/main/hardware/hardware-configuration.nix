@@ -24,12 +24,23 @@
 
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/ACB6A0E5B6A0B16E";
-    fsType = "ntfs";
-    options = [ "default" ];
+    fsType = "ntfs3";
+    options = [
+      "uid=1000"
+      "gid=100"
+      "umask=022"
+      "nofail"
+      "windows_names"
+    ];
   };
 
   fileSystems."/mnt/data2" = {
     device = "/dev/disk/by-uuid/f9bbb811-21e5-4615-8b59-dc82b73dbc11";
+    fsType = "ext4";
+  };
+
+  fileSystems."/mnt/data3" = {
+    device = "/dev/disk/by-uuid/35a1a29d-0f76-4e73-bc20-f65864c7c3a2";
     fsType = "ext4";
   };
 

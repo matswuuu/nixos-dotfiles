@@ -22,5 +22,5 @@
     };
   };
 
-  services.sing-box.defaultInterface = "wlo1";
+  # services.sing-box.defaultInterface = "wlo1";
 }

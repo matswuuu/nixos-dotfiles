@@ -102,4 +102,4 @@ spawn-at-startup "lutris"
 spawn-at-startup "awww-daemon"
 spawn-at-startup "awww img ~/.config/awww/wallpapers/5.jpg"
 
-spawn-at-startup "voxtype" "daemon"
+// spawn-at-startup "voxtype" "daemon"

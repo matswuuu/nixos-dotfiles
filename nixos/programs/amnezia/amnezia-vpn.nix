@@ -1,5 +1,5 @@
 {
     programs.amnezia-vpn = {
-        enable = true;
+        # enable = true;
     };
 }

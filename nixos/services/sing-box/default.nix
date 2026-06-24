@@ -31,81 +31,81 @@ let
       };
 in
 {
-  options.services.sing-box = {
-    defaultInterface = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;
-      default = null;
-      example = "wlp1s0";
-      description = ''
-        Host network interface sing-box should use for direct/default routing.
-        When set, this overrides route.default_interface and the direct outbound
-        bind_interface in the Docker proxy sing-box config.
-      '';
-    };
+  # options.services.sing-box = {
+  #   defaultInterface = lib.mkOption {
+  #     type = lib.types.nullOr lib.types.str;
+  #     default = null;
+  #     example = "wlp1s0";
+  #     description = ''
+  #       Host network interface sing-box should use for direct/default routing.
+  #       When set, this overrides route.default_interface and the direct outbound
+  #       bind_interface in the Docker proxy sing-box config.
+  #     '';
+  #   };
 
-    awgConfigDir = lib.mkOption {
-      type = lib.types.path;
-      default = "/home/${username}/proxy/config";
-      example = "/var/lib/amneziawg/config";
-      description = ''
-        Directory containing AmneziaWG config files mounted into the Docker
-        proxy containers.
-      '';
-    };
-  };
+  #   awgConfigDir = lib.mkOption {
+  #     type = lib.types.path;
+  #     default = "/home/${username}/proxy/config";
+  #     example = "/var/lib/amneziawg/config";
+  #     description = ''
+  #       Directory containing AmneziaWG config files mounted into the Docker
+  #       proxy containers.
+  #     '';
+  #   };
+  # };
 
-  config = {
-    systemd.services.proxy-containers = {
-      description = "Docker proxy containers";
-      wantedBy = [ "multi-user.target" ];
-      after = [
-        "docker.service"
-        "network-online.target"
-      ];
-      wants = [ "network-online.target" ];
-      requires = [ "docker.service" ];
+  # config = {
+  #   systemd.services.proxy-containers = {
+  #     description = "Docker proxy containers";
+  #     wantedBy = [ "multi-user.target" ];
+  #     after = [
+  #       "docker.service"
+  #       "network-online.target"
+  #     ];
+  #     wants = [ "network-online.target" ];
+  #     requires = [ "docker.service" ];
 
-      path = [
-        pkgs.docker
-        pkgs.docker-compose
-      ];
+  #     path = [
+  #       pkgs.docker
+  #       pkgs.docker-compose
+  #     ];
 
-      environment.AWG_CONFIG_DIR = awgConfigDir;
+  #     environment.AWG_CONFIG_DIR = awgConfigDir;
 
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        WorkingDirectory = proxyDir;
-        ExecStartPre = pkgs.writeShellScript "proxy-containers-preflight" ''
-          config_dir=${lib.escapeShellArg awgConfigDir}
-          missing=0
-          for config in ${lib.escapeShellArgs proxyConfigFiles}; do
-            if [[ ! -f "$config_dir/$config" ]]; then
-              echo "missing $config_dir/$config" >&2
-              missing=1
-            fi
-          done
+  #     serviceConfig = {
+  #       Type = "oneshot";
+  #       RemainAfterExit = true;
+  #       WorkingDirectory = proxyDir;
+  #       ExecStartPre = pkgs.writeShellScript "proxy-containers-preflight" ''
+  #         config_dir=${lib.escapeShellArg awgConfigDir}
+  #         missing=0
+  #         for config in ${lib.escapeShellArgs proxyConfigFiles}; do
+  #           if [[ ! -f "$config_dir/$config" ]]; then
+  #             echo "missing $config_dir/$config" >&2
+  #             missing=1
+  #           fi
+  #         done
 
-          if [[ "$missing" -ne 0 ]]; then
-            echo "proxy-containers.service requires local AmneziaWG configs in $config_dir" >&2
-            exit 1
-          fi
-        '';
-        ExecStart = "${pkgs.docker-compose}/bin/docker-compose up --build --detach --remove-orphans";
-        ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
-        TimeoutStartSec = "10min";
-        TimeoutStopSec = "2min";
-      };
-    };
+  #         if [[ "$missing" -ne 0 ]]; then
+  #           echo "proxy-containers.service requires local AmneziaWG configs in $config_dir" >&2
+  #           exit 1
+  #         fi
+  #       '';
+  #       ExecStart = "${pkgs.docker-compose}/bin/docker-compose up --build --detach --remove-orphans";
+  #       ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+  #       TimeoutStartSec = "10min";
+  #       TimeoutStopSec = "2min";
+  #     };
+  #   };
 
-    services.sing-box = {
-      enable = true;
-      settings = applyDefaultInterface baseSettings;
-    };
+  #   services.sing-box = {
+  #     enable = true;
+  #     settings = applyDefaultInterface baseSettings;
+  #   };
 
-    systemd.services.sing-box = {
-      after = [ "proxy-containers.service" ];
-      requires = [ "proxy-containers.service" ];
-    };
-  };
+  #   systemd.services.sing-box = {
+  #     after = [ "proxy-containers.service" ];
+  #     requires = [ "proxy-containers.service" ];
+  #   };
+  # };
 }
