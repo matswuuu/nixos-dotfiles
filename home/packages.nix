@@ -17,7 +17,6 @@
         mtr
         jmtpfs
         simple-mtpfs
-        # mtpfs
         libmtp
         gvfs
         usbutils
@@ -47,6 +46,8 @@
         grim
         slurp
         swappy
+
+        kdePackages.kclock
 
         # whisper-cpp-vulkan
         # voxtype-vulkan
@@ -89,10 +90,6 @@
         # JS
         nodejs
         pnpm
-
-        # AI
-        claude-code
-        antigravity
 
         # Visual
         #krita

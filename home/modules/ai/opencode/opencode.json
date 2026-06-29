@@ -1,0 +1,26 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode/deepseek-v4-pro",
+  "small_model": "opencode/deepseek-v4-flash",
+  "autoshare": false,
+  "autoupdate": true,
+  "lsp": true,
+  "tools": {
+    "write": true,
+    "bash": true
+  },
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 12000
+  },
+  "agent": {
+    "coder": {
+      "description": "Expert software engineer for complex coding, refactoring, and architecture using DeepSeek V4 Pro",
+      "mode": "primary",
+      "model": "opencode/deepseek-v4-pro",
+      "temperature": 0.3,
+      "prompt": "You are an expert software engineer. Prefer simple, correct solutions. Think step by step before implementing. Ask clarifying questions when requirements are ambiguous."
+    }
+  }
+}

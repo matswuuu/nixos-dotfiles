@@ -10,17 +10,20 @@
     ./hardware/hardware-configuration.nix
   ];
 
-  services.xserver = {
-    enable = true;
-  };
-
-  
   environment.systemPackages = with pkgs; [
-    openbox
-    xterm
-    xdotool
-    xclip
-    xsel
-    xwayland-satellite
+    anydesk
   ];
+
+  nixpkgs.overlays = [
+      (final: prev: {
+        anydesk = prev.anydesk.overrideAttrs (old: rec {
+          version = "8.0.3";
+
+          src = prev.fetchurl {
+            url = "https://download.anydesk.com/linux/anydesk-${version}-amd64.tar.gz";
+            hash = "sha256-Mjl17hh5A/pwRAi7giL1SJYlQ61O0SXX+KeH8STZ4bs=";
+          };
+        });
+      })
+    ];
 }

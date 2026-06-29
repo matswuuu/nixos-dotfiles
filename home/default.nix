@@ -19,28 +19,13 @@
     ./modules/theme/qt.nix
     ./modules/theme/catppuccin.nix
     ./modules/sops/default.nix
+    ./modules/notification-light/default.nix
+    ./modules/ai/opencode/default.nix
   ];
 
   home = {
     inherit username;
     homeDirectory = "/home/${username}";
-    stateVersion = "25.11";
-  };
-
-  xdg.desktopEntries.chrome-office = {
-    name = "Google Chrome Office";
-    exec = "/run/current-system/sw/bin/google-chrome-stable %U";
-    icon = "google-chrome";
-    terminal = false;
-    noDisplay = true;
-    categories = [ "Network" "WebBrowser" ];
-    mimeType = [
-      "application/msword"
-      "application/vnd.ms-excel"
-      "application/vnd.ms-powerpoint"
-      "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    ];
+    stateVersion = "26.05";
   };
 }
