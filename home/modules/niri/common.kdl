@@ -24,8 +24,7 @@ hotkey-overlay {
 input {
     keyboard {
         xkb {
-            layout "us,ru"
-            options "grp:win_space_toggle"
+            file "~/.config/niri/keymap.xkb"
         }
     }
 

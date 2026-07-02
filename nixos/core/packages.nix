@@ -5,8 +5,10 @@
     cudaSupport = true;
     permittedInsecurePackages = [
       "openssl-1.1.1w"
+      "pnpm-10.29.2"
     ];
   };
+  
   environment.systemPackages = with pkgs; [
     alacritty
     google-chrome
