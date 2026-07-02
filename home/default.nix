@@ -21,6 +21,7 @@
     ./modules/sops/default.nix
     ./modules/notification-light/default.nix
     ./modules/ai/opencode/default.nix
+    ./modules/anki/default.nix
   ];
 
   home = {

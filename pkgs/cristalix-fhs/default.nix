@@ -26,10 +26,15 @@ let
   # FHS env's native glibc 2.42, we MUST NOT add $GLIBC_43/lib — mixing glibc
   # versions in the same process causes "stack smashing detected" crashes.
   #
+  # Options:
+  #   -m, --memory <limit>   Launch via systemd-run with MemoryMax=<limit>
+  #                           (e.g. --memory=4G, -m 8G)
+  #
   # Behaviour:
-  # - If arguments are provided, they are executed directly (with FHS lib paths
-  #   but NO glibc 2.43 path). This allows testing/debugging without crashes.
-  # - If no arguments, patches all known JRE binaries and launches
+  # - If positional arguments are provided, they are executed directly (with
+  #   FHS lib paths but NO glibc 2.43 path). This allows testing/debugging
+  #   without crashes.
+  # - If no positional arguments, patches all known JRE binaries and launches
   #   CristalixLauncher.jar (with glibc 2.43 path included).
   runScript = pkgs.writeShellScript "cristalix-wrapper" ''
     set -euo pipefail
@@ -45,6 +50,49 @@ let
     # --- Library path components ---
     FHS_LIB_PATH="/usr/lib64:/usr/lib:/lib64:/lib"
     JAVA_LIB_PATH="$GLIBC_43/lib:$FHS_LIB_PATH:$ZLIB_DIR:$GCC_DIR"
+
+    # --- Parse options ---
+    MEMORY_LIMIT=
+    while [ $# -gt 0 ]; do
+      case "$1" in
+        --memory=*)
+          MEMORY_LIMIT="''${1#--memory=}"
+          shift
+          ;;
+        -m)
+          MEMORY_LIMIT="$2"
+          shift 2
+          ;;
+        --memory)
+          MEMORY_LIMIT="$2"
+          shift 2
+          ;;
+        --help|-h)
+          echo "Usage: cristalix-fhs [options] [command...]"
+          echo ""
+          echo "Options:"
+          echo "  -m, --memory <limit>   Launch via systemd-run with MemoryMax=<limit>"
+          echo "                           (e.g. -m 4G, --memory=8G)"
+          echo "  -h, --help             Show this help"
+          echo ""
+          echo "Without positional arguments, launches the Cristalix launcher."
+          echo "With positional arguments, runs them inside the FHS environment."
+          exit 0
+          ;;
+        --)
+          shift
+          break
+          ;;
+        -*)
+          echo "Unknown option: $1" >&2
+          echo "Try --help for usage." >&2
+          exit 1
+          ;;
+        *)
+          break
+          ;;
+      esac
+    done
 
     # --- Utility: patch a binary's interpreter to use glibc 2.43's ld-linux ---
     # Leaves the file writable so applications (like the launcher) can still
@@ -89,22 +137,12 @@ let
       ) &
     fi
 
-    # If custom arguments were given, run those instead of the default launcher.
+    # If positional arguments remain, run those instead of the default launcher.
     # Use ONLY FHS paths here (no glibc 2.43), so FHS-native tools (bash,
     # python, etc.) don't crash from mixing glibc versions.
     if [ $# -gt 0 ]; then
-      case "$1" in
-        --help|-h)
-          echo "Usage: cristalix-fhs [command...]"
-          echo "  Default (no args): launches Cristalix launcher with glibc 2.43"
-          echo "  With args: runs the given command(s) inside the FHS environment"
-          exit 0
-          ;;
-        *)
-          export LD_LIBRARY_PATH="$FHS_LIB_PATH''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-          exec "$@"
-          ;;
-      esac
+      export LD_LIBRARY_PATH="$FHS_LIB_PATH''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+      exec "$@"
     fi
 
     # --- Default: run Cristalix launcher with patched system Java ---
@@ -129,13 +167,25 @@ let
     # GLFW init to fail even though X11 works fine.
     unset WAYLAND_DISPLAY
     export LD_LIBRARY_PATH="$JAVA_LIB_PATH''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-    exec "$PATCHED_JAVA" -jar "$LAUNCHER"
+
+    if [ -n "$MEMORY_LIMIT" ]; then
+      SYSTEMD_RUN="/run/current-system/sw/bin/systemd-run"
+      if [ -x "$SYSTEMD_RUN" ]; then
+        exec "$SYSTEMD_RUN" --user --scope -p "MemoryMax=$MEMORY_LIMIT" \
+          "$PATCHED_JAVA" -jar "$LAUNCHER"
+      else
+        echo "Warning: systemd-run not found at $SYSTEMD_RUN, ignoring --memory" >&2
+        exec "$PATCHED_JAVA" -jar "$LAUNCHER"
+      fi
+    else
+      exec "$PATCHED_JAVA" -jar "$LAUNCHER"
+    fi
   '';
 
 in
 pkgs.buildFHSEnv {
   pname = "cristalix-fhs";
-  version = "0.5";
+  version = "0.6";
 
   meta = {
     description = "FHS environment for Cristalix launcher (glibc 2.43)";
