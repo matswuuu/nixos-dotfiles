@@ -1,6 +1,10 @@
 include "./common.kdl"
 include "./binds.kdl"
 
+debug {
+    force-disable-connectors-on-resume
+}
+
 workspace "0" {
     open-on-output "DP-1"
 }

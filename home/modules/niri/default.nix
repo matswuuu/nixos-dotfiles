@@ -19,7 +19,6 @@
       ".config/niri/config.kdl".source = cfg.main-path;
       ".config/niri/common.kdl".source = ./common.kdl;
       ".config/niri/binds.kdl".source = ./binds.kdl;
-      ".config/niri/keymap.xkb".source = ./keymap.xkb;
     };
 
     systemd.user.services.xwayland-satellite = {

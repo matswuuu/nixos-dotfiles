@@ -162,10 +162,25 @@ let
     fi
 
     # Set the full Java lib path (glibc 2.43 + FHS) and launch.
-    # Unset WAYLAND_DISPLAY so that LWJGL/GLFW uses X11 instead of Wayland.
-    # The Wayland compositor connection can fail inside the FHS sandbox, causing
-    # GLFW init to fail even though X11 works fine.
+    # Unset WAYLAND_DISPLAY so that LWJGL/GLFW uses X11 (XWayland) instead of Wayland.
+    # NVIDIA + Wayland + GLFW 3.4.2-snapshot cannot init OpenGL (bails out with
+    # "GLFW initialization failed").  XWayland works, but switching niri workspaces
+    # may freeze X11 windows (XWayland surface remapping bug with NVIDIA).
     unset WAYLAND_DISPLAY
+
+    # NVIDIA driver tweaks for stability with many concurrent GL contexts.
+    # When switching XWayland surfaces (e.g. niri workspace switch), the driver
+    # remaps all GLX drawables.  With 10+ active game instances this can block
+    # glXSwapBuffers on some windows, freezing their rendering while X11 events
+    # (close button, etc.) still work.  These env vars reduce contention:
+    #
+    #   __GL_SYNC_TO_VBLANK=0       — don't block swap on vblank
+    #   __GL_THREADED_OPTIMIZATIONS=0 — disable multi-threaded GL (more deterministic)
+    #   __GL_YIELD=NOTHING          — reduce context thrashing during remap
+    export __GL_SYNC_TO_VBLANK=0
+    export __GL_THREADED_OPTIMIZATIONS=0
+    export __GL_YIELD=NOTHING
+
     export LD_LIBRARY_PATH="$JAVA_LIB_PATH''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
     if [ -n "$MEMORY_LIMIT" ]; then

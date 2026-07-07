@@ -44,6 +44,7 @@
     tmux
     ydotool # Clicker
     translate-shell # Translator
+    moreutils
 
     grimblast
     grim
