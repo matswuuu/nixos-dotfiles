@@ -4,6 +4,9 @@
     autoEnable = true;
     flavor = "macchiato";
     accent = "mauve";
+    cursors = {
+      enable = false;
+    };
     kvantum = {
       apply = true;
     };

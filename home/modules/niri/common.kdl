@@ -24,7 +24,8 @@ hotkey-overlay {
 input {
     keyboard {
         xkb {
-            file "~/.config/niri/keymap.xkb"
+            layout "us,ru"
+            options "grp:win_space_toggle"
         }
     }
 
@@ -36,6 +37,12 @@ input {
     warp-mouse-to-focus
     focus-follows-mouse
 }
+
+cursor {
+    xcursor-theme "Numix-Cursor"
+    xcursor-size 24
+}
+
 
 layout {
     gaps 10

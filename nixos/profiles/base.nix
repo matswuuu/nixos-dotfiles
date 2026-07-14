@@ -21,7 +21,6 @@
 
     ../programs/amnezia/amnezia-vpn.nix
     ../programs/docker.nix
-    ../programs/podman.nix
     ../programs/nix-ld.nix
     ../programs/shell.nix
     ../programs/ssh.nix

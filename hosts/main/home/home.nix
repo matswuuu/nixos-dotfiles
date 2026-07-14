@@ -5,7 +5,7 @@
     
   ];
 
-  session.niri = {  
+  session.niri = {
     main-path = ./config.kdl;
   };
 

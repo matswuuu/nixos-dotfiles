@@ -10,6 +10,18 @@
     ./hardware/hardware-configuration.nix
   ];
 
+  security.rtkit.enable = true;
+
+  services.pipewire = {
+    enable = true;
+    audio.enable = true;
+    pulse.enable = true;
+    jack.enable = true;
+    extraConfig.pipewire."context.properties" = {
+      "max-clients" = 256;
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     anydesk
   ];

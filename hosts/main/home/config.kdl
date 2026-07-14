@@ -98,7 +98,6 @@ window-rule {
 }
 
 spawn-at-startup "google-chrome-stable"
-spawn-at-startup "$HOME/.local/share/JetBrains/Toolbox/apps/intellij-idea-ultimate/bin/idea"
 spawn-at-startup "vesktop"
 spawn-at-startup "Telegram"
 spawn-at-startup "lutris"

@@ -7,7 +7,12 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-#    extraModulePackages = [ config.boot.kernelPackages.amneziawg ];
     kernelModules = [ "uinput" ];
   };
+
+#      programs.hyprland = {
+#        enable = true;
+#        withUWSM = true;
+#        xwayland.enable = true;
+#      };
 }

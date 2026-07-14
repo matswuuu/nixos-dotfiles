@@ -181,8 +181,6 @@ let
     export __GL_THREADED_OPTIMIZATIONS=0
     export __GL_YIELD=NOTHING
 
-    export LD_LIBRARY_PATH="$JAVA_LIB_PATH''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-
     if [ -n "$MEMORY_LIMIT" ]; then
       SYSTEMD_RUN="/run/current-system/sw/bin/systemd-run"
       if [ -x "$SYSTEMD_RUN" ]; then

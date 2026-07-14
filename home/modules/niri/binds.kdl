@@ -14,6 +14,9 @@ binds {
     // Pin window
     Mod+P { toggle-window-floating; }
 
+    // Power off monitors
+    Mod+Shift+Ctrl+P { power-off-monitors; }
+
     // Screenshot region
     Mod+Shift+S { screenshot; }
 

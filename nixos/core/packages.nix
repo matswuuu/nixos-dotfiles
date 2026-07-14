@@ -10,7 +10,6 @@
   };
   
   environment.systemPackages = with pkgs; [
-    alacritty
     google-chrome
     home-manager
 

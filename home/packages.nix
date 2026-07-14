@@ -1,11 +1,8 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # Cursor 
+    # Cursor
     numix-cursor-theme
-
-    # Container tools (for Cristalix)
-    distrobox
 
     # Utils
     brightnessctl
@@ -51,6 +48,8 @@
     slurp
     swappy
 
+    alacritty # Terminal
+
     # whisper-cpp-vulkan
     # voxtype-vulkan
     
@@ -82,7 +81,7 @@
     # Code stuff
     vscode
     jetbrains-toolbox 
-    mongodb-compass
+#    mongodb-compass
     insomnia
 
     # Java

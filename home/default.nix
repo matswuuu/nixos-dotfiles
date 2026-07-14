@@ -14,6 +14,7 @@
     ./modules/yazi/default.nix
     ./modules/zed/default.nix
     ./modules/niri/default.nix
+#    ./modules/hyprland/default.nix
     ./modules/python/default.nix
     ./modules/theme/gtk.nix
     ./modules/theme/qt.nix
