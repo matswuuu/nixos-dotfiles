@@ -2,7 +2,7 @@
 
 {
   imports = [
-    
+
   ];
 
   session.niri = {
