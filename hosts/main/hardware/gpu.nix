@@ -1,22 +1,9 @@
 { config, ... }:
 
 {
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware = {
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-    nvidia = {
-      modesetting = {
+    services.xserver.videoDrivers = [ "amdgpu" ];
+    hardware.graphics = {
         enable = true;
-      };
-      powerManagement = {
-        enable = true;
-      };
-      open = false;
-      nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+        enable32Bit = true;
     };
-  };
 }

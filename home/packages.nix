@@ -15,7 +15,7 @@
     sshuttle
     traceroute
     mtr
-    jmtpfs
+#    jmtpfs
     simple-mtpfs
     libmtp
     gvfs
@@ -68,6 +68,9 @@
     # Wallpaper
     mpvpaper
     awww
+
+    # RGB controller
+    openrgb
 
     # Catppuccin
     catppuccin-kvantum
