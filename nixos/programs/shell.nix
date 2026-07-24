@@ -5,6 +5,7 @@
       set fish_greeting
     '';
     shellAliases = {
+      trash-empty = "rm -rf ~/.local/share/Trash/files/* ~/.local/share/Trash/info/*";
       c7x-host = "bash $HOME/c7x-host.sh";
       yoru-host = "bash $HOME/yoru-host.sh";
       mongodb = "mongodb-compass --password-store=\"gnome-libsecret\" --ignore-additional-command-line-flags";
