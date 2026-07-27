@@ -1,9 +1,11 @@
 { config, ... }: 
 {
+  boot.kernelParams = [ "pcie_aspm=off" ];
   networking = {
     hostName = "main";
     networkmanager = {
       enable = true;
+      wifi.powersave = false;
     };
     timeServers = [ "0.pool.ntp.org" "1.pool.ntp.org" ];
     firewall = {
