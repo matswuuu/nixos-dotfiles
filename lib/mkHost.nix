@@ -21,6 +21,23 @@
       catppuccin.nixosModules.catppuccin
 
       {
+        nixpkgs.overlays = [
+          (final: prev: {
+            libdisplay-info = prev.libdisplay-info.overrideAttrs {
+              version = "0.3.0";
+              src = prev.fetchFromGitLab {
+                domain = "gitlab.freedesktop.org";
+                owner = "emersion";
+                repo = "libdisplay-info";
+                rev = "0.3.0";
+                hash = "sha256-nXf2KGovNKvcchlHlzKBkAOeySMJXgxMpbi5z9gLrdc=";
+              };
+            };
+          })
+        ];
+      }
+
+      {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;

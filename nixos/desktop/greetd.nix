@@ -18,23 +18,3 @@ in
     };
   };
 }
-#{ pkgs, username, ... }:
-#
-#let
-#  hyprlandSession = "${pkgs.uwsm}/bin/uwsm start hyprland.desktop";
-#in
-#{
-#  services.greetd = {
-#    enable = true;
-#    settings = {
-#      initial_session = {
-#        command = hyprlandSession;
-#        user = username;
-#      };
-#      default_session = {
-#        command = hyprlandSession;
-#        user = username;
-#      };
-#    };
-#  };
-#}

@@ -1,6 +1,7 @@
 {
-    fileSystems."/mnt/data3" = {
-        device = "/dev/disk/by-uuid/f9bbb811-21e5-4615-8b59-dc82b73dbc11";
-        fsType = "ext4";
+    fileSystems."/mnt/games" = {
+        device = "/dev/disk/by-uuid/7248a423-38fb-4cde-9df5-ba37f6c1c2b6";
+        fsType = "btrfs";
+        options = [ "subvol=mnt/@games" ];
     };
 }

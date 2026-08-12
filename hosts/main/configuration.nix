@@ -3,7 +3,8 @@
   imports = [
     ../../nixos/profiles/desktop-niri.nix
     ../../nixos/hardware/openrgb.nix
-    ../../nixos/services/lact/default.nix
+    ../../nixos/services/ollama/default.nix
+    #../../nixos/services/lact/default.nix
     ./game/steam.nix
     ./network/networking.nix
     ./packages.nix
@@ -15,16 +16,6 @@
   ];
 
   security.rtkit.enable = true;
-
-  services.pipewire = {
-    enable = true;
-    audio.enable = true;
-    pulse.enable = true;
-    jack.enable = true;
-    extraConfig.pipewire."context.properties" = {
-      "max-clients" = 256;
-    };
-  };
 
   environment.systemPackages = with pkgs; [
     anydesk
