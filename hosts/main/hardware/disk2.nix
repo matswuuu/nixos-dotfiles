@@ -12,5 +12,6 @@
     fileSystems."/mnt/data2" = {
         device = "/dev/disk/by-uuid/35a1a29d-0f76-4e73-bc20-f65864c7c3a2";
         fsType = "ext4";
+        options = [ "nofail" ];
     };
 }
