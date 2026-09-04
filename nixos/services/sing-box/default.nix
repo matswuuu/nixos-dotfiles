@@ -1,4 +1,10 @@
-{ config, lib, pkgs, username, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  username,
+  ...
+}:
 
 let
   cfg = config.services.sing-box;
@@ -13,18 +19,20 @@ let
   ];
   baseSettings = builtins.fromJSON (builtins.readFile ../../../proxy/sing-box.json);
 
-  applyDefaultInterface = settings:
+  applyDefaultInterface =
+    settings:
     if cfg.defaultInterface == null then
       settings
     else
-      settings // {
-        outbounds = builtins.map
-          (outbound:
-            if (outbound.tag or null) == "direct" then
-              outbound // { bind_interface = cfg.defaultInterface; }
-            else
-              outbound)
-          (settings.outbounds or [ ]);
+      settings
+      // {
+        outbounds = builtins.map (
+          outbound:
+          if (outbound.tag or null) == "direct" then
+            outbound // { bind_interface = cfg.defaultInterface; }
+          else
+            outbound
+        ) (settings.outbounds or [ ]);
         route = (settings.route or { }) // {
           default_interface = cfg.defaultInterface;
         };

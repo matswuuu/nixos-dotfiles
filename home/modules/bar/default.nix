@@ -9,7 +9,10 @@ in
   programs.mtsw-bar = {
     enable = true;
     settings = {
-      monitors = [ "DP-1" "eDP-1" ];
+      monitors = [
+        "DP-1"
+        "eDP-1"
+      ];
       bar = {
         tray = {
           iconOrder = [

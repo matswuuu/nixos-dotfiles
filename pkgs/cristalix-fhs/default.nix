@@ -208,62 +208,63 @@ pkgs.buildFHSEnv {
   };
 
   # 64-bit target packages — these get symlinked into the FHS rootfs.
-  targetPkgs = p: with p; [
-    # Java runtime
-    openjdk
+  targetPkgs =
+    p: with p; [
+      # Java runtime
+      openjdk
 
-    # X11 & graphics libraries (needed by JavaFX / LWJGL)
-    libx11
-    libxext
-    libxcursor
-    libxrandr
-    libxxf86vm
-    libxi
-    libxtst
-    libXrender
-    libXcomposite
-    libXdamage
-    libXinerama
-    libGL
-    libGLU
+      # X11 & graphics libraries (needed by JavaFX / LWJGL)
+      libx11
+      libxext
+      libxcursor
+      libxrandr
+      libxxf86vm
+      libxi
+      libxtst
+      libXrender
+      libXcomposite
+      libXdamage
+      libXinerama
+      libGL
+      libGLU
 
-    # GTK3 + transitive deps (needed by JavaFX glass GTK library).
-    # buildFHSEnv does NOT automatically pull transitive deps, so we must
-    # list them all explicitly.
-    gtk3
-    glib
-    cairo
-    pango
-    gdk-pixbuf
-    harfbuzz
-    at-spi2-atk # provides libatk-1.0.so
-    libepoxy
+      # GTK3 + transitive deps (needed by JavaFX glass GTK library).
+      # buildFHSEnv does NOT automatically pull transitive deps, so we must
+      # list them all explicitly.
+      gtk3
+      glib
+      cairo
+      pango
+      gdk-pixbuf
+      harfbuzz
+      at-spi2-atk # provides libatk-1.0.so
+      libepoxy
 
-    # Audio
-    alsa-lib
-    libpulseaudio
+      # Audio
+      alsa-lib
+      libpulseaudio
 
-    # Fonts & text
-    fontconfig
-    freetype
+      # Fonts & text
+      fontconfig
+      freetype
 
-    # Input & rendering
-    libxkbcommon
-    libdrm
+      # Input & rendering
+      libxkbcommon
+      libdrm
 
-    # Game/GL libraries (used by LWJGL in game client)
-    glfw
-    glew
+      # Game/GL libraries (used by LWJGL in game client)
+      glfw
+      glew
 
-    # stdc++ & zlib (needed by many native libs, including downloaded JRE)
-    gcc.cc.lib
-    zlib
+      # stdc++ & zlib (needed by many native libs, including downloaded JRE)
+      gcc.cc.lib
+      zlib
 
-    # General utilities + patchelf for our wrapper
-    bash
-    coreutils
-    patchelf
-  ];
+      # General utilities + patchelf for our wrapper
+      bash
+      coreutils
+      patchelf
+    ];
 
   # 32-bit packages (disabled — multiArch defaults to false)
   multiPkgs = p: [ ];

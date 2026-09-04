@@ -1,4 +1,9 @@
-{ pkgs, lib, fetchurl, ... }:
+{
+  pkgs,
+  lib,
+  fetchurl,
+  ...
+}:
 
 let
   inherit (builtins) toString filter;
@@ -11,12 +16,12 @@ let
   patches =
     let
       origPatches = pkgs.glibc.patches or [ ];
-      isExcluded = p:
+      isExcluded =
+        p:
         lib.hasSuffix "2.42-master.patch" (toString p)
         || lib.hasSuffix "0001-Revert-Remove-all-usage-of-BASH-or-BASH-in-installed.patch" (toString p);
     in
-    filter (p: !isExcluded p) origPatches
-    ++ [ ./glibc-2.43-open-tree-fix.patch ];
+    filter (p: !isExcluded p) origPatches ++ [ ./glibc-2.43-open-tree-fix.patch ];
 
 in
 pkgs.glibc.overrideAttrs (old: {

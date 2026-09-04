@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 {
   boot = {
-    kernelParams = [ "pcie_aspm=off" "rtw89_8852ce" ];
+    kernelParams = [
+      "pcie_aspm=off"
+      "rtw89_8852ce"
+    ];
     extraModprobeConfig = ''
       options rtw89_core disable_ps_mode=Y
       options rtw89_pci disable_aspm_l1ss=Y disable_aspm_l1=Y disable_clkreq=Y
@@ -29,7 +32,10 @@
         }
       ];
     };
-    timeServers = [ "0.pool.ntp.org" "1.pool.ntp.org" ];
+    timeServers = [
+      "0.pool.ntp.org"
+      "1.pool.ntp.org"
+    ];
     firewall = {
       enable = true;
       allowedTCPPorts = [

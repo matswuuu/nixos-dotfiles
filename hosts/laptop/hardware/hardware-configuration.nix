@@ -1,4 +1,10 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [
@@ -11,7 +17,13 @@
     extraModulePackages = [ config.boot.kernelPackages.r8168 ];
     blacklistedKernelModules = [ "r8169" ];
     initrd = {
-      availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "rtsx_usb_sdmmc" ];
+      availableKernelModules = [
+        "xhci_pci"
+        "nvme"
+        "usb_storage"
+        "sd_mod"
+        "rtsx_usb_sdmmc"
+      ];
       kernelModules = [ ];
     };
   };
@@ -24,7 +36,10 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/2BCD-0FEA";
     fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
   swapDevices = [

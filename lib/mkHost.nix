@@ -1,10 +1,19 @@
-{ nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, hermes-agent, inputs }:
+{
+  nixpkgs,
+  home-manager,
+  sops-nix,
+  catppuccin,
+  mtsw-bar,
+  hermes-agent,
+  inputs,
+}:
 
-{ system
-, hostName
-, username
-, nixosModules ? [ ]
-, homeModules ? [ ]
+{
+  system,
+  hostName,
+  username,
+  nixosModules ? [ ],
+  homeModules ? [ ],
 }:
 {
   nixos = nixpkgs.lib.nixosSystem {
@@ -20,8 +29,6 @@
       catppuccin.nixosModules.catppuccin
       hermes-agent.nixosModules.default
 
-
-
       {
         home-manager = {
           useGlobalPkgs = true;
@@ -36,13 +43,15 @@
             sops-nix.homeManagerModules.sops
             catppuccin.homeModules.catppuccin
             mtsw-bar.homeModules.mtsw-bar
-          ] ++ homeModules;
+          ]
+          ++ homeModules;
         };
       }
 
       ../nixos/profiles/base.nix
       ../hosts/${hostName}/configuration.nix
-    ] ++ nixosModules;
+    ]
+    ++ nixosModules;
   };
 
   meta = {

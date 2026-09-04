@@ -30,13 +30,30 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, hermes-agent, ... } @inputs:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      sops-nix,
+      catppuccin,
+      mtsw-bar,
+      hermes-agent,
+      ...
+    }@inputs:
     let
       user = import ./users/matswuuu;
       username = user.username;
 
       mkHost = import ./lib/mkHost.nix {
-        inherit nixpkgs home-manager sops-nix catppuccin mtsw-bar hermes-agent inputs;
+        inherit
+          nixpkgs
+          home-manager
+          sops-nix
+          catppuccin
+          mtsw-bar
+          hermes-agent
+          inputs
+          ;
       };
 
       main = mkHost {

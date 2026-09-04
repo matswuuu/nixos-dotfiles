@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) mkIf mkOption types;
   cfg = config.services.notification-light;
@@ -26,21 +31,25 @@ let
     propagatedBuildInputs = with pkgs.python314.pkgs; [ requests ];
   };
 
-  pythonEnv = pkgs.python314.withPackages (ps: with ps; [
-    dbus-python
-    pygobject3
-    tapo
-  ]);
+  pythonEnv = pkgs.python314.withPackages (
+    ps: with ps; [
+      dbus-python
+      pygobject3
+      tapo
+    ]
+  );
 
-  configJson = pkgs.writeText "notification-light-config.json" (builtins.toJSON {
-    apps = cfg.apps;
-    duration = cfg.duration;
-    tapo = {
-      email_path = secret "bar/tapo/email";
-      password_path = secret "bar/tapo/password";
-      ip_path = secret "bar/tapo/ip";
-    };
-  });
+  configJson = pkgs.writeText "notification-light-config.json" (
+    builtins.toJSON {
+      apps = cfg.apps;
+      duration = cfg.duration;
+      tapo = {
+        email_path = secret "bar/tapo/email";
+        password_path = secret "bar/tapo/password";
+        ip_path = secret "bar/tapo/ip";
+      };
+    }
+  );
 
   pkg = pkgs.writeShellScriptBin "notification-light" ''
     exec ${pythonEnv}/bin/python ${./notification-light.py}
@@ -55,17 +64,36 @@ in
     };
 
     apps = mkOption {
-      type = types.attrsOf (types.submodule {
-        options = {
-          r = mkOption { type = types.int; description = "Red 0-255"; };
-          g = mkOption { type = types.int; description = "Green 0-255"; };
-          b = mkOption { type = types.int; description = "Blue 0-255"; };
-        };
-      });
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            r = mkOption {
+              type = types.int;
+              description = "Red 0-255";
+            };
+            g = mkOption {
+              type = types.int;
+              description = "Green 0-255";
+            };
+            b = mkOption {
+              type = types.int;
+              description = "Blue 0-255";
+            };
+          };
+        }
+      );
       default = { };
       example = {
-        telegram = { r = 138; g = 173; b = 244; };
-        vesktop = { r = 88; g = 101; b = 242; };
+        telegram = {
+          r = 138;
+          g = 173;
+          b = 244;
+        };
+        vesktop = {
+          r = 88;
+          g = 101;
+          b = 242;
+        };
       };
       description = "App name patterns to RGB color mappings";
     };
