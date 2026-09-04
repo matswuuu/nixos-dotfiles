@@ -13,7 +13,8 @@ metadata:
 - **Gradle Kotlin DSL**: `build.gradle.kts` at project root — never Groovy in new projects
 - Version catalogs in `gradle/libs.versions.toml` for centralized dependency management
 - Convention plugins (`build-logic/src/main/kotlin`) for shared configuration across modules
-- K2 compiler enabled by default in Kotlin 2.x — use `kotlin("jvm")`, `kotlin("plugin.spring")`, `kotlin("plugin.serialization")` plugins
+- K2 compiler enabled by default in Kotlin 2.x — use `kotlin("jvm")`, `kotlin("plugin.spring")`,
+  `kotlin("plugin.serialization")` plugins
 - Use `gradle wrapper` and commit `gradlew`/`gradlew.bat`
 
 ## Code Conventions
@@ -42,15 +43,18 @@ metadata:
 ## Testing
 
 - **Kotest**: `DescribeSpec` (BDD-style), `StringSpec` (simple), `Should` / `shouldBe` assertions
-- **MockK**: `mockk<T>()`, `every { } returns`, `coEvery { } coReturns`, `verify { }`, `coVerify { }` — never Mockito with Kotlin
+- **MockK**: `mockk<T>()`, `every { } returns`, `coEvery { } coReturns`, `verify { }`, `coVerify { }` — never Mockito
+  with Kotlin
 - Coroutine testing: `runTest { }`, `TestCoroutineScheduler`, `UnconfinedTestDispatcher`
 - `Turbine` library: `testScope { testScheduler.advanceTimeBy(...) }`
 - `kotlinx-kotest-property` for property-based testing
 
 ## Frameworks
 
-- **Ktor 3**: `routing { }` DSL, `HttpClient` with pluggable engines (OkHttp, CIO, Java), content negotiation with kotlinx.serialization, `StatusPages` for error handling
-- **kotlinx.serialization**: `@Serializable`, `@SerialName`, `Json { ignoreUnknownKeys = true; isLenient = true; prettyPrint = true }`
+- **Ktor 3**: `routing { }` DSL, `HttpClient` with pluggable engines (OkHttp, CIO, Java), content negotiation with
+  kotlinx.serialization, `StatusPages` for error handling
+- **kotlinx.serialization**: `@Serializable`, `@SerialName`,
+  `Json { ignoreUnknownKeys = true; isLenient = true; prettyPrint = true }`
 - **Spring Boot**: works with Kotlin; prefer constructor-based beans, avoid Kotlin `open` issues with `all-open` plugin
 - **Compose Multiplatform**: shared UI targeting Android, Desktop (JVM), Web (JS/Wasm), iOS
 - **Arrow**: `Either<Problem, T>`, `Option<T>`, `IO<T>` for functional effect handling

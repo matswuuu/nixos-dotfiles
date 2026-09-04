@@ -10,22 +10,27 @@ metadata:
 
 ## Layout
 
-- **Flexbox** for one-dimensional layouts: rows, columns, centering, distribution — `gap`, `align-items`, `justify-content`
-- **CSS Grid** for two-dimensional layouts: page structure, card grids — `grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))`
+- **Flexbox** for one-dimensional layouts: rows, columns, centering, distribution — `gap`, `align-items`,
+  `justify-content`
+- **CSS Grid** for two-dimensional layouts: page structure, card grids —
+  `grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))`
 - **Subgrid**: `grid-template-rows: subgrid` — aligns children across parent grid tracks (e.g., card titles in a grid)
 - Never use float-based layouts; never use `display: table` for layout
 
 ## Container Queries
 
-- Replace media queries for component-level responsiveness: `container-type: inline-size` + `@container (min-width: 400px) { ... }`
-- Container query units: `cqw` (1% of container width), `cqi` (1% of container inline size), `cqh` (1% of container height)
+- Replace media queries for component-level responsiveness: `container-type: inline-size` +
+  `@container (min-width: 400px) { ... }`
+- Container query units: `cqw` (1% of container width), `cqi` (1% of container inline size), `cqh` (1% of container
+  height)
 - Named containers: `container-name: card` — prevents query collisions with nested containers
 - Container style queries (2026): `@container style(--variant: compact)` — respond to custom property values
 - Design component-first: define breakpoints where the component's design breaks, not at viewport widths
 
 ## Cascade & Nesting
 
-- `@layer` for explicit cascade control: `@layer base, components, utilities` — third-party CSS imports `layer()` to stay behind
+- `@layer` for explicit cascade control: `@layer base, components, utilities` — third-party CSS imports `layer()` to
+  stay behind
 - CSS nesting (2024+): `.card { & .title { ... } }` — no preprocessor needed
 - `@scope` for scoped styles: `@scope (.card) { ... }` — limits selector reach without naming hacks
 
@@ -54,10 +59,14 @@ metadata:
 
 ## Modern Features (2026)
 
-- **Scroll-driven animations**: `@keyframes fade { ... } .card { animation: fade linear; animation-timeline: view() }` — scroll-linked without JS
-- **View transitions**: `@view-transition { navigation: auto; }` + `::view-transition-old()` / `::view-transition-new()` — SPA-like transitions on MPA
-- **Anchor positioning**: `position: absolute; position-anchor: --btn; top: anchor(bottom)` — tooltips and popovers without JS
-- **`@property`**: `@property --x { syntax: '<length>'; inherits: false; initial-value: 0px }` — typed custom properties for animation
+- **Scroll-driven animations**: `@keyframes fade { ... } .card { animation: fade linear; animation-timeline: view() }` —
+  scroll-linked without JS
+- **View transitions**: `@view-transition { navigation: auto; }` + `::view-transition-old()` /
+  `::view-transition-new()` — SPA-like transitions on MPA
+- **Anchor positioning**: `position: absolute; position-anchor: --btn; top: anchor(bottom)` — tooltips and popovers
+  without JS
+- **`@property`**: `@property --x { syntax: '<length>'; inherits: false; initial-value: 0px }` — typed custom properties
+  for animation
 
 ## Naming
 

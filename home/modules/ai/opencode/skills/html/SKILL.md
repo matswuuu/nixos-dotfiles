@@ -10,7 +10,8 @@ metadata:
 
 ## Semantics
 
-- Use semantic elements: `<header>`, `<nav>`, `<main>` (exactly one), `<section>`, `<article>`, `<aside>`, `<footer>`, `<search>`
+- Use semantic elements: `<header>`, `<nav>`, `<main>` (exactly one), `<section>`, `<article>`, `<aside>`, `<footer>`,
+  `<search>`
 - One `<h1>` per page, logical hierarchy (`h1`→`h2`→`h3`), never skip levels
 - `<ul>`/`<ol>` for lists, `<dl>`/`<dt>`/`<dd>` for definition lists
 - `<table>` for tabular data only (not layout), with `<thead>`, `<tbody>`, `<th scope="col/row">`
@@ -47,7 +48,8 @@ metadata:
 
 ## Performance & Meta
 
-- `<meta charset="UTF-8">` and `<meta name="viewport" content="width=device-width, initial-scale=1.0">` — required in `<head>`
+- `<meta charset="UTF-8">` and `<meta name="viewport" content="width=device-width, initial-scale=1.0">` — required in
+  `<head>`
 - `<title>` per page: unique, descriptive, under 60 chars
 - Open Graph: `og:title`, `og:description`, `og:image`, `og:url` — required for social sharing
 - `<link rel="canonical" href="...">` — prevent duplicate content issues

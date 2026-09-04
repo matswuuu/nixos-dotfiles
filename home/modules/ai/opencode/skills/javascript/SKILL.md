@@ -39,4 +39,5 @@ metadata:
 - **ESLint** with flat config (`eslint.config.js`) — replaces `.eslintrc` (deprecated)
 - **Prettier** for formatting — run as pre-commit hook with `lint-staged`
 - **Vite 7** for dev servers and bundling — replaces webpack in new projects
-- **Node.js**: `fs/promises` over `fs` callbacks, global `fetch` over `node-fetch`, `timers/promises` over `util.promisify(setTimeout)`
+- **Node.js**: `fs/promises` over `fs` callbacks, global `fetch` over `node-fetch`, `timers/promises` over
+  `util.promisify(setTimeout)`
