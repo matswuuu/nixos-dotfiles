@@ -8,8 +8,10 @@
     ./modules/bar/default.nix
     ./modules/cliphist/default.nix
     ./modules/fastfetch/default.nix
+    ./modules/fish/default.nix
     ./modules/wofi/default.nix
     ./modules/java/default.nix
+    ./modules/kitty/default.nix
     ./modules/btop/default.nix
     ./modules/yazi/default.nix
     ./modules/zed/default.nix

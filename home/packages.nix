@@ -15,7 +15,6 @@
     sshuttle
     traceroute
     mtr
-#    jmtpfs
     simple-mtpfs
     libmtp
     gvfs
@@ -44,16 +43,18 @@
     moreutils
     psmisc
     lsof
+    dnsutils
 
     grim
     slurp
     swappy
 
     alacritty # Terminal
+    kitty # 2nd terminal for yazi
 
     # whisper-cpp-vulkan
     # voxtype-vulkan
-    
+
     gtk3
     gtk4
     adw-gtk3
@@ -81,11 +82,12 @@
     telegram-desktop
     #discord-ptb
     vesktop
-    
+
     # Code stuff
     jetbrains-toolbox
-#    mongodb-compass
+    #    mongodb-compass
     insomnia
+    lazydocker
 
     # Java
     visualvm

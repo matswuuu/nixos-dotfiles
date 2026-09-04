@@ -2,7 +2,7 @@
 
 {
   imports = [
-   (modulesPath + "/installer/scan/not-detected.nix")
+    (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
   boot = {
@@ -17,7 +17,7 @@
   };
 
   fileSystems."/" = {
-     device = "/dev/disk/by-uuid/77002d6c-b737-40a1-8d59-749565d1626b";
+    device = "/dev/disk/by-uuid/77002d6c-b737-40a1-8d59-749565d1626b";
     fsType = "ext4";
   };
 
@@ -29,7 +29,7 @@
 
   swapDevices = [
     {
-      device = "/dev/disk/by-uuid/07469d58-c747-47e8-94a3-5bcc6ae0615b"; 
+      device = "/dev/disk/by-uuid/07469d58-c747-47e8-94a3-5bcc6ae0615b";
     }
   ];
 

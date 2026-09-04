@@ -1,35 +1,35 @@
 [[mgr.prepend_keymap]]
-on = [ "g", "h" ]
+on = ["g", "h"]
 run = "cd ~"
 desc = "Cd to home"
 
 [[mgr.prepend_keymap]]
-on = [ "g", "d" ]
+on = ["g", "d"]
 run = "cd ~/Downloads"
 desc = "Cd to downloads"
 
 [[mgr.prepend_keymap]]
-on = [ "g", "n" ]
+on = ["g", "n"]
 run = "cd ~/nixos-dotfiles"
 desc = "Cd to nixos dotfiles"
 
 [[mgr.prepend_keymap]]
-on = [ "g", "t" ]
+on = ["g", "t"]
 run = "cd ~/.local/share/Trash/files"
 desc = "Cd to trash"
 
 [[mgr.prepend_keymap]]
-on = [ "g", "m", "1" ]
+on = ["g", "m", "1"]
 run = "cd /mnt/data"
 desc = "Cd to /mnt/data"
 
 [[mgr.prepend_keymap]]
-on = [ "g", "m", "2" ]
+on = ["g", "m", "2"]
 run = "cd /mnt/data"
 desc = "Cd to /mnt/data2"
 
 [[mgr.prepend_keymap]]
-on = [ "<Delete>" ]
+on = ["<Delete>"]
 run = "remove --force"
 desc = "Trash selected files"
 

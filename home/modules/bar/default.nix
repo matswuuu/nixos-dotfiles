@@ -1,7 +1,7 @@
 { config, ... }:
-  let
-    secret = name: config.sops.secrets.${name}.path;
-  in
+let
+  secret = name: config.sops.secrets.${name}.path;
+in
 {
   home.file = {
     ".config/mtsw-bar/network_latency.sh".source = ./network_latency.sh;

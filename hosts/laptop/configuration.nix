@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ...}:
+{ inputs, lib, config, pkgs, ... }:
 {
   imports = [
     ../../nixos/profiles/desktop-niri.nix

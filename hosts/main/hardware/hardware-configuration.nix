@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
@@ -14,31 +15,36 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/997f4130-4594-4c3d-9c49-7e703f9a8ad7";
+    {
+      device = "/dev/disk/by-uuid/997f4130-4594-4c3d-9c49-7e703f9a8ad7";
       fsType = "btrfs";
       options = [ "subvol=@" "compress=zstd" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/997f4130-4594-4c3d-9c49-7e703f9a8ad7";
+    {
+      device = "/dev/disk/by-uuid/997f4130-4594-4c3d-9c49-7e703f9a8ad7";
       fsType = "btrfs";
       options = [ "subvol=@home" "compress=zstd" ];
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/997f4130-4594-4c3d-9c49-7e703f9a8ad7";
+    {
+      device = "/dev/disk/by-uuid/997f4130-4594-4c3d-9c49-7e703f9a8ad7";
       fsType = "btrfs";
       options = [ "subvol=@nix" "compress=zstd" ];
     };
 
   fileSystems."/var/log" =
-    { device = "/dev/disk/by-uuid/997f4130-4594-4c3d-9c49-7e703f9a8ad7";
+    {
+      device = "/dev/disk/by-uuid/997f4130-4594-4c3d-9c49-7e703f9a8ad7";
       fsType = "btrfs";
       options = [ "subvol=@log" "compress=zstd" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/C666-0270";
+    {
+      device = "/dev/disk/by-uuid/C666-0270";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };

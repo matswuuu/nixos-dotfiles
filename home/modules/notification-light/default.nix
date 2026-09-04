@@ -18,7 +18,10 @@ let
       hash = "sha256-HDgP3ZK0T4t514E+MYS02G39CwVqDbaOPQyFoqaVx+c=";
     };
     nativeBuildInputs = with pkgs; [
-      rustc cargo rustPlatform.maturinBuildHook rustPlatform.cargoSetupHook
+      rustc
+      cargo
+      rustPlatform.maturinBuildHook
+      rustPlatform.cargoSetupHook
     ];
     propagatedBuildInputs = with pkgs.python314.pkgs; [ requests ];
   };
@@ -59,7 +62,7 @@ in
           b = mkOption { type = types.int; description = "Blue 0-255"; };
         };
       });
-      default = {};
+      default = { };
       example = {
         telegram = { r = 138; g = 173; b = 244; };
         vesktop = { r = 88; g = 101; b = 242; };

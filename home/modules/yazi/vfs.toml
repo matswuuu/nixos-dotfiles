@@ -1,0 +1,17 @@
+[sftp.storage]
+host = "storage.dedi.c7x.dev"
+user = "matswuuu"
+port = 22
+key_file = "~/.ssh/cristalix"
+
+[sftp.new2b2t]
+host = "new2b2t.dedi.c7x.dev"
+user = "matswuuu"
+port = 22
+key_file = "~/.ssh/cristalix"
+
+[sftp.mokou]
+host = "mokou.dedi.c7x.dev"
+user = "matswuuu"
+port = 22
+key_file = "~/.ssh/cristalix"

@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
-  let
-    cfg = config.session.niri;
-  in
+let
+  cfg = config.session.niri;
+in
 {
   imports = [
     ./awww.nix

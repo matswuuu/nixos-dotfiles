@@ -5,9 +5,9 @@ let
 
   # Pre-computed store paths used by the wrapper script.
   glibc_43_store = "${glibc_43}";
-  zlib_store     = "${lib.getLib pkgs.zlib}";
-  gcc_store      = "${lib.getLib pkgs.gcc.cc.lib}";
-  patchelf_bin   = "${lib.getBin pkgs.patchelf}/bin/patchelf";
+  zlib_store = "${lib.getLib pkgs.zlib}";
+  gcc_store = "${lib.getLib pkgs.gcc.cc.lib}";
+  patchelf_bin = "${lib.getBin pkgs.patchelf}/bin/patchelf";
 
   # Wrapper script that patches Java's interpreter to use glibc 2.43's ld-linux.
   # This avoids rebuilding the entire OpenJDK and all its transitive dependencies
@@ -236,7 +236,7 @@ pkgs.buildFHSEnv {
     pango
     gdk-pixbuf
     harfbuzz
-    at-spi2-atk          # provides libatk-1.0.so
+    at-spi2-atk # provides libatk-1.0.so
     libepoxy
 
     # Audio

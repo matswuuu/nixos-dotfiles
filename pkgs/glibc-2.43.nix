@@ -8,13 +8,15 @@ let
   # - 2.42-master.patch: backports from release/2.42/master already in 2.43 tarball
   # - 0001-Revert-Remove-all-usage-of-BASH-or-BASH-in-installed.patch: hardcodes /bin/bash
   #   in scripts; FHS env provides /bin/bash so this is not needed
-  patches = let
-    origPatches = pkgs.glibc.patches or [ ];
-    isExcluded = p:
-      lib.hasSuffix "2.42-master.patch" (toString p)
-      || lib.hasSuffix "0001-Revert-Remove-all-usage-of-BASH-or-BASH-in-installed.patch" (toString p);
-  in filter (p: !isExcluded p) origPatches
-     ++ [ ./glibc-2.43-open-tree-fix.patch ];
+  patches =
+    let
+      origPatches = pkgs.glibc.patches or [ ];
+      isExcluded = p:
+        lib.hasSuffix "2.42-master.patch" (toString p)
+        || lib.hasSuffix "0001-Revert-Remove-all-usage-of-BASH-or-BASH-in-installed.patch" (toString p);
+    in
+    filter (p: !isExcluded p) origPatches
+    ++ [ ./glibc-2.43-open-tree-fix.patch ];
 
 in
 pkgs.glibc.overrideAttrs (old: {

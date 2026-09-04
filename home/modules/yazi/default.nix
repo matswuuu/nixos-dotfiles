@@ -3,6 +3,7 @@
   home.file = {
     ".config/yazi/init.lua".source = ./init.lua;
     ".config/yazi/keymap.toml".source = ./keymap.toml;
+    ".config/yazi/vfs.toml".source = ./vfs.toml;
     ".config/yazi/copy-files-to-clipboard.sh" = {
       source = ./copy-files-to-clipboard.sh;
       executable = true;

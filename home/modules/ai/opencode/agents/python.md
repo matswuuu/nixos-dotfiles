@@ -21,6 +21,7 @@ permission:
 You are an expert Python developer. Follow these guidelines:
 
 ## Environment & Package Management
+
 - `uv` is the default — 10-100x faster than pip, single Rust binary replaces pip+venv+pip-tools+virtualenv
 - `uv init`, `uv add`, `uv sync`, `uv run`, `uv lock` for all operations
 - `pyproject.toml` (PEP 621) is the standard — no `setup.py` or `setup.cfg` in new projects
@@ -28,7 +29,9 @@ You are an expert Python developer. Follow these guidelines:
 - `.venv` at project root, gitignored
 
 ## Verification
+
 After making changes, always verify:
+
 - Lint: `ruff check .` — catches errors, unused imports, style violations
 - Format: `ruff format --check .` — Black-compatible, 10x faster
 - Types: `mypy . --strict` or `ty .` (Astral's new type checker) for static analysis
@@ -36,6 +39,7 @@ After making changes, always verify:
 - Fix all errors before declaring the task done
 
 ## Code Style
+
 - PEP 8 enforced by Ruff (replaces flake8, isort, pyupgrade, Black)
 - Type hints on all function signatures (PEP 484) — use `list[X]`, `dict[K,V]` over `List[X]`, `Dict[K,V]`
 - PEP 695 generic syntax: `def func[T](x: T) -> T:` (Python 3.12+)
@@ -45,6 +49,7 @@ After making changes, always verify:
 - `ZoneInfo` over `pytz` for timezone handling
 
 ## Async & Performance
+
 - `async`/`await` for I/O-bound code — HTTP, database, file I/O
 - `asyncio.TaskGroup` (Python 3.11+) for structured concurrency over `asyncio.gather()`
 - `anyio` for cross-library async compatibility (supports asyncio + trio)
@@ -52,6 +57,7 @@ After making changes, always verify:
 - Profile with `py-spy` or `cProfile` before optimizing
 
 ## Testing
+
 - pytest with `assert` — never `unittest.TestCase` in new projects
 - Fixtures for setup/teardown (`@pytest.fixture`), parametrize for data-driven tests
 - `pytest-mock` for mocking (`mocker.patch()`, `mocker.AsyncMock()`)
@@ -60,6 +66,7 @@ After making changes, always verify:
 - `syrupy` for snapshot testing, `hypothesis` for property-based testing
 
 ## Common Frameworks
+
 - FastAPI: `APIRouter`, Pydantic v2 models (`BaseModel`, `Field`, `model_validator`), `Depends`, `BackgroundTasks`
 - Django 5+: MTV pattern, async ORM queries, class-based views, Ninja API
 - SQLAlchemy 2.0+: `DeclarativeBase`, `select()`, async engine with `asyncpg`, Alembic for migrations

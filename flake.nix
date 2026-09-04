@@ -24,15 +24,19 @@
       url = "github:matswuuu/mtsw-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hermes-agent = {
+      url = "github:NousResearch/hermes-agent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, ... } @inputs:
+  outputs = { nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, hermes-agent, ... } @inputs:
     let
       user = import ./users/matswuuu;
       username = user.username;
 
       mkHost = import ./lib/mkHost.nix {
-        inherit nixpkgs home-manager sops-nix catppuccin mtsw-bar inputs;
+        inherit nixpkgs home-manager sops-nix catppuccin mtsw-bar hermes-agent inputs;
       };
 
       main = mkHost {
@@ -52,15 +56,15 @@
         ];
       };
     in
-  {
-    nixosConfigurations = {
-      main = main.nixos;
-      laptop = laptop.nixos;
-    };
+    {
+      nixosConfigurations = {
+        main = main.nixos;
+        laptop = laptop.nixos;
+      };
 
-    homeConfigurations = {
-      "${main.meta.username}@${main.meta.hostName}" = main.home;
-      "${laptop.meta.username}@${laptop.meta.hostName}" = laptop.home;
+      homeConfigurations = {
+        "${main.meta.username}@${main.meta.hostName}" = main.home;
+        "${laptop.meta.username}@${laptop.meta.hostName}" = laptop.home;
+      };
     };
-  };
 }

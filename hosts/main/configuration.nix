@@ -1,9 +1,10 @@
-{ inputs, lib, config, pkgs, ...}:
+{ inputs, lib, config, pkgs, ... }:
 {
   imports = [
     ../../nixos/profiles/desktop-niri.nix
     ../../nixos/hardware/openrgb.nix
     ../../nixos/services/ollama/default.nix
+    ../../nixos/services/hermes/default.nix
     #../../nixos/services/lact/default.nix
     ./game/steam.nix
     ./network/networking.nix
@@ -16,21 +17,4 @@
   ];
 
   security.rtkit.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    anydesk
-  ];
-
-  nixpkgs.overlays = [
-      (final: prev: {
-        anydesk = prev.anydesk.overrideAttrs (old: rec {
-          version = "8.0.3";
-
-          src = prev.fetchurl {
-            url = "https://download.anydesk.com/linux/anydesk-${version}-amd64.tar.gz";
-            hash = "sha256-Mjl17hh5A/pwRAi7giL1SJYlQ61O0SXX+KeH8STZ4bs=";
-          };
-        });
-      })
-    ];
 }

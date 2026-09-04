@@ -1,11 +1,10 @@
-{ nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, inputs }:
+{ nixpkgs, home-manager, sops-nix, catppuccin, mtsw-bar, hermes-agent, inputs }:
 
-{
-  system,
-  hostName,
-  username,
-  nixosModules ? [ ],
-  homeModules ? [ ]
+{ system
+, hostName
+, username
+, nixosModules ? [ ]
+, homeModules ? [ ]
 }:
 {
   nixos = nixpkgs.lib.nixosSystem {
@@ -19,23 +18,9 @@
       home-manager.nixosModules.home-manager
       sops-nix.nixosModules.sops
       catppuccin.nixosModules.catppuccin
+      hermes-agent.nixosModules.default
 
-      {
-        nixpkgs.overlays = [
-          (final: prev: {
-            libdisplay-info = prev.libdisplay-info.overrideAttrs {
-              version = "0.3.0";
-              src = prev.fetchFromGitLab {
-                domain = "gitlab.freedesktop.org";
-                owner = "emersion";
-                repo = "libdisplay-info";
-                rev = "0.3.0";
-                hash = "sha256-nXf2KGovNKvcchlHlzKBkAOeySMJXgxMpbi5z9gLrdc=";
-              };
-            };
-          })
-        ];
-      }
+
 
       {
         home-manager = {

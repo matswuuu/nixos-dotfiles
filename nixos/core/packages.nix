@@ -1,4 +1,4 @@
-{ inputs, pkgs, ...}:
+{ inputs, pkgs, ... }:
 {
   nixpkgs.config = {
     allowUnfree = true;
@@ -8,7 +8,7 @@
       "pnpm-10.29.2"
     ];
   };
-  
+
   environment.systemPackages = with pkgs; [
     google-chrome
     home-manager

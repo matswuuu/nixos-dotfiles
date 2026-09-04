@@ -1,3 +1,3 @@
 {
-    services.lact.enable = true;
+  services.lact.enable = true;
 }
