@@ -1,3 +1,3 @@
 {
-    xdg.configFile."fish/functions/lzd.fish".source = ./lzd.fish;
+    xdg.configFile."fish/functions/lzd-remote.fish".source = ./lzd-remote.fish;
 }

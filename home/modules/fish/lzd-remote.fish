@@ -7,7 +7,7 @@ function lzd-remote
     end
     set -l sock /tmp/remote-docker-(string replace -a '@' '_' -- $host).sock
     rm -f $sock
-    ssh -o ExitOnForwardFailure=yes -nNT -L $sock:localhost:$remote_sock $host &
+    ssh -o ExitOnForwardFailure=yes -nNT -L $sock:$remote_sock $host &
     set -l ssh_pid $last_pid
     for i in (seq 1 50)
         test -S $sock && break
