@@ -1,6 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "opencode/deepseek-v4-flash",
   "autoshare": false,
   "autoupdate": true,
   "lsp": true,
@@ -14,6 +13,19 @@
     "prune": true,
     "reserved": 12000
   },
+  "mcp": {
+    "codebase-memory": {
+      "type": "local",
+      "command": [
+        "codebase-memory-mcp"
+      ],
+      "environment": {
+        "CBM_ALLOWED_ROOT": "/home/matswuuu/IdeaProjects"
+      },
+      "enabled": true,
+      "timeout": 60000
+    }
+  },
   "provider": {
     "ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -22,7 +34,9 @@
         "baseURL": "http://localhost:11434/v1"
       },
       "models": {
-        "qwen3.6:27b": {}
+        "qwen3.8:27b": {
+          "name": "qwen3.8:27b"
+        }
       }
     }
   }
