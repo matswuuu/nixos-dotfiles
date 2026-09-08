@@ -12,8 +12,6 @@
   environment.systemPackages = with pkgs; [
     codebase-memory-mcp
 
-#    codebase-memory-mcp.packages.${system}.default
-
     google-chrome
     home-manager
 

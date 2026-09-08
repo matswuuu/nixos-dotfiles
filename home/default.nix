@@ -9,6 +9,7 @@
     ./modules/cliphist/default.nix
     ./modules/fastfetch/default.nix
     ./modules/fish/default.nix
+    ./modules/git/default.nix
     ./modules/wofi/default.nix
     ./modules/java/default.nix
     ./modules/kitty/default.nix
