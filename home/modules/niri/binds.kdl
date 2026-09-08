@@ -86,10 +86,9 @@ binds {
     XF86AudioMute { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
     XF86AudioMicMute { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
 
-    XF86AudioPlay { spawn-sh "playerctl play-pause"; }
-    XF86AudioStop { spawn-sh "playerctl stop"; }
-    XF86AudioPrev { spawn-sh "playerctl previous"; }
-    XF86AudioNext { spawn-sh "playerctl next"; }
+    Mod+comma { spawn-sh "playerctl previous"; }
+    Mod+period { spawn-sh "playerctl next"; }
+    Mod+slash { spawn-sh "playerctl play-pause"; }
 
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+5%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "5%-"; }
