@@ -24,10 +24,6 @@
       url = "github:matswuuu/mtsw-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hermes-agent = {
-      url = "github:NousResearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -37,7 +33,6 @@
       sops-nix,
       catppuccin,
       mtsw-bar,
-      hermes-agent,
       ...
     }@inputs:
     let
@@ -51,7 +46,6 @@
           sops-nix
           catppuccin
           mtsw-bar
-          hermes-agent
           inputs
           ;
       };

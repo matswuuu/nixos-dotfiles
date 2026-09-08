@@ -4,7 +4,6 @@
   sops-nix,
   catppuccin,
   mtsw-bar,
-  hermes-agent,
   inputs,
 }:
 
@@ -27,7 +26,6 @@
       home-manager.nixosModules.home-manager
       sops-nix.nixosModules.sops
       catppuccin.nixosModules.catppuccin
-      hermes-agent.nixosModules.default
 
       {
         home-manager = {

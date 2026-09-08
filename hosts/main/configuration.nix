@@ -10,7 +10,6 @@
     ../../nixos/profiles/desktop-niri.nix
     ../../nixos/hardware/openrgb.nix
     ../../nixos/services/ollama/default.nix
-    ../../nixos/services/hermes/default.nix
     #../../nixos/services/lact/default.nix
     ./game/steam.nix
     ./network/networking.nix
