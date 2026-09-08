@@ -2,7 +2,7 @@
   programs.git = {
     enable = true;
 
-    extraConfig = {
+    settings = {
       url."git@github.com:".insteadOf = "https://github.com/";
       url."git@gitlab.com:".insteadOf = "https://gitlab.com/";
     };
@@ -10,8 +10,9 @@
 
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
 
-    matchBlocks = {
+    settings = {
       "github.com" = {
         hostname = "github.com";
         user = "git";
