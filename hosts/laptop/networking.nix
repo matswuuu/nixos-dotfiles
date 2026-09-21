@@ -11,8 +11,4 @@
       "1.pool.ntp.org"
     ];
   };
-
-  # services.sing-box = {
-  #   defaultInterface = "wlp1s0";
-  # };
 }

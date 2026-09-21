@@ -15,7 +15,6 @@
     sshuttle
     traceroute
     mtr
-    simple-mtpfs
     libmtp
     gvfs
     usbutils
@@ -37,13 +36,12 @@
     iptables
     nftables
     tcpdump
-    tmux
-    ydotool # Clicker
     translate-shell # Translator
     moreutils
     psmisc
     lsof
     dnsutils
+    file
 
     grim
     slurp
@@ -51,9 +49,6 @@
 
     alacritty # Terminal
     kitty # 2nd terminal for yazi
-
-    # whisper-cpp-vulkan
-    # voxtype-vulkan
 
     gtk3
     gtk4
@@ -80,12 +75,9 @@
 
     # Social
     telegram-desktop
-    #discord-ptb
-    vesktop
 
     # Code stuff
     jetbrains-toolbox
-    #    mongodb-compass
     insomnia
     lazydocker
 
@@ -98,15 +90,12 @@
     # pnpm
 
     # Visual
-    #krita
-    blockbench
     obs-studio
 
     # Gaming
     steam
     umu-launcher
     protontricks
-    mangohud
     protonup-qt
 
     # https://github.com/NixOS/nixpkgs/issues/513245

@@ -20,6 +20,10 @@
       url = "github:catppuccin/nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixcord = {
+      url = "github:4evy/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     mtsw-bar = {
       url = "github:matswuuu/mtsw-bar";
       inputs.nixpkgs.follows = "nixpkgs";

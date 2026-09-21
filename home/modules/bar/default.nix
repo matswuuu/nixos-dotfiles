@@ -22,22 +22,7 @@ in
         };
         network = {
           hosts = [
-            {
-              host = secret "bar/network/host1/ip";
-              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST ${secret "bar/network/host1/port"}";
-            }
-            {
-              host = secret "bar/network/host2/ip";
-              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST ${secret "bar/network/host2/port"}";
-            }
-            {
-              host = secret "bar/network/host3/ip";
-              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST ${secret "bar/network/host3/port"}";
-            }
-            {
-              host = secret "bar/network/host4/ip";
-              pingCommand = "bash ~/.config/mtsw-bar/network_latency.sh $HOST ${secret "bar/network/host4/port"}";
-            }
+
           ];
         };
         light = {

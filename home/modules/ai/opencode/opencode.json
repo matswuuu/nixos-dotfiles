@@ -3,7 +3,7 @@
   "autoshare": false,
   "autoupdate": true,
   "lsp": true,
-  "plugin": ["@mohak34/opencode-notifier@latest"],
+  "plugin": ["@mohak34/opencode-notifier@latest", "superpowers@git+https://github.com/obra/superpowers.git"],
   "tools": {
     "write": true,
     "bash": true
@@ -37,6 +37,81 @@
         "qwen3.8:27b": {
           "name": "qwen3.8:27b"
         }
+      }
+    }
+  },
+  "agent": {
+    "orchestrator": {
+      "description": "Coordinates complex development tasks by decomposing them into parallel specialized subtasks, integrating results, and verifying the final implementation.",
+      "mode": "primary",
+
+      "prompt": "{file:./prompts/orchestrator.md}",
+
+      "permission": {
+        "task": {
+          "*": "deny",
+          "researcher": "allow",
+          "explorer": "allow",
+          "implementer": "allow",
+          "reviewer": "allow",
+          "tester": "allow"
+        },
+        "edit": "allow",
+        "bash": "allow"
+      }
+    },
+
+    "researcher": {
+      "description": "Researches external APIs, libraries, documentation, and technical approaches.",
+      "mode": "subagent",
+      "prompt": "{file:./prompts/researcher.md}",
+
+      "permission": {
+        "edit": "deny"
+      }
+    },
+
+    "explorer": {
+      "description": "Explores the existing codebase and identifies relevant files, architecture, dependencies, and implementation constraints.",
+      "mode": "subagent",
+      "prompt": "{file:./prompts/explorer.md}",
+
+      "permission": {
+        "edit": "deny"
+      }
+    },
+
+    "implementer": {
+      "description": "Implements an assigned, well-defined change in the codebase.",
+      "mode": "subagent",
+      "prompt": "{file:./prompts/implementer.md}",
+
+      "permission": {
+        "edit": "allow",
+        "bash": "allow",
+        "task": {
+          "*": "deny"
+        }
+      }
+    },
+
+    "reviewer": {
+      "description": "Reviews the implementation for correctness, regressions, architecture, security, and maintainability.",
+      "mode": "subagent",
+      "prompt": "{file:./prompts/reviewer.md}",
+
+      "permission": {
+        "edit": "deny"
+      }
+    },
+
+    "tester": {
+      "description": "Runs relevant tests, builds, static analysis, and diagnostics and reports failures.",
+      "mode": "subagent",
+      "prompt": "{file:./prompts/tester.md}",
+
+      "permission": {
+        "edit": "deny"
       }
     }
   }

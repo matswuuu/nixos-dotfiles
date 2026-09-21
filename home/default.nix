@@ -24,9 +24,10 @@
     ./modules/theme/catppuccin.nix
     ./modules/sops/default.nix
     ./modules/notification-light/default.nix
+    ./modules/obsidian/default.nix
     ./modules/ai/opencode/default.nix
     ./modules/anki/default.nix
-    ./modules/vesktop/default.nix
+    ./modules/nixcord/default.nix
   ];
 
   home = {

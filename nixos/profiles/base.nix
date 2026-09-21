@@ -12,16 +12,12 @@
     ../hardware/bluetooth.nix
     ../hardware/uinput.nix
 
-    ../services/flatpak.nix
     ../services/openssh.nix
     ../services/security.nix
-    ../services/sing-box
     ../services/udisk.nix
     ../services/upower.nix
 
-    ../programs/amnezia/amnezia-vpn.nix
     ../programs/docker.nix
-    ../programs/podman.nix
     ../programs/nix-ld.nix
     ../programs/fish/default.nix
     ../programs/ssh.nix
