@@ -63,10 +63,12 @@
     };
     userPlugins = {
       removeChildishChannelNames = "github:matswuuu/vc-removeChildishChannelNames/d2c609ed22a78a9df37425c620158947e4fe5497";
+      linuxScratch = ./linuxScratch;
     };
     extraConfig = {
       plugins = {
         removeChildishChannelNames.enable = true;
+        linuxScratch.enable = true;
       };
     };
   };
