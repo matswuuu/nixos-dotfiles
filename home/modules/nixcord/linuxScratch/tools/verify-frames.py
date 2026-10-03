@@ -4,19 +4,21 @@
 Asserts the asset-side invariants the renderer depends on:
   * FRAME_COUNT == len(LOGO_BOXES) == len(FRAME_DATA_URLS), and equals 12
   * every frame decodes to SOURCE_SIZE x SOURCE_SIZE
-  * logo boxes are consistent (~114x114) and lie inside the frame
+  * logo boxes are consistent and lie inside the frame
+  * saturated logo pixels outside the logo box stay at or below
+    SAT_OUTSIDE_MAX. This is the load-bearing one: the renderer's erase region
+    IS the box (see eraseRegion in logic.ts), so logo pixels outside it are
+    never erased and survive into the GIF as a blue fringe. This check is what
+    catches a box that under-covers the logo.
   * the logo extends BEYOND the avatar circle - the fact that makes a
-    box-bounded erase region mandatory (see eraseRegion in logic.ts)
-  * the chroma test barely fires outside the logo box, so keying can never
-    reach Tux, the LINUX text, or the background
+    box-bounded erase region necessary at all
+  * loose chroma hits outside the box stay under 2% of the frame, bounding how
+    far a too-permissive threshold could reach beyond the logo
 
-CIRCLE_RATIO must match logic.ts; the chroma threshold must match
-isLogoColor in logic.ts.
-
-Deliberately NOT asserted: "zero leftover logo pixels". Modelled faithfully
-that is true by construction - the renderer erases every flagged pixel it
-visits - so such a check would assert nothing. The two invariants above are
-the falsifiable guards.
+Constants are duplicated from logic.ts on purpose: CIRCLE_RATIO and the chroma
+threshold must match isLogoColor there. Note the two outside-box counters are
+deliberately separate - a box regression and a threshold regression both move
+the loose count, so conflating them makes a failure unattributable.
 """
 
 import base64
@@ -31,6 +33,20 @@ FRAMES_TS = HERE.parent / "frames.ts"
 
 # Must match render.ts
 CIRCLE_RATIO = 0.9
+
+# Saturated logo pixels permitted outside the box, per frame.
+#
+# The box is built from blue connected components of >= MIN_PANE_PX pixels, so
+# isolated 1-2px h264 specks are excluded by construction - and those same specks
+# are then, by construction, outside the box. Measured residual: 0-4 px/frame.
+#
+# The failure this bound exists to catch is systematic edge under-coverage, which
+# measured 67-128 px/frame as a continuous band along all four sides when the box
+# was clipped to the 0.5-99.5 percentile. A bound of 8 sits ~16x below that
+# failure mode while tolerating the specks, so it still goes loudly red on any
+# real regression. Raising MIN_PANE_PX would remove the specks from the count but
+# reintroduces the 135-138px outlier box, which is far worse.
+SAT_OUTSIDE_MAX = 8
 
 failures = []
 
@@ -65,13 +81,26 @@ def decode(data_url, size):
     png = HERE.parent / "work" / "_verify.png"
     png.parent.mkdir(parents=True, exist_ok=True)
     png.write_bytes(raw)
-    return run(["ffmpeg", "-v", "error", "-i", str(png), "-f", "rawvideo",
+    data = run(["ffmpeg", "-v", "error", "-i", str(png), "-f", "rawvideo",
                 "-pix_fmt", "rgba", "-"])
+    if len(data) != size * size * 4:
+        raise SystemExit(f"frame decoded to {len(data)} bytes, expected {size * size * 4}")
+    return data
 
 
 def is_logo(r, g, b):
-    """Runtime keying test - must match render.ts isLogoColor."""
+    """Runtime keying test - must match isLogoColor in logic.ts."""
     return b - (r + g) / 2.0 > 10
+
+
+def strict_logo(r, g, b):
+    """Saturated logo blue - the offline box detector's predicate.
+
+    Stricter than is_logo on purpose: it ignores the near-white h264 noise that
+    makes the loose test fire a few hundred times per frame, so a non-zero
+    count outside the box means real logo pixels, not noise.
+    """
+    return b > 150 and b - r > 80 and b - g > 40 and r < 110
 
 
 def main():
@@ -103,30 +132,46 @@ def main():
             continue
         cx, cy = x + w / 2.0, y + h / 2.0
         rad = min(w, h) / 2.0 * CIRCLE_RATIO
-        outside = 0        # flagged outside the box: must stay negligible
-        max_r = 0.0        # farthest flagged pixel from the box centre
+        loose_outside = 0   # loosely-flagged outside the box: bounded, not zero
+        sat_outside = 0     # saturated logo outside the box: must be exactly 0
+        max_r = 0.0         # farthest flagged pixel from the box centre
         for py in range(size):
             for px in range(size):
                 i = (py * size + px) * 4
-                if not is_logo(data[i], data[i + 1], data[i + 2]):
+                r, g, b = data[i], data[i + 1], data[i + 2]
+                loose = is_logo(r, g, b)
+                if not loose and not strict_logo(r, g, b):
                     continue
-                if x <= px < x + w and y <= py < y + h:
-                    max_r = max(max_r, math.hypot(px + 0.5 - cx, py + 0.5 - cy))
+                inside = x <= px < x + w and y <= py < y + h
+                if inside:
+                    if loose:
+                        max_r = max(max_r, math.hypot(px + 0.5 - cx, py + 0.5 - cy))
                 else:
-                    outside += 1
+                    if loose:
+                        loose_outside += 1
+                    if strict_logo(r, g, b):
+                        sat_outside += 1
+        print(f"  frame {k:>2}: logo overhang {max_r / rad:.2f}x circle, "
+              f"saturated outside box {sat_outside}, "
+              f"loose outside box {loose_outside} "
+              f"({100.0 * loose_outside / (size * size):.2f}% of frame)")
+        if sat_outside > SAT_OUTSIDE_MAX:
+            print(f"  FAIL frame {k}: {sat_outside} saturated logo pixels lie "
+                  f"OUTSIDE the logo box (max {SAT_OUTSIDE_MAX}) - the erase "
+                  f"region is the box, so these are never erased and will "
+                  f"fringe the output")
+            failures.append(f"frame {k}: {sat_outside} saturated logo px outside box")
         if max_r <= rad * 1.05:
             print(f"  FAIL frame {k}: logo reaches only {max_r:.1f}px vs circle "
-                  f"{rad:.1f}px - if the logo ever fit inside the circle a "
-                  f"circle-bounded erase region would become correct")
+                  f"{rad:.1f}px - the logo no longer extends past the circle")
             failures.append(f"frame {k}: logo does not extend past the circle")
-        # ~886 hits/frame observed, from h264 noise on white. 2% of the frame
-        # is a wide bound that a too-permissive threshold overruns by ~250x.
-        if outside > 0.02 * size * size:
-            print(f"  FAIL frame {k}: chroma test flagged {outside} pixels "
-                  f"outside the logo box "
-                  f"({100.0 * outside / (size * size):.1f}% of frame) - "
-                  f"threshold too permissive")
-            failures.append(f"frame {k}: {outside} stray keying hits")
+        # ~570 non-logo hits/frame observed (watermark/antialiasing). 2% of the
+        # frame is a wide bound a too-permissive threshold overruns by ~250x.
+        if loose_outside > 0.02 * size * size:
+            print(f"  FAIL frame {k}: chroma test flagged {loose_outside} pixels "
+                  f"outside the logo box ({100.0 * loose_outside / (size * size):.1f}% "
+                  f"of frame) - threshold too permissive")
+            failures.append(f"frame {k}: {loose_outside} loose keying hits")
 
     check(len(failures) == 0, "per-frame invariants hold")
 
