@@ -38,6 +38,10 @@ t("speed bounds are 0.25..4, default 1", () => {
     assert.equal(MAX_SPEED, 4);
     assert.equal(DEFAULT_SPEED, 1);
 });
+t("PALETTE_SIZE is sane and below the source size", () => {
+    assert.ok(PALETTE_SIZE > 0 && PALETTE_SIZE < SOURCE_SIZE);
+    assert.equal(PALETTE_SIZE, 120);
+});
 t("palette budget leaves room for the art", () => {
     assert.equal(ART_PALETTE_COLORS, 32);
     assert.equal(MAX_PALETTE_COLORS, 255);
@@ -150,7 +154,7 @@ t("square fully covers the circle at every frame", () => {
         const c = circleFor(box, 1);
         for (let i = 0; i < FRAME_COUNT; i++) {
             const r = avatarTransform(i, box, 1);
-            assert.ok(r.size / 2 >= c.r - 1e-6, `frame ${k} step ${i}: must cover the radius`);
+            assert.ok(r.size / 2 >= c.r, `frame ${k} step ${i}: must cover the radius`);
             assert.ok(r.size / 2 <= c.r * 1.3, `frame ${k} step ${i}: must not wildly overshoot`);
         }
     }
@@ -180,6 +184,28 @@ t("is strictly larger than the circle in BOTH axes", () => {
         const c = circleFor(box, 1);
         assert.ok(r.x1 - r.x0 > 2 * c.r, `frame ${k}: width ${r.x1 - r.x0} > ${2 * c.r}`);
         assert.ok(r.y1 - r.y0 > 2 * c.r, `frame ${k}: height ${r.y1 - r.y0} > ${2 * c.r}`);
+    }
+});
+t("is bounded - it must not inflate to the whole canvas", () => {
+    // The spec forbids inflation as well as shrinking. Without an upper bound a
+    // region of {0,0,limit,limit} satisfies every other assertion here.
+    for (const [k, box] of LOGO_BOXES.entries()) {
+        const r = eraseRegion(box, 1, SOURCE_SIZE);
+        assert.ok(r.x1 - r.x0 <= box.w + 3, `frame ${k}: width must stay near the box`);
+        assert.ok(r.y1 - r.y0 <= box.h + 3, `frame ${k}: height must stay near the box`);
+    }
+});
+t("pads the box by exactly 1px on each side", () => {
+    // Only <= was asserted before, so a margin of 0 or 50 both passed. verify-
+    // frames.py tolerates 8 stray pixels per frame, so a lost margin would not
+    // have been caught there either.
+    for (const [k, box] of LOGO_BOXES.entries()) {
+        if (box.x <= 1 || box.y <= 1) continue;   // clamped at the canvas edge
+        const r = eraseRegion(box, 1, SOURCE_SIZE);
+        assert.equal(r.x0, box.x - 1, `frame ${k}: x0 margin`);
+        assert.equal(r.y0, box.y - 1, `frame ${k}: y0 margin`);
+        assert.equal(r.x1, box.x + box.w + 1, `frame ${k}: x1 margin`);
+        assert.equal(r.y1, box.y + box.h + 1, `frame ${k}: y1 margin`);
     }
 });
 t("is clamped to the canvas", () => {

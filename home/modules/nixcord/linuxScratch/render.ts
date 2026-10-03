@@ -83,19 +83,24 @@ export async function renderGif(opts: {
 
     const [avatarCanvas, avatarCtx] = mkCanvas(res, res);
     const [frameCanvas, frameCtx] = mkCanvas(res, res);
-    const [outCanvas, outCtx] = mkCanvas(res, res);
+    const [, outCtx] = mkCanvas(res, res);
 
     // Palette. The art is quantised SEPARATELY so the ~79% white background
     // only claims a few of its 32 slots instead of starving the avatar; avatar
     // entries come first so they win if the merge is trimmed. quantize() ignores
     // alpha outside format:"rgba4444", so making white transparent would not
     // exclude it - a separate call is the only way to reserve budget.
-    const [palCanvas, palCtx] = mkCanvas(PALETTE_SIZE, PALETTE_SIZE);
+    const [, palCtx] = mkCanvas(PALETTE_SIZE, PALETTE_SIZE);
+    // White-filled, not left transparent. quantize() ignores alpha outside
+    // format:"rgba4444", so an uncleared canvas hands it ~96% RGB(0,0,0) around
+    // the avatar circle and lets that black compete for the avatar's 223 slots.
+    palCtx.fillStyle = "#fff";
+    palCtx.fillRect(0, 0, PALETTE_SIZE, PALETTE_SIZE);
     const c0 = circleFor(LOGO_BOXES[0], ps);
     drawAvatarInCircle(palCtx, avatar, c0, c0.r * 2);
     const avatarData = palCtx.getImageData(0, 0, PALETTE_SIZE, PALETTE_SIZE).data;
 
-    const [artCanvas, artCtx] = mkCanvas(PALETTE_SIZE, PALETTE_SIZE);
+    const [, artCtx] = mkCanvas(PALETTE_SIZE, PALETTE_SIZE);
     artCtx.drawImage(frames[0], 0, 0, PALETTE_SIZE, PALETTE_SIZE);
     const artData = artCtx.getImageData(0, 0, PALETTE_SIZE, PALETTE_SIZE).data;
 
@@ -111,8 +116,11 @@ export async function renderGif(opts: {
         const c = circleFor(box, scale);
         const rect = avatarTransform(i, box, scale);
 
-        // A: the avatar, clipped to this frame's circle
-        avatarCtx.clearRect(0, 0, res, res);
+        // A: the avatar, clipped to this frame's circle. White-filled first so
+        // a PNG avatar with transparency cannot put unintended alpha into a GIF
+        // that is written as opaque.
+        avatarCtx.fillStyle = "#fff";
+        avatarCtx.fillRect(0, 0, res, res);
         drawAvatarInCircle(avatarCtx, avatar, c, rect.size);
 
         // B: the frame, with a transparent hole inside the circle and any
@@ -129,14 +137,22 @@ export async function renderGif(opts: {
             for (let x = x0; x < x1; x++) {
                 const p = (y * res + x) * 4;
                 const cov = circleCoverage(x + 0.5 - c.cx, y + 0.5 - c.cy, c.r);
+                // Whiten FIRST, then modulate alpha. Order matters: the logo is
+                // a rotated square whose corners reach ~1.5x the circle radius,
+                // so the 1px band just inside the rim is solid logo blue in the
+                // sectors near those corners. Whitening only in the `cov === 0`
+                // branch let that blue survive at partial alpha, tinting the
+                // avatar's outer pixel - and flickering as the square rotates
+                // frame to frame.
+                if (isLogoColor(d[p], d[p + 1], d[p + 2])) {
+                    d[p] = 255;
+                    d[p + 1] = 255;
+                    d[p + 2] = 255;
+                }
                 if (cov >= 1) {
                     d[p + 3] = 0;
                 } else if (cov > 0) {
                     d[p + 3] = Math.round(d[p + 3] * (1 - cov));
-                } else if (isLogoColor(d[p], d[p + 1], d[p + 2])) {
-                    d[p] = 255;
-                    d[p + 1] = 255;
-                    d[p + 2] = 255;
                 }
             }
         }
