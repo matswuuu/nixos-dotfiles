@@ -15,17 +15,16 @@ import {
     MIN_RESOLUTION,
     MIN_SPEED,
     clamp,
+    num,
 } from "./logic";
 import { renderGif } from "./render";
 
-function num(value: unknown, fallback: number): number {
-    const n = typeof value === "string" ? Number(value) : value;
-    return typeof n === "number" && Number.isFinite(n) ? n : fallback;
-}
-
 async function resolveAvatarUrl(user: string, ctx: CommandContext): Promise<string> {
     const u = await UserUtils.getUser(user);
-    return u.getAvatarURL(ctx.guild?.id, 2048);
+    // MAX_RESOLUTION, not 2048: the avatar is drawn at most 498px wide, so a
+    // 2048px fetch is hundreds of KB downloaded and CORS-decoded to be thrown
+    // away on every invocation.
+    return u.getAvatarURL(ctx.guild?.id, MAX_RESOLUTION);
 }
 
 export default definePlugin({
@@ -86,10 +85,21 @@ export default definePlugin({
                     const file = await renderGif({ avatarUrl, resolution, speed });
                     // Discord clears slash-command input (and pending
                     // attachments) the moment the command resolves, so defer.
-                    setTimeout(
-                        () => UploadHandler.promptToUpload([file], ctx.channel, DraftType.ChannelMessage),
-                        10,
-                    );
+                    // The try/catch cannot be the enclosing one: it has already
+                    // exited by the time this fires.
+                    setTimeout(() => {
+                        try {
+                            void UploadHandler.promptToUpload(
+                                [file],
+                                ctx.channel,
+                                DraftType.ChannelMessage,
+                            ).catch((err: unknown) =>
+                                console.error("[linux-scratch] upload failed\n", err),
+                            );
+                        } catch (err) {
+                            console.error("[linux-scratch] upload failed\n", err);
+                        }
+                    }, 10);
                 } catch (err) {
                     console.error("[linux-scratch] render failed\n", err);
                     sendBotMessage(ctx.channel.id, {

@@ -70,6 +70,9 @@ export async function renderGif(opts: {
     resolution: number;
     speed: number;
 }): Promise<File> {
+    // renderGif is the enforcement point for these bounds, not index.ts: the
+    // command already clamps the same way, so this is belt-and-braces for any
+    // other caller, and it is what guarantees a NaN can never reach Math.round.
     const res = clamp(Math.round(opts.resolution), MIN_RESOLUTION, MAX_RESOLUTION);
     const speed = clamp(opts.speed, MIN_SPEED, MAX_SPEED);
     const scale = res / SOURCE_SIZE;

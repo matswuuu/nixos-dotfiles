@@ -5,7 +5,7 @@ import {
     MIN_RESOLUTION, MAX_RESOLUTION, DEFAULT_RESOLUTION,
     MIN_SPEED, MAX_SPEED, DEFAULT_SPEED, MIN_DELAY_MS,
     ART_PALETTE_COLORS, MAX_PALETTE_COLORS,
-    isLogoColor, clamp, scaleForFrame, circleFor, circleCoverage,
+    isLogoColor, clamp, num, scaleForFrame, circleFor, circleCoverage,
     frameDelayMs, avatarTransform, eraseRegion,
 } from "./logic.ts";
 import { SOURCE_SIZE, FRAME_COUNT, LOGO_BOXES } from "./frames.ts";
@@ -63,6 +63,67 @@ console.log("clamp");
 t("clamps low", () => assert.equal(clamp(-5, 10, 20), 10));
 t("clamps high", () => assert.equal(clamp(99, 10, 20), 20));
 t("passes through", () => assert.equal(clamp(15, 10, 20), 15));
+
+console.log("num");
+t("passes finite numbers through unchanged", () => {
+    for (const v of [0, 1, -1, 256, 498, 1.5, 0.25, 4, -1e6, 1e6, 1 / 3]) {
+        assert.equal(num(v, -99), v, `${v} should pass through`);
+    }
+});
+t("coerces the numeric strings Discord delivers", () => {
+    // NUMBER/INTEGER options arrive as strings through findOption in some
+    // command paths, so "1.5" must survive rather than fall back.
+    assert.equal(num("256", 0), 256);
+    assert.equal(num("1.5", 0), 1.5);
+    assert.equal(num("-8", 0), -8);
+    assert.equal(num("0", 0), 0);
+    assert.equal(num("  128  ", 0), 128);
+    assert.equal(num("1e2", 0), 100);
+});
+t("falls back for every absent or unusable value", () => {
+    for (const v of [
+        undefined, null, "abc", "", "   ", NaN,
+        Infinity, -Infinity, "Infinity", "-Infinity", "NaN",
+        true, false, {}, { valueOf: () => 5 }, [], [5],
+        () => 1, Symbol("opt"),
+    ]) {
+        assert.equal(num(v, 256), 256, `${String(v)} should fall back`);
+    }
+});
+t("a blank resolution falls back to the default, not the minimum", () => {
+    // The regression: Number("") is 0, which is finite, so without the blank
+    // guard an absent option clamped to MIN_RESOLUTION (64) instead of
+    // DEFAULT_RESOLUTION (256).
+    assert.equal(num("", DEFAULT_RESOLUTION), DEFAULT_RESOLUTION);
+    assert.equal(clamp(num("", DEFAULT_RESOLUTION), MIN_RESOLUTION, MAX_RESOLUTION),
+        DEFAULT_RESOLUTION);
+    assert.equal(clamp(num("   ", DEFAULT_RESOLUTION), MIN_RESOLUTION, MAX_RESOLUTION),
+        DEFAULT_RESOLUTION);
+});
+t("never yields NaN, whatever it is handed", () => {
+    // clamp() silently propagates NaN - both comparisons are false for it - so
+    // num is the only thing stopping NaN reaching render.ts's Math.round.
+    const inputs = [
+        undefined, null, "", " ", "abc", "12abc", NaN, 0 / 0,
+        Infinity, -Infinity, "Infinity", true, false, {}, [], [1, 2],
+        () => 3, Number, new Date(NaN), new Map(), 0n, Symbol("s"),
+    ];
+    for (const v of inputs) {
+        for (const fb of [256, 1, 0, -1]) {
+            const got = num(v, fb);
+            assert.ok(!Number.isNaN(got),
+                `num(${String(v)}, ${fb}) returned NaN`);
+        }
+    }
+    // And the composed path the command actually runs stays finite.
+    for (const v of inputs) {
+        const r = clamp(num(v, DEFAULT_RESOLUTION), MIN_RESOLUTION, MAX_RESOLUTION);
+        const s = clamp(num(v, DEFAULT_SPEED), MIN_SPEED, MAX_SPEED);
+        assert.ok(Number.isFinite(r) && r >= MIN_RESOLUTION && r <= MAX_RESOLUTION,
+            `resolution ${r}`);
+        assert.ok(Number.isFinite(s) && s >= MIN_SPEED && s <= MAX_SPEED, `speed ${s}`);
+    }
+});
 
 console.log("scaleForFrame");
 t("ramps up to the midpoint then back down", () => {

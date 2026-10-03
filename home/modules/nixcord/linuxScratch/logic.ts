@@ -50,6 +50,20 @@ export function clamp(n: number, lo: number, hi: number): number {
     return n < lo ? lo : n > hi ? hi : n;
 }
 
+/**
+ * Coerce a slash-command option to a number, falling back when it is absent or
+ * unusable. This is the ONLY guard against NaN reaching the renderer: clamp()
+ * would propagate it, since both of its comparisons are false for NaN.
+ */
+export function num(value: unknown, fallback: number): number {
+    // A blank string is an absent option, not a zero: Number("") is 0, which is
+    // finite, so without this an empty resolution would clamp to the MINIMUM
+    // rather than fall back to the default.
+    if (typeof value === "string" && value.trim() === "") return fallback;
+    const n = typeof value === "string" ? Number(value) : value;
+    return typeof n === "number" && Number.isFinite(n) ? n : fallback;
+}
+
 /** Squash amount per frame: ramps up to the midpoint, then back down. */
 export function scaleForFrame(i: number, frameCount: number): number {
     return i < frameCount / 2 ? i : frameCount - i;
