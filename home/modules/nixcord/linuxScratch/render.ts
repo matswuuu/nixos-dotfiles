@@ -19,7 +19,14 @@ import {
     isLogoColor,
 } from "./logic";
 
-function loadImage(src: string): Promise<HTMLImageElement> {
+/**
+ * Load an image with CORS enabled.
+ *
+ * Exported so `index.ts` can load the avatar in its own try/catch: an avatar
+ * 404 / network / CORS failure is the most likely real error, and it must not be
+ * indistinguishable from a render failure.
+ */
+export function loadImage(src: string): Promise<HTMLImageElement> {
     return new Promise((resolve, reject) => {
         const img = new Image();
         img.crossOrigin = "Anonymous";
@@ -66,23 +73,23 @@ function drawAvatarInCircle(
 }
 
 export async function renderGif(opts: {
-    avatarUrl: string;
+    /** Already loaded by the caller, so an avatar failure is reported as one. */
+    avatar: HTMLImageElement;
     resolution: number;
     speed: number;
 }): Promise<File> {
-    // renderGif is the enforcement point for these bounds, not index.ts: the
-    // command already clamps the same way, so this is belt-and-braces for any
-    // other caller, and it is what guarantees a NaN can never reach Math.round.
+    // A bounds assertion for any caller other than index.ts, which already
+    // clamps the same way. It is NOT the NaN guard: clamp() returns NaN
+    // unchanged, since both its comparisons are false for NaN, so Math.round
+    // below would see it. num() in logic.ts is the only thing preventing that.
     const res = clamp(Math.round(opts.resolution), MIN_RESOLUTION, MAX_RESOLUTION);
     const speed = clamp(opts.speed, MIN_SPEED, MAX_SPEED);
     const scale = res / SOURCE_SIZE;
     const delay = frameDelayMs(speed);
     const ps = PALETTE_SIZE / SOURCE_SIZE;
 
-    const [avatar, frames] = await Promise.all([
-        loadImage(opts.avatarUrl),
-        Promise.all(FRAME_DATA_URLS.map(loadImage)),
-    ]);
+    const avatar = opts.avatar;
+    const frames = await Promise.all(FRAME_DATA_URLS.map(loadImage));
 
     const [avatarCanvas, avatarCtx] = mkCanvas(res, res);
     const [frameCanvas, frameCtx] = mkCanvas(res, res);
@@ -105,7 +112,9 @@ export async function renderGif(opts: {
     palCtx.fillStyle = "#fff";
     palCtx.fillRect(0, 0, PALETTE_SIZE, PALETTE_SIZE);
     const c0 = circleFor(LOGO_BOXES[0], ps);
-    drawAvatarInCircle(palCtx, avatar, c0, c0.r * 2);
+    // Frame 0's own transform rather than a hand-derived `c0.r * 2`, which
+    // agrees only because scaleForFrame(0, ANIMATION_FRAMES) === 0.
+    drawAvatarInCircle(palCtx, avatar, c0, avatarTransform(0, LOGO_BOXES[0], ps).size);
     const avatarData = palCtx.getImageData(0, 0, PALETTE_SIZE, PALETTE_SIZE).data;
 
     const [, artCtx] = mkCanvas(PALETTE_SIZE, PALETTE_SIZE);
@@ -147,6 +156,24 @@ export async function renderGif(opts: {
             for (let x = x0; x < x1; x++) {
                 const p = (y * res + x) * 4;
                 const cov = circleCoverage(x + 0.5 - c.cx, y + 0.5 - c.cy, c.r);
+                // Erase ONLY logo-or-background. Tux's black flipper reaches
+                // into the circle, so erasing the whole interior severed the
+                // claw and painted the avatar straight over it: measured
+                // 649-2327 art pixels per frame sit inside the circle (about
+                // 630-2160 of them dark). Anything that is neither logo blue nor
+                // near-white is art and stays opaque.
+                //
+                // Near-white MUST be in the erase set. Without it the avatar
+                // would show only through the four window panes instead of as a
+                // circle, since the logo panes are exactly the blue pixels.
+                //
+                // Known trade-off, worth eyeballing at resolution 498: the
+                // claw's antialiased boundary against the logo is itself
+                // bluish-dark, so it is partly whitened here and leaves a faint
+                // halo. That is cosmetic next to a severed claw.
+                const erase = isLogoColor(d[p], d[p + 1], d[p + 2]) ||
+                    (d[p] > 200 && d[p + 1] > 200 && d[p + 2] > 200);
+                if (!erase) continue;
                 // Whiten FIRST, then modulate alpha. Order matters: the logo is
                 // a rotated square whose corners reach ~1.5x the circle radius,
                 // so the 1px band just inside the rim is solid logo blue in the
@@ -154,11 +181,9 @@ export async function renderGif(opts: {
                 // branch let that blue survive at partial alpha, tinting the
                 // avatar's outer pixel - and flickering as the square rotates
                 // frame to frame.
-                if (isLogoColor(d[p], d[p + 1], d[p + 2])) {
-                    d[p] = 255;
-                    d[p + 1] = 255;
-                    d[p + 2] = 255;
-                }
+                d[p] = 255;
+                d[p + 1] = 255;
+                d[p + 2] = 255;
                 if (cov >= 1) {
                     d[p + 3] = 0;
                 } else if (cov > 0) {
@@ -168,8 +193,10 @@ export async function renderGif(opts: {
         }
         frameCtx.putImageData(img, 0, 0);
 
-        // C: composite. The avatar shows through the hole, and Tux's flipper
-        // stays on top because it is opaque in the frame.
+        // C: composite. The avatar shows through the hole punched in the logo
+        // and the white background. Tux's claw was deliberately left opaque by
+        // the erase step, so it now genuinely stays on top of the avatar rather
+        // than being erased along with the logo.
         outCtx.clearRect(0, 0, res, res);
         outCtx.drawImage(avatarCanvas, 0, 0);
         outCtx.drawImage(frameCanvas, 0, 0);

@@ -4,7 +4,7 @@ import {
     CIRCLE_RATIO, REAL_TIME_DELAY_MS, ANIMATION_FRAMES, PALETTE_SIZE,
     MIN_RESOLUTION, MAX_RESOLUTION, DEFAULT_RESOLUTION,
     MIN_SPEED, MAX_SPEED, DEFAULT_SPEED, MIN_DELAY_MS,
-    ART_PALETTE_COLORS, MAX_PALETTE_COLORS,
+    ART_PALETTE_COLORS, MAX_PALETTE_COLORS, AVATAR_ZOOM,
     isLogoColor, clamp, num, scaleForFrame, circleFor, circleCoverage,
     frameDelayMs, avatarTransform, eraseRegion,
 } from "./logic.ts";
@@ -126,13 +126,29 @@ t("never yields NaN, whatever it is handed", () => {
 });
 
 console.log("scaleForFrame");
-t("ramps up to the midpoint then back down", () => {
+t("ramps up to the midpoint, plateaus, then back down", () => {
     assert.deepEqual(
         Array.from({ length: FRAME_COUNT }, (_, i) => scaleForFrame(i, FRAME_COUNT)),
-        [0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1]);
+        [0, 1, 2, 3, 4, 5, 5, 4, 3, 2, 1, 0]);
 });
 t("is zero at the first frame", () =>
     assert.equal(scaleForFrame(0, FRAME_COUNT), 0));
+t("returns to zero at the last frame so the loop seam disappears", () =>
+    // Guards the loop: with `frameCount - i` the last frame was 1, so the GIF
+    // stepped 0 -> 1 on every loop. Falsifiable - a 1 here fails.
+    assert.equal(scaleForFrame(FRAME_COUNT - 1, FRAME_COUNT), 0));
+t("is symmetric about the midpoint", () => {
+    for (let i = 0; i < FRAME_COUNT; i++) {
+        assert.equal(scaleForFrame(i, FRAME_COUNT),
+            scaleForFrame(FRAME_COUNT - 1 - i, FRAME_COUNT),
+            `frame ${i} is not mirrored`);
+    }
+});
+t("never exceeds half the frame count", () => {
+    const peak = Math.max(...Array.from({ length: FRAME_COUNT },
+        (_, i) => scaleForFrame(i, FRAME_COUNT)));
+    assert.equal(peak, Math.floor((FRAME_COUNT - 1) / 2));
+});
 
 console.log("circleFor");
 t("centres on the logo box", () => {
@@ -225,6 +241,25 @@ t("scales with resolution", () => {
     const a = avatarTransform(0, box, 1);
     const b = avatarTransform(0, box, 256 / SOURCE_SIZE);
     assert.ok(Math.abs(b.size - a.size * 256 / SOURCE_SIZE) < 1e-9);
+});
+t("AVATAR_ZOOM is 0.048 and peaks at exactly 24%", () => {
+    // The coefficient is 0.048 rather than the historical 0.04 only because the
+    // ramp now peaks at 5 instead of 6. This pins the resulting peak, which is
+    // the value the design was validated against.
+    assert.equal(AVATAR_ZOOM, 0.048);
+    const box = LOGO_BOXES[0];
+    const c = circleFor(box, 1);
+    const peak = Math.max(...Array.from({ length: FRAME_COUNT },
+        (_, i) => avatarTransform(i, box, 1).size / 2 / c.r));
+    assert.ok(Math.abs(peak - 1.24) < 1e-9, `peak zoom is ${peak}, expected 1.24`);
+});
+t("zoom starts and ends at 1x so the loop is seamless", () => {
+    const box = LOGO_BOXES[0];
+    const c = circleFor(box, 1);
+    for (const i of [0, FRAME_COUNT - 1]) {
+        assert.ok(Math.abs(avatarTransform(i, box, 1).size / (2 * c.r) - 1) < 1e-9,
+            `frame ${i} must be unzoomed`);
+    }
 });
 
 console.log("eraseRegion");

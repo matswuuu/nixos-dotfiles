@@ -17,14 +17,18 @@ import {
     clamp,
     num,
 } from "./logic";
-import { renderGif } from "./render";
+import { loadImage, renderGif } from "./render";
+
+/** Avatar fetch size. 512 is Discord's canonical bucket and strictly exceeds
+ *  MAX_RESOLUTION (498), so the avatar is never upscaled into the circle. */
+const AVATAR_SIZE = 512;
 
 async function resolveAvatarUrl(user: string, ctx: CommandContext): Promise<string> {
     const u = await UserUtils.getUser(user);
-    // MAX_RESOLUTION, not 2048: the avatar is drawn at most 498px wide, so a
+    // Not 2048: the avatar is drawn at most MAX_RESOLUTION (498) px wide, so a
     // 2048px fetch is hundreds of KB downloaded and CORS-decoded to be thrown
     // away on every invocation.
-    return u.getAvatarURL(ctx.guild?.id, MAX_RESOLUTION);
+    return u.getAvatarURL(ctx.guild?.id, AVATAR_SIZE);
 }
 
 export default definePlugin({
@@ -56,16 +60,19 @@ export default definePlugin({
                 },
             ],
             async execute(opts: CommandArgument[], ctx: CommandContext) {
-                let avatarUrl: string;
+                let avatar: HTMLImageElement;
                 try {
-                    avatarUrl = await resolveAvatarUrl(
-                        findOption(opts, "user", ""),
-                        ctx,
+                    avatar = await loadImage(
+                        await resolveAvatarUrl(findOption(opts, "user", ""), ctx),
                     );
                 } catch (err) {
-                    console.error("[linux-scratch] failed to resolve user\n", err);
+                    // Distinct from the render failure below: an avatar 404, a
+                    // network error or a CORS rejection all land here, and the
+                    // generic render message would tell the user nothing
+                    // actionable about any of them.
+                    console.error("[linux-scratch] failed to load avatar\n", err);
                     sendBotMessage(ctx.channel.id, {
-                        content: "Could not load that user. Try a different one.",
+                        content: "Could not load that user's avatar. Try a different user.",
                     });
                     return;
                 }
@@ -82,7 +89,7 @@ export default definePlugin({
                 );
 
                 try {
-                    const file = await renderGif({ avatarUrl, resolution, speed });
+                    const file = await renderGif({ avatar, resolution, speed });
                     // Discord clears slash-command input (and pending
                     // attachments) the moment the command resolves, so defer.
                     // The try/catch cannot be the enclosing one: it has already

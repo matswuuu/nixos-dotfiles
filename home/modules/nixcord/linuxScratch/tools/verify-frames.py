@@ -1,8 +1,18 @@
 #!/usr/bin/env python3
 """Verify the generated frames.ts. No browser required.
 
+Decodes the 12 PNGs inlined in frames.ts and measures them against the box
+table already baked into that same file. It does NOT re-derive either table from
+the source video: it never reads work/, never touches the MP4, and never re-runs
+the box detector. Requires ffmpeg on PATH (12 invocations; without it this dies
+with FileNotFoundError).
+
 Asserts the asset-side invariants the renderer depends on:
   * FRAME_COUNT == len(LOGO_BOXES) == len(FRAME_DATA_URLS), and equals 12
+  * FRAME_SOURCE_INDICES == range(0, 68, 6) - the sampling that justifies
+    REAL_TIME_DELAY_MS (68 frames at 30fps over 12 output frames = 189ms). If a
+    regeneration changed the sampling, that constant's derivation would be
+    silently wrong, and nothing else here would notice.
   * every frame decodes to SOURCE_SIZE x SOURCE_SIZE
   * logo boxes are consistent and lie inside the frame
   * saturated logo pixels outside the logo box stay at or below
@@ -14,11 +24,25 @@ Asserts the asset-side invariants the renderer depends on:
     box-bounded erase region necessary at all
   * loose chroma hits outside the box stay under 2% of the frame, bounding how
     far a too-permissive threshold could reach beyond the logo
+  * art pixels (neither logo-blue nor near-white) exist inside the avatar
+    circle, and near-white pixels do too. See ART_IN_CIRCLE_MIN below - these
+    pin the two halves of the renderer's erase rule.
 
 Constants are duplicated from logic.ts on purpose: CIRCLE_RATIO and the chroma
 threshold must match isLogoColor there. Note the two outside-box counters are
 deliberately separate - a box regression and a threshold regression both move
 the loose count, so conflating them makes a failure unattributable.
+
+Two limitations, both structural:
+
+  * strict_logo below is duplicated from generate-frames.py, so a
+    mis-specified blue predicate leaves generator and verifier agreeing and the
+    suite green.
+  * the GEOMETRY is not independently checked either. The boxes in frames.ts
+    were measured from these same PNGs, so a systematically wrong box agrees
+    with the frames it came from. This suite catches box regressions relative to
+    the frames (a shrink, a drift), NOT a box that was wrong from the start.
+    Cross-checking against the video would mean re-running the detector.
 """
 
 import base64
@@ -48,6 +72,37 @@ CIRCLE_RATIO = 0.9
 # reintroduces the 135-138px outlier box, which is far worse.
 SAT_OUTSIDE_MAX = 8
 
+# Near-white threshold. Must match the renderer's erase rule in render.ts, which
+# erases logo-blue OR (r > 200 and g > 200 and b > 200) inside the circle.
+WHITE_LEVEL = 200
+
+# Art pixels (neither logo-blue nor near-white) required inside the avatar
+# circle, per frame. These are Tux's body, beak and flipper - the claw that
+# reaches into the circle.
+#
+# This pins BOTH halves of the renderer's erase rule, which is the whole reason
+# it is written as "erase logo-or-background" rather than "erase the circle":
+#
+#   * art > 0: there IS non-logo art inside the circle. Measured 649-2327 per
+#     frame. If it were 0, erasing the entire circle interior would be safe and
+#     the renderer's `if (!erase) continue` guard would be dead code. A drop to
+#     0 means the asset changed and the guard no longer has anything to protect.
+#   * near-white > 0: near-white must stay in the erase set. Without it the
+#     avatar would show only through the four window panes (which are exactly
+#     the blue pixels) instead of as a circle. Measured 1069-2135 per frame.
+#
+# A failure here is a prompt to re-examine the erase rule, not to edit this
+# number: it is a floor on measured reality, not a tunable target.
+ART_IN_CIRCLE_MIN = 1
+WHITE_IN_CIRCLE_MIN = 1
+
+# Source frames sampled, and the step between them. 68 frames at 30fps over 12
+# output frames gives 188.9ms, which is where REAL_TIME_DELAY_MS = 189 in
+# logic.ts comes from. The step is ceil(68 / 12) = 6, so the sampling is
+# 0, 6, ..., 66.
+SOURCE_FRAME_COUNT = 68
+SOURCE_FRAME_STEP = 6
+
 failures = []
 
 
@@ -73,7 +128,9 @@ def parse_ts():
             r"\{\s*x:\s*(\d+),\s*y:\s*(\d+),\s*w:\s*(\d+),\s*h:\s*(\d+)\s*\}", src)
     ]
     urls = re.findall(r'"(data:image/png;base64,[A-Za-z0-9+/=]+)"', src)
-    return size, count, boxes, urls
+    m = re.search(r"FRAME_SOURCE_INDICES[^=]*=\s*\[([^\]]*)\]", src)
+    indices = [int(v) for v in re.findall(r"\d+", m.group(1))] if m else []
+    return size, count, boxes, urls, indices
 
 
 def decode(data_url, size):
@@ -93,6 +150,11 @@ def is_logo(r, g, b):
     return b - (r + g) / 2.0 > 10
 
 
+def is_white(r, g, b):
+    """Near-white background - must match the renderer's second erase term."""
+    return r > WHITE_LEVEL and g > WHITE_LEVEL and b > WHITE_LEVEL
+
+
 def strict_logo(r, g, b):
     """Saturated logo blue - the offline box detector's predicate.
 
@@ -107,13 +169,16 @@ def strict_logo(r, g, b):
 
 
 def main():
-    size, count, boxes, urls = parse_ts()
+    size, count, boxes, urls, indices = parse_ts()
     print(f"SOURCE_SIZE={size} FRAME_COUNT={count} "
           f"boxes={len(boxes)} urls={len(urls)}")
 
     check(count == 12, "FRAME_COUNT is 12")
     check(len(boxes) == count, "box count matches FRAME_COUNT")
     check(len(urls) == count, "data URL count matches FRAME_COUNT")
+    check(indices == list(range(0, SOURCE_FRAME_COUNT, SOURCE_FRAME_STEP)),
+          f"FRAME_SOURCE_INDICES is range(0, {SOURCE_FRAME_COUNT}, "
+          f"{SOURCE_FRAME_STEP}): {indices}")
 
     widths = [b[2] for b in boxes]
     heights = [b[3] for b in boxes]
@@ -135,10 +200,22 @@ def main():
         loose_outside = 0   # loosely-flagged outside the box: bounded, not zero
         sat_outside = 0     # saturated logo outside the box: must be exactly 0
         max_r = 0.0         # farthest flagged pixel from the box centre
+        in_circle = 0       # pixels inside the avatar circle
+        in_logo = 0         #   of which logo-blue: always erased
+        in_white = 0        #   of which near-white: erased, so the avatar shows
+        in_art = 0          #   of which neither: Tux, preserved opaque
         for py in range(size):
             for px in range(size):
                 i = (py * size + px) * 4
                 r, g, b = data[i], data[i + 1], data[i + 2]
+                if math.hypot(px + 0.5 - cx, py + 0.5 - cy) <= rad:
+                    in_circle += 1
+                    if is_logo(r, g, b):
+                        in_logo += 1
+                    elif is_white(r, g, b):
+                        in_white += 1
+                    else:
+                        in_art += 1
                 loose = is_logo(r, g, b)
                 if not loose and not strict_logo(r, g, b):
                     continue
@@ -155,6 +232,8 @@ def main():
               f"saturated outside box {sat_outside}, "
               f"loose outside box {loose_outside} "
               f"({100.0 * loose_outside / (size * size):.2f}% of frame)")
+        print(f"           in circle {in_circle}: logo {in_logo}, white {in_white}, "
+              f"art {in_art} ({100.0 * in_art / in_circle:.1f}% preserved)")
         if sat_outside > SAT_OUTSIDE_MAX:
             print(f"  FAIL frame {k}: {sat_outside} saturated logo pixels lie "
                   f"OUTSIDE the logo box (max {SAT_OUTSIDE_MAX}) - the erase "
@@ -165,6 +244,17 @@ def main():
             print(f"  FAIL frame {k}: logo reaches only {max_r:.1f}px vs circle "
                   f"{rad:.1f}px - the logo no longer extends past the circle")
             failures.append(f"frame {k}: logo does not extend past the circle")
+        if in_art < ART_IN_CIRCLE_MIN:
+            print(f"  FAIL frame {k}: only {in_art} art pixels inside the circle - "
+                  f"the renderer's `if (!erase) continue` guard would have nothing "
+                  f"to protect, so erasing the whole circle interior would be safe "
+                  f"again. Re-examine the erase rule.")
+            failures.append(f"frame {k}: no art inside circle")
+        if in_white < WHITE_IN_CIRCLE_MIN:
+            print(f"  FAIL frame {k}: no near-white inside the circle - dropping "
+                  f"white from the erase set would no longer turn the avatar into "
+                  f"four window panes, so that half of the rule is unverified")
+            failures.append(f"frame {k}: no near-white inside circle")
         # ~570 non-logo hits/frame observed (watermark/antialiasing). 2% of the
         # frame is a wide bound a too-permissive threshold overruns by ~250x.
         if loose_outside > 0.02 * size * size:

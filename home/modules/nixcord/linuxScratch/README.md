@@ -44,7 +44,24 @@ At render time each frame is composited on a canvas:
 3. the two are composited so the avatar shows through the hole.
 
 Drawing the avatar *underneath* is deliberate: Tux's flipper overlaps the logo,
-so painting the avatar on top would smear over the claw.
+so painting the avatar on top would smear over the claw. For that to work the
+keying step must **not** erase the claw, so inside the circle it erases only
+logo-or-background — pixels that are neither logo-blue nor near-white are left
+opaque. Measured, 649–2327 such art pixels sit inside the circle per frame
+(7–26% of its area); erasing the whole interior severed the flipper in every
+frame. Near-white has to stay in the erase set, or the avatar would show only
+through the four window panes rather than as a circle. The trade-off is that the
+claw's antialiased boundary against the logo is itself bluish-dark and gets
+whitened, leaving a faint halo — cosmetic next to a severed claw, and worth
+eyeballing at `resolution:498`.
+
+The avatar is also zoomed slightly per frame, peaking at **+24%**
+(`AVATAR_ZOOM` in `logic.ts`) on a symmetric ramp: 0, 1, 2, 3, 4, 5, 5, 4, 3,
+2, 1, 0. This is an invented effect, not a measurement — the logo box is a
+constant 118–122px across all 12 frames, so the ramp tracks nothing in the
+source art. It exists only so the avatar does not look frozen. Because the ramp
+starts and ends at zero it also loops seamlessly; an earlier asymmetric ramp
+stepped 0 → 1 on every loop.
 
 The chroma key (`isLogoColor` in `logic.ts`) tests *blueness* — blue above the
 red/green midpoint — rather than a blue range, so the antialiased edges where
@@ -94,16 +111,28 @@ python3 tools/verify-frames.py
 library only — no numpy or PIL). Downloads and extracted frames are cached in
 `work/`, which is gitignored.
 
-`verify-frames.py` re-derives the frame table and box table from the source
-video and asserts the per-frame invariants the renderer depends on (box sizes,
-boxes inside the frame, logo overhang, stray chroma outside the box). It also
-holds a second, deliberately stricter copy of the offline blue detector used
-for box detection — the runtime keying test in `logic.ts` is looser than that,
-and the two must not be confused.
+`verify-frames.py` needs `ffmpeg` on `PATH` (it shells out once per frame) plus
+Python 3, standard library only.
+
+`verify-frames.py` re-measures the logo extent in each inlined frame and asserts
+the baked box table covers it (box sizes, boxes inside the frame, logo overhang,
+stray chroma outside the box, and the in-circle art/near-white counts that pin
+the renderer's erase rule). It also holds a second, deliberately stricter copy of
+the offline blue detector used for box detection — the runtime keying test in
+`logic.ts` is looser than that, and the two must not be confused.
+
+Note what that verifier does **not** do: it decodes the PNGs already inlined in
+`frames.ts` and measures them against the box table from that same file. It never
+re-derives either table from the source video. So it catches box regressions
+*relative to the frames* — a shrink, a drift — but a box that was systematically
+wrong from the start agrees with the frames it was measured from and would pass.
+The shared blue predicate is a second, separate blind spot. Cross-checking either
+against the video means re-running the detector.
 
 `CIRCLE_RATIO` and `isLogoColor` in `logic.ts` are mirrored in
 `tools/verify-frames.py`. If you change one, change both; the verifier exists
-to catch the drift.
+to catch the drift. `WHITE_LEVEL` is mirrored too — it is the other half of the
+renderer's erase rule.
 
 ## Tests
 

@@ -30,6 +30,19 @@ export const MAX_PALETTE_COLORS = 255;
 
 export const PALETTE_SIZE = 120;
 
+/**
+ * Per-frame zoom coefficient for the avatar square. The peak is
+ * 5 * AVATAR_ZOOM = 24%, matching what this feature shipped with; the
+ * coefficient is 0.048 rather than 0.04 only because scaleForFrame now peaks at
+ * 5 instead of 6, and 5 * 0.048 keeps the peak at exactly 0.24 so the
+ * validated visual is unchanged.
+ *
+ * The logo box is a constant 118-122px across all 12 frames, so this ramp
+ * tracks no property of the source art - it is a deliberate, invented zoom, not
+ * a measurement. It exists to keep the avatar from looking frozen.
+ */
+export const AVATAR_ZOOM = 0.048;
+
 export type Circle = { cx: number; cy: number; r: number };
 export type Rect = { x: number; y: number; size: number };
 export type Region = { x0: number; y0: number; x1: number; y1: number };
@@ -64,9 +77,17 @@ export function num(value: unknown, fallback: number): number {
     return typeof n === "number" && Number.isFinite(n) ? n : fallback;
 }
 
-/** Squash amount per frame: ramps up to the midpoint, then back down. */
+/**
+ * Squash amount per frame: ramps up to the midpoint, then back down.
+ *
+ * The two middle frames share the peak and the last frame equals the first
+ * (`frameCount - 1 - i` on the way down, not `frameCount - i`). That makes the
+ * ramp symmetric AND closed, so `avatarTransform`'s zoom returns to its starting
+ * value and the GIF's loop seam is 0 -> 0 instead of a visible 0 -> 1 step.
+ * For 12 frames: 0 1 2 3 4 5 5 4 3 2 1 0.
+ */
 export function scaleForFrame(i: number, frameCount: number): number {
-    return i < frameCount / 2 ? i : frameCount - i;
+    return i < frameCount / 2 ? i : frameCount - 1 - i;
 }
 
 export function circleFor(box: LogoBox, scale: number): Circle {
@@ -113,10 +134,12 @@ export function eraseRegion(box: LogoBox, scale: number, limit: number): Region 
 
 /**
  * Square the avatar is drawn into: sized to fully cover the circle (with
- * margin for the antialiased rim) and nudged outward for the squash.
+ * margin for the antialiased rim) and zoomed by AVATAR_ZOOM on the symmetric
+ * ramp. Deliberately oversized — it is clipped to the circle, so growing it
+ * zooms the fill instead of leaving transparent corners.
  */
 export function avatarTransform(i: number, box: LogoBox, scale: number): Rect {
     const { cx, cy, r } = circleFor(box, scale);
-    const size = r * 2 * (1 + scaleForFrame(i, ANIMATION_FRAMES) * 0.04);
+    const size = r * 2 * (1 + scaleForFrame(i, ANIMATION_FRAMES) * AVATAR_ZOOM);
     return { x: cx - size / 2, y: cy - size / 2, size };
 }
