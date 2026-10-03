@@ -31,7 +31,7 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 FRAMES_TS = HERE.parent / "frames.ts"
 
-# Must match render.ts
+# Must match logic.ts
 CIRCLE_RATIO = 0.9
 
 # Saturated logo pixels permitted outside the box, per frame.
@@ -96,9 +96,12 @@ def is_logo(r, g, b):
 def strict_logo(r, g, b):
     """Saturated logo blue - the offline box detector's predicate.
 
-    Stricter than is_logo on purpose: it ignores the near-white h264 noise that
-    makes the loose test fire a few hundred times per frame, so a non-zero
-    count outside the box means real logo pixels, not noise.
+    Duplicated from generate-frames.py on purpose, and that duplication is a
+    real limit on what this suite can detect: the saturated-outside-box check
+    catches box-geometry regressions, but because generator and verifier share
+    this predicate, a mis-specified predicate (too strict, so the box clips the
+    logo; too loose, so noise sets the extent) would leave both agreeing and the
+    suite green.
     """
     return b > 150 and b - r > 80 and b - g > 40 and r < 110
 
@@ -125,11 +128,8 @@ def main():
           "all boxes lie inside the frame")
 
     for k, ((x, y, w, h), url) in enumerate(zip(boxes, urls)):
+        # decode() raises SystemExit on a length mismatch, so no re-check here.
         data = decode(url, size)
-        if len(data) != size * size * 4:
-            failures.append(f"frame {k}: decoded {len(data)} bytes, expected {size * size * 4}")
-            print(f"  FAIL frame {k}: decoded {len(data)} bytes, expected {size * size * 4}")
-            continue
         cx, cy = x + w / 2.0, y + h / 2.0
         rad = min(w, h) / 2.0 * CIRCLE_RATIO
         loose_outside = 0   # loosely-flagged outside the box: bounded, not zero

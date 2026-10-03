@@ -33,9 +33,10 @@ if len(FRAME_INDICES) != FRAME_COUNT or FRAME_INDICES[-1] != 66:
 PALETTE_COLORS = 32  # flat art; higher only absorbs h264 noise
 
 # Strict blue test used for OFFLINE box detection. The runtime keying test is
-# looser (see render.ts isLogoColor) - this one must NOT fire on background
+# looser (see logic.ts isLogoColor) - this one must NOT fire on background
 # noise, so it is deliberately narrow.
 def strict_blue(r, g, b):
+    """Offline box detector. Duplicated verbatim in verify-frames.py."""
     return b > 150 and b - r > 80 and b - g > 40 and r < 110
 
 
@@ -80,7 +81,8 @@ def robust_box(data, w, h):
     MIN_PANE_PX = 3 is measured, not guessed. At 1 or 2 the box stretches to
     135-138px wide on frame 3 because isolated noise specks survive; at 3 and
     above the widths settle to 118-122 with a spread of 4px, identical to a
-    50px threshold. Below 3 there are strays, at 3 there are none.
+    50px threshold. Specks do survive at 3 - they are simply too small to move
+    the box, and verify-frames.py bounds the residual with SAT_OUTSIDE_MAX.
     """
     mask = bytearray(w * h)
     for y in range(h):
@@ -152,14 +154,19 @@ def main():
 
     mp4_sha = hashlib.sha256(mp4.read_bytes()).hexdigest()
 
+    # Key the extraction cache on content. A MISSING stamp counts as stale, not
+    # fresh: an existing stamp-less work/full/ from an older generator would
+    # otherwise skip invalidation forever, and swapping in a different video with
+    # the same frame count would silently re-emit the previous boxes and frames.
     full = WORK / "full"
     stamp = WORK / "full.stamp"
-    if stamp.exists() and stamp.read_text().strip() != mp4_sha:
+    fresh = stamp.exists() and stamp.read_text().strip() == mp4_sha
+    if full.exists() and not fresh:
         shutil.rmtree(full, ignore_errors=True)
     if not (full / f"f{nframes:03d}.png").exists():
         full.mkdir(parents=True, exist_ok=True)
         run(["ffmpeg", "-v", "error", "-i", str(mp4), str(full / "f%03d.png")])
-        stamp.write_text(mp4_sha)
+    stamp.write_text(mp4_sha)
 
     pal = WORK / "pal"
     pal.mkdir(parents=True, exist_ok=True)
