@@ -119,6 +119,53 @@ neither of which has runtime imports, so no bundler resolution is involved.
 `render.ts` holds the canvas and GIF encoding and cannot run outside a browser;
 it is covered by `nix build` plus the in-app smoke test.
 
+## Verifying the build
+
+Each client is a single derivation — there is no `.package` sub-attribute to
+reach for:
+
+```bash
+nix build --no-link --print-out-paths \
+  '.#nixosConfigurations.main.config.home-manager.users.matswuuu.programs.nixcord.finalPackage.discord'
+nix build --no-link --print-out-paths \
+  '.#nixosConfigurations.main.config.home-manager.users.matswuuu.programs.nixcord.finalPackage.vesktop'
+```
+
+Neither build runs `tsc`. The mod is bundled by esbuild as part of the build, so
+a successful build is the only compile gate this plugin has.
+
+**Grep the mod store path, not the client output.** Both clients are *indirect*
+builds, so the plugin is not inside the paths those commands print:
+
+- Discord's `opt/Discord/resources/app.asar` is replaced by a loader directory
+  whose `index.js` is a one-line `require` of the equicord store path. There is
+  no `desktop.asar` in the client output at all.
+- Vesktop's `use_system_vencord.patch` hardcodes the vencord store path in place
+  of its default session-data lookup.
+
+So read those mod paths out of the client output and grep there. Searching the
+client output itself for `Adds a /linux-scratch command` finds nothing, and that
+does **not** mean injection failed:
+
+```bash
+grep -rl 'Adds a /linux-scratch command' <equicord-store-path>
+grep -rl 'Adds a /linux-scratch command' <vencord-store-path>
+```
+
+The bundled `.js.map` should also name `linuxScratch/index.ts`, `frames.ts`,
+`render.ts` and `logic.ts`. That is stronger evidence than the string match,
+because it shows the module was compiled from this directory rather than merely
+appearing in the bundle.
+
+Finally, the enable key reaches the client as `enabled`, **not** `enable`.
+nixcord renames both halves on the way into `settings.json`: `core.nix:40-41`
+maps `enable` to `enabled` via `specialRenames`, and the `toUpper` helper at
+`core.nix:33` (applied at `core.nix:74`) capitalises the plugin key `linuxScratch`
+to `LinuxScratch`. That capitalisation only applies to lowerCamel keys, and the
+result must match the plugin's `name` in `index.ts` exactly — otherwise the
+plugin loads but stays disabled, with nothing in the build output to indicate
+why.
+
 ## nixcord wiring
 
 Enabled from `home/modules/nixcord/default.nix`:
@@ -130,19 +177,15 @@ programs.nixcord = {
 };
 ```
 
-nixcord rewrites both halves when it generates `settings.json`, and both
-rewrites matter:
+Note that the two option names are what nixcord expects, not what reaches the
+client — see the rename rules above.
 
-- the plugin key `linuxScratch` becomes `LinuxScratch`, which must match the
-  plugin's `name` exactly;
-- the inner `enable` becomes `enabled`, the key Vencord actually reads.
-
-Plugin key names must be lowerCamel for nixcord to apply that capitalisation,
-and must not contain `.` — a Nix attribute name cannot hold one, so the plugin
-could not be enabled at all.
+Plugin key names must be lowerCamel for nixcord to apply the capitalisation, and
+must not contain `.` — a Nix attribute name cannot hold one, so the plugin could
+not be enabled at all.
 
 ## Credits
 
-Animation by Artem. The watermark in the top-left of each frame reads
-"Made by Artem / Telegram: furazane / Insta: furazane" and is part of the
-source artwork, so it is preserved in the output rather than cropped out.
+Animation by Artem. A watermark carrying the artist's contact handles sits in the
+top-left of every frame; it is part of the source artwork, so it is preserved in
+the output rather than cropped out.
