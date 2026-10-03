@@ -1,14 +1,26 @@
 #!/usr/bin/env python3
 """Verify the generated frames.ts. No browser required.
 
-Asserts:
-  * FRAME_COUNT == len(LOGO_BOXES) == len(FRAME_DATA_URLS)
-  * every frame decodes and is SOURCE_SIZE x SOURCE_SIZE
-  * logo boxes are consistent (~114x114) and inside the frame
-  * the runtime keying predicate leaves ZERO logo-blue pixels outside the
-    circle, for every frame  (CIRCLE_RATIO must match render.ts)
+Asserts the asset-side invariants the renderer depends on:
+  * FRAME_COUNT == len(LOGO_BOXES) == len(FRAME_DATA_URLS), and equals 12
+  * every frame decodes to SOURCE_SIZE x SOURCE_SIZE
+  * logo boxes are consistent (~114x114) and lie inside the frame
+  * the logo extends BEYOND the avatar circle - the fact that makes a
+    box-bounded erase region mandatory (see eraseRegion in logic.ts)
+  * the chroma test barely fires outside the logo box, so keying can never
+    reach Tux, the LINUX text, or the background
+
+CIRCLE_RATIO must match logic.ts; the chroma threshold must match
+isLogoColor in logic.ts.
+
+Deliberately NOT asserted: "zero leftover logo pixels". Modelled faithfully
+that is true by construction - the renderer erases every flagged pixel it
+visits - so such a check would assert nothing. The two invariants above are
+the falsifiable guards.
 """
+
 import base64
+import math
 import pathlib
 import re
 import subprocess
@@ -83,7 +95,6 @@ def main():
               for x, y, w, h in boxes),
           "all boxes lie inside the frame")
 
-    total_leftover = 0
     for k, ((x, y, w, h), url) in enumerate(zip(boxes, urls)):
         data = decode(url, size)
         if len(data) != size * size * 4:
@@ -92,20 +103,32 @@ def main():
             continue
         cx, cy = x + w / 2.0, y + h / 2.0
         rad = min(w, h) / 2.0 * CIRCLE_RATIO
-        leftover = 0
-        for py in range(y, y + h):
-            for px in range(x, x + w):
+        outside = 0        # flagged outside the box: must stay negligible
+        max_r = 0.0        # farthest flagged pixel from the box centre
+        for py in range(size):
+            for px in range(size):
                 i = (py * size + px) * 4
-                dx, dy = px + 0.5 - cx, py + 0.5 - cy
-                if dx * dx + dy * dy <= rad * rad:
-                    continue          # inside the avatar circle: avatar shows
-                if is_logo(data[i], data[i + 1], data[i + 2]):
-                    leftover += 1
-        total_leftover += leftover
+                if not is_logo(data[i], data[i + 1], data[i + 2]):
+                    continue
+                if x <= px < x + w and y <= py < y + h:
+                    max_r = max(max_r, math.hypot(px + 0.5 - cx, py + 0.5 - cy))
+                else:
+                    outside += 1
+        if max_r <= rad * 1.05:
+            print(f"  FAIL frame {k}: logo reaches only {max_r:.1f}px vs circle "
+                  f"{rad:.1f}px - if the logo ever fit inside the circle a "
+                  f"circle-bounded erase region would become correct")
+            failures.append(f"frame {k}: logo does not extend past the circle")
+        # ~886 hits/frame observed, from h264 noise on white. 2% of the frame
+        # is a wide bound that a too-permissive threshold overruns by ~250x.
+        if outside > 0.02 * size * size:
+            print(f"  FAIL frame {k}: chroma test flagged {outside} pixels "
+                  f"outside the logo box "
+                  f"({100.0 * outside / (size * size):.1f}% of frame) - "
+                  f"threshold too permissive")
+            failures.append(f"frame {k}: {outside} stray keying hits")
 
-    check(len(failures) == 0, f"every frame decodes to {size}x{size} RGBA")
-    check(total_leftover == 0,
-          f"zero logo pixels survive keying (found {total_leftover})")
+    check(len(failures) == 0, "per-frame invariants hold")
 
     print()
     if failures:
