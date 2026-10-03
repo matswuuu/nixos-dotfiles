@@ -144,7 +144,7 @@ def main():
         run(["curl", "-sfL", "-o", str(mp4), MP4_URL])
     # Checked unconditionally: a previously-downloaded HTML error page would
     # otherwise fail later with a confusing ffprobe error.
-    if mp4.stat().st_size < 8 or mp4.read_bytes()[4:8] != b"ftyp":
+    if mp4.stat().st_size < 8 or mp4.open("rb").read(12)[4:8] != b"ftyp":
         raise SystemExit(f"{mp4} is not an MP4 (ftyp box missing); refusing to use it")
 
     w, h, nframes = probe(mp4)
@@ -162,11 +162,19 @@ def main():
     stamp = WORK / "full.stamp"
     fresh = stamp.exists() and stamp.read_text().strip() == mp4_sha
     if full.exists() and not fresh:
-        shutil.rmtree(full, ignore_errors=True)
+        # Deliberately NOT ignore_errors. A swallowed rmtree would leave the
+        # previous video's frames in place, the extract branch would then be
+        # skipped, and we would stamp that stale cache as current - silently
+        # re-emitting the wrong video's boxes and frames with exit 0.
+        shutil.rmtree(full)
+        if full.exists():
+            raise SystemExit(f"could not clear {full}; refusing to reuse a stale cache")
     if not (full / f"f{nframes:03d}.png").exists():
         full.mkdir(parents=True, exist_ok=True)
         run(["ffmpeg", "-v", "error", "-i", str(mp4), str(full / "f%03d.png")])
-    stamp.write_text(mp4_sha)
+        # Stamped only here, after a verified extraction from THIS mp4, so the
+        # stamp can never record a cache we did not produce.
+        stamp.write_text(mp4_sha)
 
     pal = WORK / "pal"
     pal.mkdir(parents=True, exist_ok=True)
