@@ -109,8 +109,16 @@ def robust_box(data, w, h):
             if px > x1: x1 = px
             if py < y0: y0 = py
             if py > y1: y1 = py
-            for q in (p - 1, p + 1, p - w, p + w):
-                if 0 <= q < w * h and mask[q] and not seen[q]:
+            # Row-bounded neighbours. Plain p-1 / p+1 would wrap from column 0
+            # to the end of the previous row, silently merging unrelated
+            # components and corrupting the box. Unreachable for the current
+            # asset (no blue in those columns) but this is the one thing that
+            # must hold for the box to mean anything.
+            for q in ((p - 1) if px > 0 else -1,
+                      (p + 1) if px < w - 1 else -1,
+                      p - w if py > 0 else -1,
+                      p + w if py < h - 1 else -1):
+                if q >= 0 and mask[q] and not seen[q]:
                     seen[q] = 1
                     stack.append(q)
         if n >= MIN_PANE_PX:
@@ -132,9 +140,10 @@ def main():
         print(f"downloading {MP4_URL}")
         # -f so an HTTP error is a non-zero exit rather than a saved HTML page
         run(["curl", "-sfL", "-o", str(mp4), MP4_URL])
-        head = mp4.read_bytes()[4:8]
-        if head != b"ftyp":
-            raise SystemExit(f"{mp4} is not an MP4 (ftyp box missing); refusing to use it")
+    # Checked unconditionally: a previously-downloaded HTML error page would
+    # otherwise fail later with a confusing ffprobe error.
+    if mp4.stat().st_size < 8 or mp4.read_bytes()[4:8] != b"ftyp":
+        raise SystemExit(f"{mp4} is not an MP4 (ftyp box missing); refusing to use it")
 
     w, h, nframes = probe(mp4)
     print(f"source: {w}x{h}, {nframes} frames")
