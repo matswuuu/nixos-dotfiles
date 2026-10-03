@@ -86,14 +86,19 @@ export async function renderGif(opts: {
     const [, outCtx] = mkCanvas(res, res);
 
     // Palette. The art is quantised SEPARATELY so the ~79% white background
-    // only claims a few of its 32 slots instead of starving the avatar; avatar
-    // entries come first so they win if the merge is trimmed. quantize() ignores
-    // alpha outside format:"rgba4444", so making white transparent would not
-    // exclude it - a separate call is the only way to reserve budget.
+    // only claims a few of its 32 slots instead of taking a share of the
+    // avatar's - quantize() ignores alpha outside format:"rgba4444", so making
+    // white transparent would not exclude it; a separate call is the only way to
+    // reserve budget. Avatar entries come first so they are preferred in the
+    // dedupe. Note 223 + 32 == MAX_PALETTE_COLORS, so slice() is a safety net
+    // rather than a real trim: dedupe can only shorten the list.
     const [, palCtx] = mkCanvas(PALETTE_SIZE, PALETTE_SIZE);
-    // White-filled, not left transparent. quantize() ignores alpha outside
-    // format:"rgba4444", so an uncleared canvas hands it ~96% RGB(0,0,0) around
-    // the avatar circle and lets that black compete for the avatar's 223 slots.
+    // White-filled so the quantiser sees the colour those pixels actually render
+    // as, and so correctness does not depend on quantize()'s bin-merge internals.
+    // It reads alpha only under format:"rgba4444", so leaving the canvas
+    // transparent cannot exclude them. (It is PNN error-merge, not
+    // popularity-based, so the black would NOT have stolen avatar slots — but
+    // that is an implementation detail we should not be relying on.)
     palCtx.fillStyle = "#fff";
     palCtx.fillRect(0, 0, PALETTE_SIZE, PALETTE_SIZE);
     const c0 = circleFor(LOGO_BOXES[0], ps);
@@ -111,6 +116,9 @@ export async function renderGif(opts: {
 
     const gif = GIFEncoder();
 
+    // Loop-invariant: set once so it is not reassigned on every frame.
+    avatarCtx.fillStyle = "#fff";
+
     for (let i = 0; i < FRAME_COUNT; i++) {
         const box = LOGO_BOXES[i];
         const c = circleFor(box, scale);
@@ -119,7 +127,6 @@ export async function renderGif(opts: {
         // A: the avatar, clipped to this frame's circle. White-filled first so
         // a PNG avatar with transparency cannot put unintended alpha into a GIF
         // that is written as opaque.
-        avatarCtx.fillStyle = "#fff";
         avatarCtx.fillRect(0, 0, res, res);
         drawAvatarInCircle(avatarCtx, avatar, c, rect.size);
 

@@ -200,7 +200,11 @@ t("pads the box by exactly 1px on each side", () => {
     // frames.py tolerates 8 stray pixels per frame, so a lost margin would not
     // have been caught there either.
     for (const [k, box] of LOGO_BOXES.entries()) {
-        if (box.x <= 1 || box.y <= 1) continue;   // clamped at the canvas edge
+        // Skip boxes touching any clamped edge: eraseRegion clamps x0/y0 up to
+        // 0 and x1/y1 down to `limit`, so a box at the far edge would make all
+        // four exact assertions fail against a correct implementation.
+        if (box.x <= 1 || box.y <= 1 ||
+            box.x + box.w >= SOURCE_SIZE - 1 || box.y + box.h >= SOURCE_SIZE - 1) continue;
         const r = eraseRegion(box, 1, SOURCE_SIZE);
         assert.equal(r.x0, box.x - 1, `frame ${k}: x0 margin`);
         assert.equal(r.y0, box.y - 1, `frame ${k}: y0 margin`);
