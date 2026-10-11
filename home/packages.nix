@@ -17,6 +17,10 @@
     mtr
     libmtp
     gvfs
+    glib # gio mount mtp://... for Android phones
+    android-tools # adb, fastboot
+    android-file-transfer # aft-mtp-mount + GUI, more reliable than libmtp alone
+    go-mtpfs # FUSE mount: go-mtpfs ~/mnt/phone
     usbutils
     upower
     playerctl

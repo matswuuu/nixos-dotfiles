@@ -15,6 +15,7 @@
     ./modules/kitty/default.nix
     ./modules/lazydocker/default.nix
     ./modules/btop/default.nix
+    ./modules/udiskie/default.nix
     ./modules/yazi/default.nix
     ./modules/zed/default.nix
     ./modules/niri/default.nix

@@ -25,8 +25,38 @@ desc = "Cd to /mnt/data"
 
 [[mgr.prepend_keymap]]
 on = ["g", "m", "2"]
-run = "cd /mnt/data"
+run = "cd /mnt/data2"
 desc = "Cd to /mnt/data2"
+
+# udisks2 auto-mount root (udiskie mounts here: /run/media/$USER/<label>)
+[[mgr.prepend_keymap]]
+on = ["g", "m", "u"]
+run = "shell 'ya emit cd \"/run/media/$USER\"'"
+desc = "Cd to removable mounts (/run/media/$USER)"
+
+[[mgr.prepend_keymap]]
+on = ["g", "m", "m"]
+run = "cd /run/media"
+desc = "Cd to /run/media"
+
+[[mgr.prepend_keymap]]
+on = ["g", "m", "e"]
+run = "cd /media"
+desc = "Cd to /media"
+
+# gvfs FUSE mount root (Android MTP via `gio mount mtp://...` lands here)
+[[mgr.prepend_keymap]]
+on = ["g", "v"]
+run = "shell 'ya emit cd \"/run/user/$(id -u)/gvfs\"'"
+desc = "Cd to gvfs mounts (MTP phones)"
+
+# Official mount manager plugin (yazi-rs/plugins:mount).
+# Needs udisksctl + lsblk + eject (added to programs.yazi.extraPackages).
+# Inside: m mount / u unmount / e eject / l enter / q quit.
+[[mgr.prepend_keymap]]
+on = "M"
+run = "plugin mount"
+desc = "Open mount manager"
 
 [[mgr.prepend_keymap]]
 on = ["<Delete>"]
