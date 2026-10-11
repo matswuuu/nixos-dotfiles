@@ -25,6 +25,9 @@
     obs = {
       enable = true;
     };
+    obsidian = {
+      enable = true;
+    };
     kitty = {
       enable = true;
     };

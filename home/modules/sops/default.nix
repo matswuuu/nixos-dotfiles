@@ -7,6 +7,8 @@
       "bar/tapo/ip" = { };
       "bar/tapo/email" = { };
       "bar/tapo/password" = { };
+      "bitwarden/baseUrl" = { };
+      "bitwarden/email" = { };
     };
   };
 }

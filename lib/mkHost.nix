@@ -3,6 +3,7 @@
   home-manager,
   sops-nix,
   catppuccin,
+  obsidian-extensions,
   mtsw-bar,
   inputs,
 }:
@@ -26,6 +27,10 @@
       home-manager.nixosModules.home-manager
       sops-nix.nixosModules.sops
       catppuccin.nixosModules.catppuccin
+
+      {
+        nixpkgs.overlays = [ obsidian-extensions.overlays.default ];
+      }
 
       {
         home-manager = {

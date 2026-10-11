@@ -13,6 +13,16 @@
     "prune": true,
     "reserved": 12000
   },
+  "permission": {
+    "external_directory": {
+      "$HOME/**": "allow",
+      "/tmp/**": "allow"
+    },
+    "read": "allow",
+    "glob": "allow",
+    "grep": "allow",
+    "list": "allow"
+  },
   "mcp": {
     "codebase-memory": {
       "type": "local",

@@ -3,7 +3,11 @@
 
   inputs = {
     nixpkgs = {
-      url = "github:nixos/nixpkgs/nixos-unstable";
+      # Pinned: nixpkgs moved pkgs.discord to pkgs/by-name and dropped the
+      # `source` argument that nixcord passes via `discord.override`, which
+      # breaks evaluation of system.build.toplevel. Unpin once nixcord
+      # supports the refactor.
+      url = "github:nixos/nixpkgs/44a91898084f46797b5fac650c7e8c9ac38c43d4";
     };
     nixpkgs-stable = {
       url = "github:nixos/nixpkgs/nixos-26.05";
@@ -18,6 +22,10 @@
     };
     catppuccin = {
       url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    obsidian-extensions = {
+      url = "github:karaolidis/nix-obsidian-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixcord = {
@@ -36,6 +44,7 @@
       home-manager,
       sops-nix,
       catppuccin,
+      obsidian-extensions,
       mtsw-bar,
       ...
     }@inputs:
@@ -49,6 +58,7 @@
           home-manager
           sops-nix
           catppuccin
+          obsidian-extensions
           mtsw-bar
           inputs
           ;

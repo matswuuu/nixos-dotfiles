@@ -93,15 +93,14 @@ window-rule {
 }
 
 window-rule {
-    match app-id="lutris" at-startup=true
-    open-on-workspace "5";
+    match app-id="md.obsidian.Obsidian"
+    open-on-workspace "6";
 }
 
 spawn-at-startup "google-chrome-stable"
 spawn-at-startup "vesktop"
 spawn-at-startup "Telegram"
+spawn-at-startup "obsidian"
 
 spawn-at-startup "awww-daemon"
 spawn-at-startup "awww img ~/.config/awww/wallpapers/6.png"
-
-// spawn-at-startup "voxtype" "daemon"
