@@ -126,8 +126,5 @@
           }
         );
     })
-
-    # Cristalix launcher FHS environment (requires glibc 2.43)
-    (pkgs.callPackage ../pkgs/cristalix-fhs { })
   ];
 }

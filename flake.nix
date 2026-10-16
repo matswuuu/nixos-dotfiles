@@ -7,7 +7,7 @@
       # `source` argument that nixcord passes via `discord.override`, which
       # breaks evaluation of system.build.toplevel. Unpin once nixcord
       # supports the refactor.
-      url = "github:nixos/nixpkgs/44a91898084f46797b5fac650c7e8c9ac38c43d4";
+      url = "github:nixos/nixpkgs/nixos-unstable";
     };
     nixpkgs-stable = {
       url = "github:nixos/nixpkgs/nixos-26.05";

@@ -20,7 +20,11 @@
     inherit system;
 
     specialArgs = {
-      inherit username hostName;
+      inherit
+        inputs
+        username
+        hostName
+        ;
     };
 
     modules = [
