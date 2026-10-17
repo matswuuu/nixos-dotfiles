@@ -24,7 +24,7 @@ in
     includes = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
-      example = [ "bitwarden-env.kdl" ];
+      example = [ "extra.kdl" ];
       description = ''
         Extra niri config files to include at the end of common.kdl, named
         relative to the niri config directory. Whoever lists a file here is

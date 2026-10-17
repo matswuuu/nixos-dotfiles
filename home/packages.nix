@@ -46,6 +46,7 @@
     lsof
     dnsutils
     file
+    trash-cli # rm replacement: moves files to the XDG trash instead of deleting
 
     grim
     slurp
@@ -84,6 +85,7 @@
     jetbrains-toolbox
     insomnia
     lazydocker
+    claude-code
 
     # Java
     visualvm

@@ -10,6 +10,7 @@
     ./modules/fastfetch/default.nix
     ./modules/fish/default.nix
     ./modules/git/default.nix
+    ./modules/ssh/default.nix
     ./modules/wofi/default.nix
     ./modules/java/default.nix
     ./modules/kitty/default.nix
@@ -20,7 +21,6 @@
     ./modules/zed/default.nix
     ./modules/niri/default.nix
     ./modules/python/default.nix
-    ./modules/bitwarden/default.nix
     ./modules/theme/gtk.nix
     ./modules/theme/qt.nix
     ./modules/theme/catppuccin.nix
@@ -31,8 +31,6 @@
     ./modules/anki/default.nix
     ./modules/nixcord/default.nix
   ];
-
-  bitwarden.enable = true;
 
   home = {
     inherit username;
