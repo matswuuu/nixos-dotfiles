@@ -89,7 +89,6 @@
 
     # JS
     nodejs
-    # pnpm
 
     # Visual
     obs-studio

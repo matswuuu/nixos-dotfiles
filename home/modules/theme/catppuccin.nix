@@ -34,6 +34,11 @@
     yazi = {
       enable = true;
     };
+    # catppuccin/nix still writes programs.opencode.tui, which OpenCode 2
+    # ignores; the theme is set via programs.opencode.cli instead.
+    opencode = {
+      enable = false;
+    };
     gtk = {
       icon = {
         enable = true;

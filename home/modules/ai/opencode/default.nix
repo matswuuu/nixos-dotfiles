@@ -3,10 +3,10 @@
   programs.opencode = {
     enable = true;
     settings = builtins.fromJSON (builtins.readFile ./opencode.json);
-    tui = builtins.fromJSON (builtins.readFile ./tui.json);
     agents = ./agents;
     skills = ./skills;
     commands = ./commands;
+    cli.theme.name = "catppuccin-macchiato";
   };
 
   # opencode.json references {file:./prompts/*.md} relative to
