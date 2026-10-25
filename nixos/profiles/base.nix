@@ -10,6 +10,7 @@
     ../core/users.nix
 
     ../hardware/bluetooth.nix
+    ../hardware/tablet.nix
     ../hardware/uinput.nix
 
     ../services/openssh.nix

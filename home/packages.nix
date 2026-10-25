@@ -48,10 +48,6 @@
     file
     trash-cli # rm replacement: moves files to the XDG trash instead of deleting
 
-    grim
-    slurp
-    swappy
-
     alacritty # Terminal
     kitty # 2nd terminal for yazi
 
@@ -97,6 +93,8 @@
 
     # Visual
     obs-studio
+
+    bitwarden-desktop
 
     # Gaming
     steam

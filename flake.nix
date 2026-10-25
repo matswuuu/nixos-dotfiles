@@ -36,6 +36,10 @@
       url = "github:matswuuu/mtsw-bar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mtsw-shot = {
+      url = "github:matswuuu/mtsw-shot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

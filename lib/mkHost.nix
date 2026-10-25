@@ -51,6 +51,7 @@
             sops-nix.homeManagerModules.sops
             catppuccin.homeModules.catppuccin
             mtsw-bar.homeModules.mtsw-bar
+            inputs.mtsw-shot.homeModules.mtsw-shot
             inputs.nixcord.homeModules.nixcord
           ]
           ++ homeModules;

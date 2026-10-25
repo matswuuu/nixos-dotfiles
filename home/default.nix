@@ -6,6 +6,7 @@
     ./cursor.nix
     ./modules/alacritty/default.nix
     ./modules/bar/default.nix
+    ./modules/screenshot/default.nix
     ./modules/cliphist/default.nix
     ./modules/fastfetch/default.nix
     ./modules/fish/default.nix

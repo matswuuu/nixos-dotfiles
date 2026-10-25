@@ -20,8 +20,11 @@ binds {
     // Screenshot region
     Mod+Shift+S { screenshot; }
 
-    // Screenshot with slurp + swappy
-    Print { spawn "sh" "-c" "grim -g \"$(slurp)\" - | swappy -f -"; }
+    // Screenshot: select + annotate (Enter copies)
+    Print { spawn "mtsw-shot"; }
+    // Focused screen / focused window to clipboard
+    Ctrl+Print { spawn "mtsw-shot" "screen" "-c"; }
+    Alt+Print { spawn "mtsw-shot" "window" "-c"; }
 
     // Clipboard history
     Mod+V { spawn "sh" "-c" "cliphist list | wofi --dmenu | cliphist decode | wl-copy"; }

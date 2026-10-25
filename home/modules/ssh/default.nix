@@ -8,8 +8,8 @@
     settings = {
       # No identityFile or IdentitiesOnly: both would bypass the agent entirely
       # and pin these hosts to ~/.ssh/github and ~/.ssh/gitlab. Keys are
-      # selected from SSH_AUTH_SOCK (gnome-keyring's gcr-ssh-agent), which picks
-      # by the public key the server offers.
+      # selected from SSH_AUTH_SOCK (the Bitwarden SSH agent), which picks by the
+      # public key the server offers.
       "github.com" = {
         hostname = "github.com";
         user = "git";
