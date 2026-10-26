@@ -18,7 +18,7 @@ binds {
     Mod+Shift+Ctrl+P { power-off-monitors; }
 
     // Screenshot region
-    Mod+Shift+S { screenshot; }
+    Mod+Shift+S { spawn "mtsw-shot"; }
 
     // Screenshot: select + annotate (Enter copies)
     Print { spawn "mtsw-shot"; }

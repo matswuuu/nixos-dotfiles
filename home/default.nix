@@ -31,6 +31,7 @@
     ./modules/ai/opencode/default.nix
     ./modules/anki/default.nix
     ./modules/nixcord/default.nix
+    ./modules/cristalix/default.nix
   ];
 
   home = {
