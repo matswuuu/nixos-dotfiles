@@ -13,7 +13,7 @@
     enable = true;
     duration = 0.5;
     apps = {
-      telegram = {
+      materialgram = {
         r = 138;
         g = 173;
         b = 244;

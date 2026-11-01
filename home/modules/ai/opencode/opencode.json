@@ -3,7 +3,10 @@
   "autoshare": false,
   "autoupdate": true,
   "lsp": true,
-  "plugin": ["@mohak34/opencode-notifier@latest", "superpowers@git+https://github.com/obra/superpowers.git"],
+  "plugin": [
+    "@mohak34/opencode-notifier@latest",
+    "opencode-claude-auth@latest"
+  ],
   "tools": {
     "write": true,
     "bash": true
@@ -34,20 +37,6 @@
       },
       "enabled": true,
       "timeout": 60000
-    }
-  },
-  "provider": {
-    "ollama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Ollama (local)",
-      "options": {
-        "baseURL": "http://localhost:11434/v1"
-      },
-      "models": {
-        "qwen3.8:27b": {
-          "name": "qwen3.8:27b"
-        }
-      }
     }
   },
   "agent": {

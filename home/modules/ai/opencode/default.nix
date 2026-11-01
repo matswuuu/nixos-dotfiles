@@ -3,7 +3,6 @@
   programs.opencode = {
     enable = true;
     settings = builtins.fromJSON (builtins.readFile ./opencode.json);
-    agents = ./agents;
     skills = ./skills;
     commands = ./commands;
     cli.theme.name = "catppuccin-macchiato";

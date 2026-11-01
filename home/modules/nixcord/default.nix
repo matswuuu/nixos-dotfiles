@@ -7,6 +7,9 @@
 
     config = {
       frameless = true;
+      themeLinks = [
+        "https://capnkitten.github.io/Material-Discord/Material-Discord.theme.css"
+      ];
 
       plugins = {
         betterGifAltText.enable = true;

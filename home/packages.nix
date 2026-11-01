@@ -75,7 +75,7 @@
     catppuccin-kde
 
     # Social
-    telegram-desktop
+    materialgram
 
     # Code stuff
     jetbrains-toolbox
@@ -100,6 +100,8 @@
     umu-launcher
     protontricks
     protonup-qt
+
+    rnote
 
     # https://github.com/NixOS/nixpkgs/issues/513245
     (lutris.override {

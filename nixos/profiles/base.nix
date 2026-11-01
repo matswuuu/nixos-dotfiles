@@ -13,6 +13,7 @@
     ../hardware/tablet.nix
     ../hardware/uinput.nix
 
+    ../services/blocky.nix
     ../services/openssh.nix
     ../services/security.nix
     ../services/udisk.nix

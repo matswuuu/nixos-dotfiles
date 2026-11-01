@@ -87,7 +87,7 @@ window-rule {
 }
 
 window-rule {
-    match app-id="org.telegram.desktop" at-startup=true
+    match app-id="io.github.kukuruzka165.materialgram" at-startup=true
     open-on-workspace "3";
     default-column-width { proportion 0.5; }
 }
@@ -99,7 +99,7 @@ window-rule {
 
 spawn-at-startup "google-chrome-stable"
 spawn-at-startup "vesktop"
-spawn-at-startup "Telegram"
+spawn-at-startup "materialgram"
 spawn-at-startup "obsidian"
 
 spawn-at-startup "awww-daemon"

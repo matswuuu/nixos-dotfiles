@@ -58,12 +58,12 @@ window-rule {
 }
 
 window-rule {
-    match app-id="org.telegram.desktop" at-startup=true
+    match app-id="io.github.kukuruzka165.materialgram" at-startup=true
     open-on-workspace "3";
 }
 
 spawn-at-startup "google-chrome-stable"
-spawn-at-startup "Telegram"
+spawn-at-startup "materialgram"
 
 spawn-at-startup "awww-daemon"
 spawn-at-startup "awww img ~/.config/awww/wallpapers/5.jpg"
