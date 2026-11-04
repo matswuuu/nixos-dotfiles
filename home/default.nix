@@ -14,6 +14,7 @@
     ./modules/ssh/default.nix
     ./modules/wofi/default.nix
     ./modules/java/default.nix
+    ./modules/gradle/default.nix
     ./modules/kitty/default.nix
     ./modules/lazydocker/default.nix
     ./modules/btop/default.nix

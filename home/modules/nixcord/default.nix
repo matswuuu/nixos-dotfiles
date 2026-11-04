@@ -21,7 +21,7 @@
         customRpc.enable = true;
         disableDeepLinks.enable = true;
         experiments.enable = true;
-        expressionCloner.enable = true;
+        expressionManager.enable = true;
         fakeNitro.enable = true;
         fakeProfileThemes.enable = true;
         favoriteEmojiFirst.enable = true;

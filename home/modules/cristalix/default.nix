@@ -19,7 +19,11 @@ let
     udev
   ];
 
+  # The bundled GLFW prefers Wayland, where scroll arrives as fractional offsets
+  # that the LWJGL2 compat layer truncates to int, dropping most wheel events.
+  # Under X11 (xwayland-satellite) each notch is a whole ±1 step.
   cristalix = pkgs.writeShellScriptBin "cristalix" ''
+    unset WAYLAND_DISPLAY
     export LD_LIBRARY_PATH="/run/opengl-driver/lib:${lib.makeLibraryPath libs}''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
     exec java -jar "''${1:-$HOME/Downloads/CristalixLauncher.jar}"
   '';
