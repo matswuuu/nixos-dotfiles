@@ -8,7 +8,9 @@
     ./modules/bar/default.nix
     ./modules/screenshot/default.nix
     ./modules/cliphist/default.nix
+    ./modules/kdeconnect/default.nix
     ./modules/fastfetch/default.nix
+
     ./modules/fish/default.nix
     ./modules/git/default.nix
     ./modules/ssh/default.nix
