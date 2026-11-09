@@ -1,8 +1,6 @@
 { pkgs, ... }: {
   programs.java = {
     enable = true;
-    package = pkgs.openjdk.override {
-      enableJavaFX = true;
-    };
+    package = pkgs.temurin-bin-25;
   };
 }
