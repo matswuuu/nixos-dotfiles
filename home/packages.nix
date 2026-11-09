@@ -11,7 +11,6 @@
     lm_sensors
     wget
     git
-    file-roller
     sshuttle
     traceroute
     mtr

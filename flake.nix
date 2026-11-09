@@ -95,5 +95,11 @@
         "${main.meta.username}@${main.meta.hostName}" = main.home;
         "${laptop.meta.username}@${laptop.meta.hostName}" = laptop.home;
       };
+
+      packages = nixpkgs.lib.genAttrs [ "x86_64-linux" ] (
+        system: {
+          openidea = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/openidea { };
+        }
+      );
     };
 }

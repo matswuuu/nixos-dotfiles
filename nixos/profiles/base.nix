@@ -16,6 +16,7 @@
     ../services/blocky.nix
     ../services/openssh.nix
     ../services/security.nix
+    ../services/syncthing.nix
     ../services/udisk.nix
     ../services/upower.nix
 

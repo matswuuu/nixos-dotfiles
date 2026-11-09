@@ -33,6 +33,7 @@
     ./modules/anki/default.nix
     ./modules/nixcord/default.nix
     ./modules/cristalix/default.nix
+    ./modules/openidea/default.nix
   ];
 
   home = {
