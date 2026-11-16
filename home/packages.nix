@@ -81,6 +81,7 @@
     insomnia
     lazydocker
     claude-code
+    # llama-cpp-rocm # llama-cli, llama-server (ROCm/AMD GPU)
 
     # Java
     visualvm

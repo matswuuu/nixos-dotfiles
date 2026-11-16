@@ -2,11 +2,11 @@
 {
   programs.opencode = {
     enable = true;
-    # nixpkgs' node_modules FOD hash for opencode 2.2.5 doesn't match what bun
+    # nixpkgs' node_modules FOD hash for opencode 2.2.6 doesn't match what bun
     # actually produces. Drop this override once nixpkgs fixes the hash.
     package = pkgs.opencode.overrideAttrs (old: {
       node_modules = old.node_modules.overrideAttrs {
-        outputHash = "sha256-prx9dX7kUvs/E3zopkaPk5LXh3xJAy5sZeum/W8L7cA=";
+        outputHash = "sha256-UOF9owEBSuVKX/hBhef7Wr4ymlNgTL21BiVBr+9a8Zo=";
       };
     });
     settings = builtins.fromJSON (builtins.readFile ./opencode.json);

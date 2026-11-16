@@ -37,6 +37,15 @@
       }
 
       {
+        # Silence catppuccin/nix's auto-enroll migration warning for the
+        # NixOS module while keeping current behaviour (no ports enrolled).
+        catppuccin = {
+          enable = true;
+          autoEnable = false;
+        };
+      }
+
+      {
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
