@@ -43,4 +43,11 @@ in
     source = ./prompts;
     recursive = true;
   };
+
+  # harness2 skill (skills/harness2 + commands/harness2.md, deployed above):
+  # its experience library is mutable state the agent appends to, so it
+  # can't live in the Nix store. Just make sure the directory exists.
+  home.activation.opencodeHarness2 = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    run mkdir -p "${config.xdg.dataHome}/opencode/harness2"
+  '';
 }
