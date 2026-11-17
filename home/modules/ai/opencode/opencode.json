@@ -48,6 +48,9 @@
       "models": {
         "huihui_ai/Qwen3.8-abliterated": {
           "name": "Qwen3.8 Abliterated"
+        },
+        "dolphin3:8b": {
+          "name": "Dolphin 3.0 8B"
         }
       }
     }
