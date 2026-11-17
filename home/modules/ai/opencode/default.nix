@@ -1,5 +1,23 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+let
+  baseSettings = builtins.fromJSON (builtins.readFile ./opencode.json);
+
+  # Telegram remote control (OpenCode v2 plugin). The bot token comes from
+  # sops and is read at runtime via OpenCode's {file:...} substitution, so it
+  # never lands in the Nix store.
+  telegramPlugin = {
+    package = "github:jaygupta17/opencode2-telegram";
+    options = {
+      token = "{file:${config.sops.secrets."opencode/telegram/token".path}}";
+      # Allowed Telegram chat IDs. Empty = bootstrap mode (the bot replies to
+      # the first DM with its chat_id).
+      allowFrom = [ 5840978292 ];
+    };
+  };
+in
 {
+  sops.secrets."opencode/telegram/token" = { };
+
   programs.opencode = {
     enable = true;
     # nixpkgs' node_modules FOD hash for opencode 2.2.6 doesn't match what bun
@@ -9,7 +27,9 @@
         outputHash = "sha256-UOF9owEBSuVKX/hBhef7Wr4ymlNgTL21BiVBr+9a8Zo=";
       };
     });
-    settings = builtins.fromJSON (builtins.readFile ./opencode.json);
+    settings = baseSettings // {
+      plugins = baseSettings.plugins ++ [ telegramPlugin ];
+    };
     skills = ./skills;
     commands = ./commands;
     cli.theme.name = "catppuccin-macchiato";

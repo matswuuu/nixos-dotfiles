@@ -3,7 +3,7 @@
   "autoshare": false,
   "autoupdate": true,
   "lsp": true,
-  "plugin": [
+  "plugins": [
     "@mohak34/opencode-notifier@latest"
   ],
   "tools": {
