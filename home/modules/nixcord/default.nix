@@ -50,6 +50,13 @@
         sendTimestamps.enable = true;
         serverInfo.enable = true;
         settings.enable = true;
+        showMeYourName = {
+          enable = true;
+          mode = "nick-user";
+          friendNicknames = "dms";
+          displayNames = false;
+          inReplies = true;
+        };
         showHiddenChannels.enable = true;
         showHiddenThings.enable = true;
         showTimeoutDuration.enable = true;
