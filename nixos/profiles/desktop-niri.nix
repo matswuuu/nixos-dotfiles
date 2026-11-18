@@ -5,4 +5,3 @@
     ../programs/kdeconnect.nix
   ];
 }
-

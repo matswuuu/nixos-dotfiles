@@ -55,6 +55,8 @@
     run mkdir -p "$HOME/.ssh"
     run chmod 700 "$HOME/.ssh"
     run rm -f "$HOME/.ssh/config"
-    run install -m 600 ${lib.escapeShellArg (toString config.home.file.".ssh/config".source)} "$HOME/.ssh/config"
+    run install -m 600 ${
+      lib.escapeShellArg (toString config.home.file.".ssh/config".source)
+    } "$HOME/.ssh/config"
   '';
 }

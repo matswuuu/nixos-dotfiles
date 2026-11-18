@@ -46,6 +46,7 @@
     dnsutils
     file
     trash-cli # rm replacement: moves files to the XDG trash instead of deleting
+    nixfmt-tree # nix formatter
 
     alacritty # Terminal
     kitty # 2nd terminal for yazi

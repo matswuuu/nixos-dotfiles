@@ -86,6 +86,11 @@
       };
     in
     {
+      formatter = {
+        main.system = nixpkgs.nixfmt-tree;
+        laptop.system = nixpkgs.nixfmt-tree;
+      };
+
       nixosConfigurations = {
         main = main.nixos;
         laptop = laptop.nixos;
@@ -96,10 +101,8 @@
         "${laptop.meta.username}@${laptop.meta.hostName}" = laptop.home;
       };
 
-      packages = nixpkgs.lib.genAttrs [ "x86_64-linux" ] (
-        system: {
-          openidea = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/openidea { };
-        }
-      );
+      packages = nixpkgs.lib.genAttrs [ "x86_64-linux" ] (system: {
+        openidea = nixpkgs.legacyPackages.${system}.callPackage ./pkgs/openidea { };
+      });
     };
 }

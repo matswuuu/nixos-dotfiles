@@ -1,11 +1,11 @@
 {
   fileSystems."/mnt/data" = {
-    device = "/dev/disk/by-uuid/ACB6A0E5B6A0B16E";
-    fsType = "ntfs-3g";
+    device = "/dev/disk/by-uuid/072690e6-b9d2-43b6-b7ef-c7c9d54870c6";
+    fsType = "btrfs";
     options = [
-      "uid=1000"
-      "gid=100"
-      "rw"
+      "subvol=@data"
+      "noatime"
+      "compress=zstd"
       "nofail"
     ];
   };
